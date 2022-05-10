@@ -34,10 +34,13 @@
         android:id="@+id/tv_iniciar_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:text="INICIAR SESIÓN"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="97dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"

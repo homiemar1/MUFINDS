@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivFotoPerfil"
-        android:layout_width="145dp"
-        android:layout_height="141dp"
+        android:layout_width="121dp"
+        android:layout_height="129dp"
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/etNombreUsuario"
         app:layout_constraintEnd_toEndOf="@+id/etNombreUsuario"
@@ -25,9 +25,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.466" />
 
     <Button
         android:id="@+id/btAtras"
@@ -51,7 +52,7 @@
     <EditText
         android:id="@+id/editTextTextMultiLine"
         android:layout_width="309dp"
-        android:layout_height="230dp"
+        android:layout_height="147dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
@@ -61,4 +62,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etNombreUsuario"
         app:layout_constraintTop_toBottomOf="@+id/etNombreUsuario" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="REGISTRO"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfil"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfil"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoPerfil" />
 </androidx.constraintlayout.widget.ConstraintLayout>
