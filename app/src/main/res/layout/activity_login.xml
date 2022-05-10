@@ -80,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
+        android:onClick="onClickRecuperarContraseña"
         android:text="Has olvidado la contraseña?"
         app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
         app:layout_constraintHorizontal_bias="0.538"

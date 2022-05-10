@@ -2,6 +2,7 @@ package com.example.mufinds;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -60,5 +61,10 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    public void onClickRecuperarContraseña (View view) {
+        Intent intent = new Intent(LoginActivity.this, RecuperarContrasenaActivity.class);
+        startActivity(intent);
     }
 }
