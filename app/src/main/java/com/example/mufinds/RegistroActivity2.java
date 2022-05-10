@@ -16,9 +16,11 @@ public class RegistroActivity2 extends AppCompatActivity {
 
     public void onClickAtras (View view) {
         intent = new Intent(RegistroActivity2.this, RegistroActivity.class);
+        startActivity(intent);
     }
 
     public void onClickFinalizar (View view) {
-        //intent = new Intent();
+        //intent = new Intent(RegistroActivity2.this, RegistroActivity.class);
+        //startActivity(intent);
     }
 }
