@@ -19,8 +19,8 @@ public class IniciActivity extends AppCompatActivity {
         //intent.start();
     }
 
-    public void onClickInicairSesion (View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
+    public void onClickIniciarSesion(View view) {
+        Intent intent = new Intent(IniciActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }
