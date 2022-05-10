@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick (View view) {
+        validarUsuario();
+    }
+
+    public void validarUsuario () {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
