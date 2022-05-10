@@ -26,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
+        Toast.makeText(MainActivity.this, "adeu", Toast.LENGTH_SHORT).show();
+
     }
 
-    public void onClick (View view) {
+    public void onClickBoton (View view) {
         validarUsuario();
         Toast.makeText(MainActivity.this, "hola", Toast.LENGTH_SHORT);
     }
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("response");
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Usuario o contraseña no existen", Toast.LENGTH_SHORT);
+                    Toast.makeText(MainActivity.this, "Usuario o contraseña no existen", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -53,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("usuario", "nereaLopez");
-                parametros.put("contraseña", "lolita123");
+                parametros.put("nombreusuario", "nereaLopez");
+                parametros.put("contraseña", "abc123");
                 return parametros;
             }
         };
