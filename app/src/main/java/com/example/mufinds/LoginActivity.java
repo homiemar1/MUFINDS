@@ -17,22 +17,19 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final String URL = "https://mufinds.000webhostapp.com/validar_usuario.php";
     TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         textView = findViewById(R.id.textView);
-        Toast.makeText(MainActivity.this, "adeu", Toast.LENGTH_SHORT).show();
-
     }
 
     public void onClickBoton (View view) {
         validarUsuario();
-        Toast.makeText(MainActivity.this, "hola", Toast.LENGTH_SHORT);
     }
 
     public void validarUsuario () {
@@ -43,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("response");
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Usuario o contraseña no existen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Usuario o contraseña no existen", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT);
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT);
             }
         }){
             @Override
