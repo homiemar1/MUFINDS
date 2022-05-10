@@ -20,13 +20,11 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String URL = "https://mufinds.000webhostapp.com/validar_usuario.php";
-    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        textView = findViewById(R.id.textView);
     }
 
     public void onClickBoton (View view) {
@@ -38,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (!response.isEmpty()) {
-                    textView.setText("response");
+                    Toast.makeText(LoginActivity.this, "Funciona", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Usuario o contraseña no existen", Toast.LENGTH_SHORT).show();
@@ -65,6 +63,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickRecuperarContraseña (View view) {
         Intent intent = new Intent(LoginActivity.this, RecuperarContrasenaActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickRecuperarUsuario (View view) {
+        Intent intent = new Intent(LoginActivity.this, RecuperarUsuarioActivity.class);
         startActivity(intent);
     }
 }

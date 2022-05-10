@@ -7,30 +7,6 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:onClick="onClickBoton"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
         android:id="@+id/tv_iniciar_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,37 +22,26 @@
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Nombre de usuario"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+        app:layout_constraintBottom_toTopOf="@+id/etContraseñaIniciarSesion"
         app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btIniciarSesion"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
 
     <Button
         android:id="@+id/btIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickBoton"
         android:text="Iniciar Sesión"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565" />
 
     <TextView
         android:id="@+id/tv_olvidado_contraseña"
@@ -95,9 +60,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="onClickRecuperarUsuario"
         android:text="Has olvidado el nombre de usuario?"
         app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="@+id/btIniciarSesion"
         app:layout_constraintTop_toBottomOf="@+id/tv_olvidado_contraseña" />
+
+    <EditText
+        android:id="@+id/etContraseñaIniciarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btIniciarSesion"
+        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
+        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

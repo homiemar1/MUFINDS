@@ -6,4 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".RecuperarUsuarioActivity">
 
+    <TextView
+        android:id="@+id/tvTituloRecuperarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="RECUPERAR USUARIO"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/etEmailRecuperarUsuario"
+        app:layout_constraintEnd_toEndOf="@+id/etEmailRecuperarUsuario"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/etEmailRecuperarUsuario" />
+
+    <EditText
+        android:id="@+id/etEmailRecuperarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/etContraseñaRecuperarUsuario"
+        app:layout_constraintEnd_toEndOf="@+id/etContraseñaRecuperarUsuario"
+        app:layout_constraintStart_toStartOf="@+id/etContraseñaRecuperarUsuario" />
+
+    <Button
+        android:id="@+id/btRecuperarRecuperarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="RECUPERAR"
+        app:layout_constraintEnd_toEndOf="@+id/etContraseñaRecuperarUsuario"
+        app:layout_constraintStart_toStartOf="@+id/etContraseñaRecuperarUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/etContraseñaRecuperarUsuario" />
+
+    <TextView
+        android:id="@+id/tvRespuestaRecuperarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Tu usuario es: "
+        app:layout_constraintStart_toStartOf="@+id/etContraseñaRecuperarUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/btRecuperarRecuperarUsuario" />
+
+    <EditText
+        android:id="@+id/etContraseñaRecuperarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
