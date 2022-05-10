@@ -15,11 +15,11 @@ public class IniciActivity extends AppCompatActivity {
     }
 
     public void onClickRegistrar (View view) {
-        //Intent intent = new Intent(this, );
-        //intent.start();
+        Intent intent = new Intent(IniciActivity.this, RegistroActivity2.class);
+        startActivity(intent);
     }
 
-    public void onClickIniciarSesion(View view) {
+    public void onClickIniciarSesion (View view) {
         Intent intent = new Intent(IniciActivity.this, LoginActivity.class);
         startActivity(intent);
     }
