@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick (View view) {
         validarUsuario();
+        Toast.makeText(MainActivity.this, "hola", Toast.LENGTH_SHORT);
     }
 
     public void validarUsuario () {
