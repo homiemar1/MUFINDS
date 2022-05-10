@@ -7,17 +7,17 @@
     tools:context=".RegistroActivity2">
 
     <ImageView
-        android:id="@+id/ivFotoPerfil"
+        android:id="@+id/ivFotoPerfilRegistro"
         android:layout_width="121dp"
         android:layout_height="129dp"
         android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/etNombreUsuario"
-        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuario"
-        app:layout_constraintStart_toStartOf="@+id/etNombreUsuario"
+        app:layout_constraintBottom_toTopOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/etNombreUsuario"
+        android:id="@+id/etNombreUsuarioRegistro"
         android:layout_width="311dp"
         android:layout_height="52dp"
         android:ems="10"
@@ -31,26 +31,28 @@
         app:layout_constraintVertical_bias="0.466" />
 
     <Button
-        android:id="@+id/btAtras"
+        android:id="@+id/btAtrasRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickAtras"
         android:text="Atras"
-        app:layout_constraintBottom_toBottomOf="@+id/btFinalizar"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintBottom_toBottomOf="@+id/btFinalizarRegistro"
+        app:layout_constraintStart_toStartOf="@+id/etDescripcionRegistro" />
 
     <Button
-        android:id="@+id/btFinalizar"
+        android:id="@+id/btFinalizarRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:onClick="onClickFinalizar"
         android:text="Finalizar"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine"
+        app:layout_constraintEnd_toEndOf="@+id/etDescripcionRegistro"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btAtras"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintStart_toEndOf="@+id/btAtrasRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionRegistro" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/etDescripcionRegistro"
         android:layout_width="309dp"
         android:layout_height="147dp"
         android:layout_marginTop="12dp"
@@ -58,10 +60,10 @@
         android:gravity="start|top"
         android:hint="Descripcion"
         android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuario"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/etNombreUsuario"
-        app:layout_constraintTop_toBottomOf="@+id/etNombreUsuario" />
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreUsuarioRegistro" />
 
     <TextView
         android:id="@+id/textView3"
@@ -70,7 +72,7 @@
         android:layout_marginBottom="12dp"
         android:text="REGISTRO"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfil"
-        app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfil"
-        app:layout_constraintStart_toStartOf="@+id/ivFotoPerfil" />
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfilRegistro"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfilRegistro"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoPerfilRegistro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

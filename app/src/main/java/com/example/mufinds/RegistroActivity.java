@@ -15,7 +15,7 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        sp_genero = findViewById(R.id.sp_genero);
+        sp_genero = findViewById(R.id.spGeneroRegistro);
         String[] datos = new String[] {"Hombre", "Mujer", "Prefiero no contestar", "No binario"};
         sp_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
 

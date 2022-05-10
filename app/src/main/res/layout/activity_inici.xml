@@ -13,13 +13,13 @@
         android:layout_marginBottom="64dp"
         android:text="MUFINDS"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/ivLogoInicio"
+        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
         app:layout_constraintHorizontal_bias="0.611"
-        app:layout_constraintStart_toStartOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivLogoInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,24 +31,24 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btActivityIniciar"
+        android:id="@+id/btIniciarSesionInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:onClick="onClickIniciarSesion"
         android:text="Iniciar Sesión"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
+        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogoInicio" />
 
     <Button
-        android:id="@+id/btRegistrarse"
+        android:id="@+id/btRegistrarseInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:onClick="onClickRegistrar"
         android:text="Registrarse"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/btActivityIniciar" />
+        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
+        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio"
+        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesionInicio" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,55 +7,55 @@
     tools:context=".RegistroActivity">
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/etNombreRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName4"
+        app:layout_constraintBottom_toTopOf="@+id/etApellidosRegistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero" />
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/etApellidosRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="Apellido"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/sp_genero"
+        app:layout_constraintBottom_toTopOf="@+id/spGeneroRegistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero" />
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/etEmailRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/sp_genero"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etdFechaNacimientoRegistro" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName7"
+        android:id="@+id/etContraseñaRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/sp_genero"
+        app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
         app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailRegistro" />
 
     <TextView
         android:id="@+id/textView2"
@@ -64,12 +64,12 @@
         android:layout_marginBottom="16dp"
         android:text="REGISTRARSE"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"
-        app:layout_constraintEnd_toEndOf="@+id/sp_genero"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero" />
+        app:layout_constraintBottom_toTopOf="@+id/etNombreRegistro"
+        app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro" />
 
     <Spinner
-        android:id="@+id/sp_genero"
+        android:id="@+id/spGeneroRegistro"
         android:layout_width="215dp"
         android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,20 +79,20 @@
         app:layout_constraintVertical_bias="0.405" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/etdFechaNacimientoRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Fecha de nacimiento"
         android:inputType="date"
-        app:layout_constraintEnd_toEndOf="@+id/sp_genero"
+        app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
         app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="@+id/sp_genero"
-        app:layout_constraintTop_toBottomOf="@+id/sp_genero" />
+        app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/spGeneroRegistro" />
 
     <Button
-        android:id="@+id/btSiguiente"
+        android:id="@+id/btSiguienteRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickSiguiente"
