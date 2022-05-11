@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String URL = "https://mufinds.000webhostapp.com/validar_usuario.php";
+    private static final String URL = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

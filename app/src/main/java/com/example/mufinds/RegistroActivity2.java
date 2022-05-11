@@ -20,7 +20,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        //intent = new Intent(RegistroActivity2.this, RegistroActivity.class);
-        //startActivity(intent);
+        intent = new Intent(RegistroActivity2.this, EditarPerfilActivity.class);
+        startActivity(intent);
     }
 }
