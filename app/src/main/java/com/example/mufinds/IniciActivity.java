@@ -15,7 +15,7 @@ public class IniciActivity extends AppCompatActivity {
     }
 
     public void onClickRegistrar (View view) {
-        Intent intent = new Intent(IniciActivity.this, VistaPerfilActivity.class);
+        Intent intent = new Intent(IniciActivity.this, RegistroActivity.class);
         startActivity(intent);
     }
 

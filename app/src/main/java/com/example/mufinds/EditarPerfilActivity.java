@@ -3,6 +3,7 @@ package com.example.mufinds;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -17,5 +18,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
         String[] datos = new String[] {"Hombre", "Mujer", "Prefiero no contestar", "No binario"};
         sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
 
+    }
+
+    public void onClickAceptar(View view) {
+        finish();
     }
 }

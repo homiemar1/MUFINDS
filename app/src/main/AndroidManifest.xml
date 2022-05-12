@@ -26,6 +26,7 @@
         <activity android:name=".RegistroActivity2" />
         <activity android:name=".RecuperarContrasenaActivity" />
         <activity android:name=".RecuperarUsuarioActivity" />
+        <activity android:name=".EditarPerfilActivity" />
     </application>
 
 </manifest>
