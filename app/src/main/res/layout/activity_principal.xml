@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickEditarPerfil"
-            android:text="Editar perfil" />
+            android:text="Gestionar Musica" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <ImageView
@@ -61,7 +61,7 @@
         android:id="@+id/tgMenuSuperiorPrincipal"
         android:layout_width="222dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="28dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClickMusica"
             android:text="Musica" />
 
         <Button
@@ -81,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClickPersonas"
             android:text="Personas" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>

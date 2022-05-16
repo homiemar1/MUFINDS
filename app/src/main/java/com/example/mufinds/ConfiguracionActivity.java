@@ -2,9 +2,12 @@ package com.example.mufinds;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class ConfiguracionActivity extends AppCompatActivity {
 
@@ -17,17 +20,26 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void onClickCambiarNombreUsuario (View view) {
-        //intent = new Intent(ConfiguracionActivity.this, CambiarNombreUsuarioActivity.class);
-        //startActivity(intent);
+        intent = new Intent(ConfiguracionActivity.this, RecuperarUsuarioActivity.class);
+        startActivity(intent);
     }
 
     public void onClickCambiarContraseña (View view) {
-        //intent = new Intent(ConfiguracionActivity.this, CambiarContraseñaActivity.class);
-        //startActivity(intent);
+        intent = new Intent(ConfiguracionActivity.this, RecuperarContrasenaActivity.class);
+        startActivity(intent);
     }
 
     public void onClickEliminarCuenta  (View view) {
-        //intent = new Intent(ConfiguracionActivity.this, EliminarCuentaActivity.class);
-        //startActivity(intent);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Eliminar cuenta");
+        alert.setMessage("Estas segur@ de que quieres eliminar tu cuenta? Esta acción será permanente");
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finishAffinity();
+            }
+        });
+        alert.show();
     }
 }

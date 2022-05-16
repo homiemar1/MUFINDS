@@ -22,6 +22,8 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void onClickSiguiente (View view) {
+        //comprobar que los datos esten bien
+
         Intent intent = new Intent(this, RegistroActivity2.class);
         startActivity(intent);
     }

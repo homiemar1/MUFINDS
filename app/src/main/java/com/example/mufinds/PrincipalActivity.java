@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.sql.PreparedStatement;
 
 public class PrincipalActivity extends AppCompatActivity {
-
+    int condicion = 1;
+    Button btEditarPerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,7 @@ public class PrincipalActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        btEditarPerfil = findViewById(R.id.btEditarPerfil);
 
     }
 
@@ -60,18 +63,29 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void onClickEditarPerfil(View view) {
-        /*if () {   LO DEL SWITCH
-
+        if (condicion == 1) {
+            Intent intent = new Intent(PrincipalActivity.this, MusicaActivity.class);
+            startActivity(intent);
         }
         else {
+            Intent intent = new Intent(PrincipalActivity.this, EditarPerfilActivity.class);
+            startActivity(intent);
+        }
 
-        }*/
-        Intent intent = new Intent(PrincipalActivity.this, EditarPerfilActivity.class);
-        startActivity(intent);
     }
 
     public void onClickAmistades(View view) {
         Intent intent = new Intent(PrincipalActivity.this, AmistadesActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickMusica(View view) {
+        condicion = 1;
+        btEditarPerfil.setText("Gestionar Musica");
+    }
+
+    public void onClickPersonas (View view) {
+        condicion = 2;
+        btEditarPerfil.setText("Editar Perfil");
     }
 }

@@ -20,7 +20,10 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
+        //comprobar los datos esten bien
+
         intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
         startActivity(intent);
+        finish();
     }
 }
