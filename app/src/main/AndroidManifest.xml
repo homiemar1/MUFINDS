@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MUFINDS">
-        <activity android:name=".VistaPerfilActivity"></activity>
+        <activity android:name=".AmistadesActivity"></activity>
+        <activity android:name=".VistaPerfilActivity" />
         <activity android:name=".PrincipalActivity" />
         <activity android:name=".ConfiguracionActivity" />
         <activity android:name=".IniciActivity">

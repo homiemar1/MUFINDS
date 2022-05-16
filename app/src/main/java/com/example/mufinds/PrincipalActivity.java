@@ -69,4 +69,9 @@ public class PrincipalActivity extends AppCompatActivity {
         Intent intent = new Intent(PrincipalActivity.this, EditarPerfilActivity.class);
         startActivity(intent);
     }
+
+    public void onClickAmistades(View view) {
+        Intent intent = new Intent(PrincipalActivity.this, AmistadesActivity.class);
+        startActivity(intent);
+    }
 }
