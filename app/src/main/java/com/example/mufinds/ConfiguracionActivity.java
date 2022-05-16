@@ -20,13 +20,13 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void onClickCambiarNombreUsuario (View view) {
-        intent = new Intent(ConfiguracionActivity.this, RecuperarUsuarioActivity.class);
-        startActivity(intent);
+        //intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
+        //startActivity(intent);
     }
 
     public void onClickCambiarContraseña (View view) {
-        intent = new Intent(ConfiguracionActivity.this, RecuperarContrasenaActivity.class);
-        startActivity(intent);
+        //intent = new Intent(ConfiguracionActivity.this, CambiarContrasenaActivity.class);
+        //startActivity(intent);
     }
 
     public void onClickEliminarCuenta  (View view) {
