@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <menu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-        <item
-            android:id="@+id/action_configuration"
-            app:showAsAction="ifRoom"
-            android:icon="@drawable/configuracion"
-            android:title="Configuration" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_configuration"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/configuracion"
+        android:title="Configuration" />
 
-        <!-- Settings, should always be in the overflow -->
-        <item
-            android:id="@+id/action_cambiarTema"
-            app:showAsAction="never"
-            android:title="Tema" />
+    <!-- Settings, should always be in the overflow -->
+    <item
+        android:id="@+id/action_cambiarTema"
+        app:showAsAction="never"
+        android:title="Tema" />
 
-        <item
-            android:id="@+id/action_logout"
-            app:showAsAction="never"
-            android:title="Logout" />
+    <item
+        android:id="@+id/action_logout"
+        app:showAsAction="never"
+        android:title="Logout" />
 
-        <item
-            android:id="@+id/action_informacio"
-            app:showAsAction="never"
-            android:title="Informacion" />
+    <item
+        android:id="@+id/action_informacio"
+        app:showAsAction="never"
+        android:title="Informacion" />
 
-        <item
-            android:id="@+id/action_exit"
-            app:showAsAction="never"
-            android:title="Exit" />
+    <item
+        android:id="@+id/action_exit"
+        app:showAsAction="never"
+        android:title="Exit" />
 
-    </menu>
 </menu>
