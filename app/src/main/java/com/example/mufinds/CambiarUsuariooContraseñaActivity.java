@@ -3,6 +3,7 @@ package com.example.mufinds;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,12 +26,17 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             etDatoAntiguo.setHint("Usuario");
             etDatoNuevo.setHint("Usuario nuevo");
             etDatoCOnfirmacion.setHint("Contraseña");
+
+            etDatoCOnfirmacion.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         }
         else {
             tvTituloCambio.setText("CAMBIAR CONTRASEÑA");
             etDatoAntiguo.setHint("Contraseña");
             etDatoNuevo.setHint("Contraseña nueva");
             etDatoCOnfirmacion.setHint("Usuario");
+
+            etDatoAntiguo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+            etDatoNuevo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         }
 
     }
@@ -38,4 +44,27 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     public void onClickAceptar(View view) {
         finish();
     }
+
+    public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return new PasswordCharSequence(source);
+        }
+
+        private class PasswordCharSequence implements CharSequence {
+            private CharSequence mSource;
+            public PasswordCharSequence(CharSequence source) {
+                mSource = source; // Store char sequence
+            }
+            public char charAt(int index) {
+                return '*'; // This is the important part
+            }
+            public int length() {
+                return mSource.length(); // Return default
+            }
+            public CharSequence subSequence(int start, int end) {
+                return mSource.subSequence(start, end); // Return default
+            }
+        }
+    };
 }
