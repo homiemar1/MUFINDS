@@ -50,12 +50,12 @@
         android:layout_marginTop="32dp"
         android:onClick="onClickAceptar"
         android:text="Aceptar"
-        app:layout_constraintEnd_toEndOf="@+id/etDatoCOnfirmacion"
-        app:layout_constraintStart_toStartOf="@+id/etDatoCOnfirmacion"
-        app:layout_constraintTop_toBottomOf="@+id/etDatoCOnfirmacion" />
+        app:layout_constraintEnd_toEndOf="@+id/etDatoConfirmacion"
+        app:layout_constraintStart_toStartOf="@+id/etDatoConfirmacion"
+        app:layout_constraintTop_toBottomOf="@+id/etDatoConfirmacion" />
 
     <EditText
-        android:id="@+id/etDatoCOnfirmacion"
+        android:id="@+id/etDatoConfirmacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

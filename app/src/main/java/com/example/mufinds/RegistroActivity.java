@@ -27,21 +27,6 @@ public class RegistroActivity extends AppCompatActivity {
         String[] datos = new String[] {"Hombre", "Mujer", "Prefiero no contestar", "No binario"};
         sp_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
 
-        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = database.getReference("cancion");
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                System.out.println(snapshot.getChildren());//no esta bien pero xd
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        };
-        reference.addListenerForSingleValueEvent(listener);*/
-
     }
 
     public void onClickSiguiente (View view) {

@@ -19,7 +19,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         tvTituloCambio = findViewById(R.id.tvTituloCambio);
         etDatoAntiguo = findViewById(R.id.etDatoAntiguo);
         etDatoNuevo = findViewById(R.id.etDatoNuevo);
-        etDatoCOnfirmacion = findViewById(R.id.etDatoCOnfirmacion);
+        etDatoCOnfirmacion = findViewById(R.id.etDatoConfirmacion);
         int valor = getIntent().getIntExtra("variable", 1);
         if (valor == 1) {
             tvTituloCambio.setText("CAMBIAR NOMBRE DE USUARIO");
