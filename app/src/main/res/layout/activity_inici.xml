@@ -6,29 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".IniciActivity">
 
-    <TextView
-        android:id="@+id/tv_nombre_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="MUFINDS"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/ivLogoInicio"
-        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
-        app:layout_constraintHorizontal_bias="0.611"
-        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio" />
-
     <ImageView
         android:id="@+id/ivLogoInicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="303dp"
+        android:layout_height="149dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/btIniciarSesionInicio"
+        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesionInicio"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/btIniciarSesionInicio"
+        tools:srcCompat="@drawable/logomufinds" />
 
     <Button
         android:background="@drawable/bordes_redondos"
@@ -36,12 +23,14 @@
         android:id="@+id/btIniciarSesionInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
         android:onClick="onClickIniciarSesion"
         android:text="Iniciar Sesión"
-        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
-        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogoInicio" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.617" />
 
     <Button
         android:background="@drawable/bordes_redondos"
@@ -49,10 +38,11 @@
         android:id="@+id/btRegistrarseInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:onClick="onClickRegistrar"
         android:text="Registrarse"
-        app:layout_constraintEnd_toEndOf="@+id/ivLogoInicio"
-        app:layout_constraintStart_toStartOf="@+id/ivLogoInicio"
+        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesionInicio"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="@+id/btIniciarSesionInicio"
         app:layout_constraintTop_toBottomOf="@+id/btIniciarSesionInicio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
