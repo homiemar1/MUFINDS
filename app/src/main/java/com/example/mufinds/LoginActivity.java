@@ -4,43 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-
+    TextView tv_olvidado_contraseña, tv_olvidado_usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        tv_olvidado_contraseña = findViewById(R.id.tv_olvidado_contraseña);
+        tv_olvidado_usuario = findViewById(R.id.tv_olvidado_usuario);
 
-        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = database.getReference("cancion");
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    System.out.println(snapshot.child("cancion/1").getChildren());
-                }
-                else {
-                    System.out.println("hola");
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.out.println("Cancelado");
-            }
-        };
-        reference.addListenerForSingleValueEvent(listener);*/
+        tv_olvidado_contraseña.setPaintFlags(tv_olvidado_contraseña.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tv_olvidado_usuario.setPaintFlags(tv_olvidado_usuario.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("cancion");
         mDatabase.child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
