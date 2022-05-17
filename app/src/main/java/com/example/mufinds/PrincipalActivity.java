@@ -1,14 +1,14 @@
 package com.example.mufinds;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -64,11 +64,19 @@ public class PrincipalActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_informacio:
-                Toast.makeText(this, "Has seleccionado informacion", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("INFORMACION DE LA APLICACION");
+                dialog.setMessage("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lorem mauris, dapibus ac turpis sed, elementum porttitor urna. Sed risus lectus, venenatis et bibendum dictum, venenatis eget erat. Aenean in enim quis quam rutrum luctus eu placerat odio. Donec nec dolor sit amet magna tincidunt venenatis mattis vitae risus. Morbi luctus ac felis et tempus. Duis eget fringilla lorem, ac molestie diam. Donec a pellentesque velit. Aliquam rhoncus vitae erat et interdum. Mauris est enim, fermentum eu ultricies id, dignissim a lorem. Duis porta elit id est fringilla, quis pharetra tortor suscipit. Proin bibendum neque nec magna gravida vehicula. Quisque iaculis magna venenatis massa lobortis, eget bibendum ipsum faucibus. Proin scelerisque odio sem, et semper erat lobortis vitae. Nullam dolor leo, rutrum sit amet mauris sed, ultricies fringilla nulla.\n" +
+                        "\n" +
+                        "Aenean in nibh lacinia, vestibulum purus sed, dapibus metus. Donec malesuada facilisis efficitur. Duis aliquam suscipit ornare. Aenean vel neque tempor, ullamcorper erat ac, venenatis eros. Quisque dictum risus vel interdum pretium. Aliquam auctor viverra nisi, at maximus eros pulvinar a. Aenean quis eros tincidunt, tempor leo et, laoreet lorem. Phasellus malesuada tortor sem, a ultrices enim gravida sit amet. Sed cursus fermentum tincidunt. Ut est nibh, aliquam vel est sit amet, convallis pretium nisl. In tempus nisl non mollis commodo. In ullamcorper ante ac auctor rutrum. In pretium sem fringilla diam egestas vestibulum. Sed consequat iaculis tempus. Nunc ornare mi at dolor sollicitudin aliquam. Fusce quis leo vehicula, porttitor justo vitae, pellentesque lacus.");
+                dialog.setPositiveButton(" OK ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                    }
+                });
+                dialog.show();
                 return true;
-
-
-
             case R.id.action_exit:
                 finishAffinity();
             default:
