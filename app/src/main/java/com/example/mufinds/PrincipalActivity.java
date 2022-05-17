@@ -2,6 +2,7 @@ package com.example.mufinds;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 
 public class PrincipalActivity extends AppCompatActivity {
     int condicion = 1;
+    int tema = 1;
     Button btEditarPerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,14 @@ public class PrincipalActivity extends AppCompatActivity {
 
             case R.id.action_cambiarTema:
                 Toast.makeText(this, "Has seleccionado cambiar tema", Toast.LENGTH_SHORT).show();
+                if (tema == 1) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    tema = 2;
+                }
+                else {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    tema = 1;
+                }
                 return true;
 
             case R.id.action_logout:
@@ -56,6 +66,8 @@ public class PrincipalActivity extends AppCompatActivity {
             case R.id.action_informacio:
                 Toast.makeText(this, "Has seleccionado informacion", Toast.LENGTH_SHORT).show();
                 return true;
+
+
 
             case R.id.action_exit:
                 finishAffinity();
