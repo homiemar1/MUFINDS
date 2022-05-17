@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MUFINDS">
-        <activity android:name=".CambiarUsuarioActivity"></activity>
+        <activity android:name=".CambiarUsuariooContraseñaActivity"></activity>
         <activity android:name=".MusicaActivity" />
         <activity android:name=".AmistadesActivity" />
         <activity android:name=".VistaPerfilActivity" />

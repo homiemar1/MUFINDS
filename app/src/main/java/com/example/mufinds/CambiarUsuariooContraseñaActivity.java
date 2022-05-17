@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CambiarUsuarioActivity extends AppCompatActivity {
+public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     TextView tvTituloCambio;
     EditText etDatoAntiguo, etDatoNuevo, etDatoCOnfirmacion;
     @Override

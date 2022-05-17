@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 public class ConfiguracionActivity extends AppCompatActivity {
 
@@ -20,13 +19,13 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void onClickCambiarNombreUsuario (View view) {
-        intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
+        intent = new Intent(ConfiguracionActivity.this, CambiarUsuariooContraseñaActivity.class);
         intent.putExtra("variable", 1);
         startActivity(intent);
     }
 
     public void onClickCambiarContraseña (View view) {
-        intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
+        intent = new Intent(ConfiguracionActivity.this, CambiarUsuariooContraseñaActivity.class);
         intent.putExtra("variable", 2);
         startActivity(intent);
     }
