@@ -31,6 +31,8 @@
         app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
 
     <Button
+        android:background="@drawable/bordes_redondos"
+        android:textColor="@android:color/white"
         android:id="@+id/btIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

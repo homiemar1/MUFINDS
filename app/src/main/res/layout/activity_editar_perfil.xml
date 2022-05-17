@@ -66,6 +66,8 @@
         app:layout_constraintVertical_bias="0.21" />
 
     <Button
+        android:background="@drawable/bordes_redondos"
+        android:textColor="@android:color/white"
         android:id="@+id/btAceptarEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

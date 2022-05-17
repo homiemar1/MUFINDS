@@ -15,7 +15,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_perfil);
 
         sp_editar_genero = findViewById(R.id.sp_editar_genero);
-        String[] datos = new String[] {"Hombre", "Mujer", "Prefiero no contestar", "No binario"};
+        String[] datos = new String[] {"Mujer", "Hombre", "Prefiero no contestar", "No binario"};
         sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
 
     }

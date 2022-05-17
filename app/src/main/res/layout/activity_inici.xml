@@ -31,6 +31,8 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
+        android:background="@drawable/bordes_redondos"
+        android:textColor="@android:color/white"
         android:id="@+id/btIniciarSesionInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +44,8 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLogoInicio" />
 
     <Button
+        android:background="@drawable/bordes_redondos"
+        android:textColor="@android:color/white"
         android:id="@+id/btRegistrarseInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
