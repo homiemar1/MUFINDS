@@ -20,26 +20,30 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void onClickCambiarNombreUsuario (View view) {
-        //intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
-        //startActivity(intent);
+        intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
+        intent.putExtra("variable", 1);
+        startActivity(intent);
     }
 
     public void onClickCambiarContraseña (View view) {
-        //intent = new Intent(ConfiguracionActivity.this, CambiarContrasenaActivity.class);
-        //startActivity(intent);
+        intent = new Intent(ConfiguracionActivity.this, CambiarUsuarioActivity.class);
+        intent.putExtra("variable", 2);
+        startActivity(intent);
     }
 
     public void onClickEliminarCuenta  (View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Eliminar cuenta");
-        alert.setMessage("Estas segur@ de que quieres eliminar tu cuenta? Esta acción será permanente");
-        final EditText input = new EditText(this);
-        alert.setView(input);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        alert.setMessage("Estas segur@ de que quieres eliminar tu cuenta? Esta acción será permanente").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 finishAffinity();
             }
-        });
+        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
         alert.show();
     }
 }
