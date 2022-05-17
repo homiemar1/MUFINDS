@@ -14,39 +14,46 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 public class LoginActivity extends AppCompatActivity {
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference reference = database.getReference("cancion");
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    System.out.println(snapshot.child("1").getValue());
+                    System.out.println(snapshot.child("cancion/1").getChildren());
                 }
                 else {
                     System.out.println("hola");
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
-
+                System.out.println("Cancelado");
             }
         };
-        reference.addListenerForSingleValueEvent(listener);
+        reference.addListenerForSingleValueEvent(listener);*/
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("cancion");
+        mDatabase.child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    System.out.println("hola");
+                }
+                else {
+                    System.out.println("adios");
+                }
+            }
+        });
     }
 
     public void onClickIniciarSession (View view) {
