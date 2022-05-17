@@ -64,5 +64,6 @@ public class RegistroActivity2 extends AppCompatActivity {
         intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
         startActivity(intent);
         finish();
+
     }
 }
