@@ -13,22 +13,23 @@
         android:layout_marginBottom="24dp"
         android:text="EDITAR PERFIL"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfilEditarPerfil"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfilEditarPerfil"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoPerfilEditarPerfil" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ivFotoPerfilEditarPerfil"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
         android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+        android:onClick="onClickFotoDePerfil"
+        app:layout_constraintBottom_toTopOf="@+id/etNombreUsuarioEditarPerfil"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioEditarPerfil"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioEditarPerfil"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/etNombreUsuarioEditarPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -39,10 +40,10 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintVertical_bias="0.438" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/etDescripcionEditarPerfil"
         android:layout_width="209dp"
         android:layout_height="145dp"
         android:layout_marginTop="12dp"
@@ -50,19 +51,19 @@
         android:gravity="start|top"
         android:hint="Descripcio"
         android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioEditarPerfil"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioEditarPerfil"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreUsuarioEditarPerfil" />
 
     <Spinner
-        android:id="@+id/sp_editar_genero"
+        android:id="@+id/spEditarGeneroEditarPerfil"
         android:layout_width="215dp"
         android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine2"
+        app:layout_constraintEnd_toEndOf="@+id/etDescripcionEditarPerfil"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2"
+        app:layout_constraintStart_toStartOf="@+id/etDescripcionEditarPerfil"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionEditarPerfil"
         app:layout_constraintVertical_bias="0.21" />
 
     <Button
@@ -74,7 +75,7 @@
         android:layout_marginTop="12dp"
         android:onClick="onClickAceptar"
         android:text="Aceptar"
-        app:layout_constraintEnd_toEndOf="@+id/sp_editar_genero"
-        app:layout_constraintStart_toStartOf="@+id/sp_editar_genero"
-        app:layout_constraintTop_toBottomOf="@+id/sp_editar_genero" />
+        app:layout_constraintEnd_toEndOf="@+id/spEditarGeneroEditarPerfil"
+        app:layout_constraintStart_toStartOf="@+id/spEditarGeneroEditarPerfil"
+        app:layout_constraintTop_toBottomOf="@+id/spEditarGeneroEditarPerfil" />
 </androidx.constraintlayout.widget.ConstraintLayout>

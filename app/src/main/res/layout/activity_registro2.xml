@@ -11,6 +11,7 @@
         android:layout_width="121dp"
         android:layout_height="129dp"
         android:layout_marginBottom="36dp"
+        android:onClick="onClickFotoDePerfil"
         app:layout_constraintBottom_toTopOf="@+id/etNombreUsuarioRegistro"
         app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
         app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
