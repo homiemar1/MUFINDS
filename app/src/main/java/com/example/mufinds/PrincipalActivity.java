@@ -12,14 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.sql.PreparedStatement;
-
 public class PrincipalActivity extends AppCompatActivity {
-    int condicion = 1;
-    int tema = 1;
-    Button btEditarPerfil;
+    private int condicion = 1;
+    private int tema = 1;
+    private Button btEditarPerfil;
+    private ImageView ivFotoMusicaPrincipal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,8 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         btEditarPerfil = findViewById(R.id.btEditarPerfil);
-
+        ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
+        ivFotoMusicaPrincipal.setImageResource(R.drawable.tusojos);
     }
 
     @Override

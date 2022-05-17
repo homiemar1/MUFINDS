@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="1.0"
         app:singleSelection="true">
 
@@ -47,7 +47,7 @@
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivFotoMusicaPrincipal"
         android:layout_width="268dp"
         android:layout_height="253dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +63,7 @@
         android:layout_height="62dp"
         android:layout_marginBottom="28dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +96,8 @@
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/btLikePrincipal"
         app:layout_constraintHorizontal_bias="0.016"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -109,8 +109,8 @@
         android:layout_marginEnd="4dp"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
