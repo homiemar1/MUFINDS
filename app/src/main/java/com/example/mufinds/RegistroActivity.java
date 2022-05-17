@@ -1,5 +1,6 @@
 package com.example.mufinds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegistroActivity extends AppCompatActivity {
     Spinner sp_genero;
@@ -18,6 +26,21 @@ public class RegistroActivity extends AppCompatActivity {
         sp_genero = findViewById(R.id.spGeneroRegistro);
         String[] datos = new String[] {"Hombre", "Mujer", "Prefiero no contestar", "No binario"};
         sp_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
+
+        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = database.getReference("cancion");
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println(snapshot.getChildren());//no esta bien pero xd
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        };
+        reference.addListenerForSingleValueEvent(listener);*/
 
     }
 
