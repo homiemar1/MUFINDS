@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="1.0"
         app:singleSelection="true">
 
@@ -46,16 +46,16 @@
             android:text="Gestionar Musica" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <ImageView
-        android:id="@+id/ivFotoMusicaPrincipal"
-        android:layout_width="268dp"
-        android:layout_height="253dp"
+    <com.yalantis.library.Koloda
+        android:id="@+id/kolFotoMusicaPrincipal"
+        android:layout_width="296dp"
+        android:layout_height="278dp"
+        app:koloda_card_layout="@layout/item_koloda"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/tgMenuSuperiorPrincipal"
@@ -63,7 +63,7 @@
         android:layout_height="62dp"
         android:layout_marginBottom="28dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintBottom_toTopOf="@+id/kolFotoMusicaPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +96,8 @@
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/btLikePrincipal"
         app:layout_constraintHorizontal_bias="0.016"
-        app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintStart_toStartOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -109,8 +109,8 @@
         android:layout_marginEnd="4dp"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
-        app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintEnd_toEndOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
