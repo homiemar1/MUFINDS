@@ -3,8 +3,11 @@ package com.example.mufinds;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,19 +21,19 @@ public class AmistadesActivity extends AppCompatActivity {
         lvSolicitudesAmistad = findViewById(R.id.lvSolicitudesAmistad);
         lvAmigos = findViewById(R.id.lvAmigos);
 
-        ArrayList<String> al = new ArrayList<>();
-        al.add("a");
-        al.add("b");
-        al.add("ac");
-        al.add("ad");
-        al.add("ae");
-        al.add("af");
-        al.add("ag");
-        al.add("ah");
-        al.add("ai");
-        ArrayAdapter adapter =new ArrayAdapter(this,android.R.layout.simple_list_item_1,al);
-        lvSolicitudesAmistad.setAdapter(adapter);
-        lvAmigos.setAdapter(adapter);
+        String[] users = new String[]{"tu", "madre"};
+
+        Integer imgs = R.drawable.error;
+
+        AmigosList customCountryList = new AmigosList(this, users, imgs);
+        lvSolicitudesAmistad.setAdapter(customCountryList);
+
+        lvSolicitudesAmistad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getApplicationContext(),"You Selected " + users[position-1] + " as Country",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
