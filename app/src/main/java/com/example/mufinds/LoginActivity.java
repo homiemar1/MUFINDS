@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,47 +21,46 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     TextView tv_olvidado_contraseña, tv_olvidado_usuario;
+    EditText editTextTextPersonName, etContraseñaIniciarSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         tv_olvidado_contraseña = findViewById(R.id.tv_olvidado_contraseña);
         tv_olvidado_usuario = findViewById(R.id.tv_olvidado_usuario);
-
         tv_olvidado_contraseña.setPaintFlags(tv_olvidado_contraseña.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tv_olvidado_usuario.setPaintFlags(tv_olvidado_usuario.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("project/mufinds-74868/firestore/data");
-        DatabaseReference usersRef = ref.child("cancion");
-        Usuario u = new Usuario("id", "nombre", "apellido", "email", "pwd", "genero",
-                null, "descripcion", "nombreusuario", null);
-        Usuario u1 = new Usuario("id1", "nombr1e", "apellid1o", "ema1il", "p1wd", "ge1nero",
-                null, "descripci1on", "nombreus1uario", null);
-        Map<String, Usuario> users = new HashMap<>();
-        users.put(u.getIdUsuario(), u);
-        users.put(u1.getIdUsuario(), u1);
+        editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
+        etContraseñaIniciarSesion = findViewById(R.id.etContraseñaIniciarSesion);
 
-        usersRef.setValue(users);*/
-
-        /*DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("cancion");
-        mDatabase.child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    System.out.println("hola");
-                }
-                else {
-                    System.out.println("adios");
-                }
-            }
-        });*/
     }
 
     public void onClickIniciarSession (View view) {
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
-        finish();
+        String nombreUsuario = editTextTextPersonName.getText().toString();
+        String password = etContraseñaIniciarSesion.getText().toString();
+
+        if ("".equals(nombreUsuario)){
+            editTextTextPersonName.setError("Introduce tu nombre de usuario");
+        }
+        else if ("".equals(password)) {
+            etContraseñaIniciarSesion.setError("Introduce tu contraseña");
+        }
+        else {
+            //comprobar los datos
+
+            //si coinciden
+            Intent intent = new Intent(this, PrincipalActivity.class);
+            startActivity(intent);
+            finish();
+
+            //si no coinciden
+            //editTextTextPersonName.setError("Usuario o Password incorrecto");
+            //etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
+
+        }
+
+
     }
 
     public void onClickRecuperarContraseña (View view) {

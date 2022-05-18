@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -20,6 +21,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner sp_editar_genero;
     private ImageView ivFotoPerfilEditarPerfil;
     private Uri imageUri;
+    EditText etNombreUsuarioEditarPerfil, etDescripcionEditarPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
         ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
 
+        etNombreUsuarioEditarPerfil = findViewById(R.id.etNombreUsuarioEditarPerfil);
+        etDescripcionEditarPerfil = findViewById(R.id.etDescripcionEditarPerfil);
+
         sp_editar_genero = findViewById(R.id.spEditarGeneroEditarPerfil);
         String[] datos = new String[] {"Mujer", "Hombre", "Prefiero no contestar", "No binario"};
         sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
@@ -36,6 +41,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void onClickAceptar(View view) {
+        String nombreUsuario = etNombreUsuarioEditarPerfil.getText().toString();
+        String descripcion = etDescripcionEditarPerfil.getText().toString();
+
         finish();
     }
 

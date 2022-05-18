@@ -40,7 +40,6 @@ public class RegistroActivity extends AppCompatActivity {
         String pwd = etContraseñaRegistro.getText().toString();
         String genero = sp_genero.getSelectedItem().toString();
         Usuario u;
-        Bundle bundle;
 
         if ("".equals(nombre)) {
             etNombreRegistro.setError("Introduce tu nombre");

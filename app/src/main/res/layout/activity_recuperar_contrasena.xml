@@ -60,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:onClick="onClickRecuperar"
         android:text="RECUPERAR"
         app:layout_constraintEnd_toEndOf="@+id/etdFechaNacimientoRecuperarContraseña"
         app:layout_constraintStart_toStartOf="@+id/etdFechaNacimientoRecuperarContraseña"
