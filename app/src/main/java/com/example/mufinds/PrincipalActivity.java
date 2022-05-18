@@ -12,22 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.yalantis.library.Koloda;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     private Button btEditarPerfil;
-
-    private SwipeAdapter adapter;
-    private List<Integer> list;
-    Koloda koloda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +28,6 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         btEditarPerfil = findViewById(R.id.btEditarPerfil);
-
-        koloda = findViewById(R.id.kolFotoMusicaPrincipal);
-
-        list = new ArrayList<>();
-        adapter = new SwipeAdapter(this, list);
-        koloda.setAdapter(adapter);
     }
 
     @Override
