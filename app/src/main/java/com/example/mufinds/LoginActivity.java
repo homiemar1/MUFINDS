@@ -15,6 +15,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
     TextView tv_olvidado_contraseña, tv_olvidado_usuario;
     @Override
@@ -27,8 +30,20 @@ public class LoginActivity extends AppCompatActivity {
         tv_olvidado_contraseña.setPaintFlags(tv_olvidado_contraseña.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tv_olvidado_usuario.setPaintFlags(tv_olvidado_usuario.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("project/mufinds-74868/firestore/data");
+        DatabaseReference usersRef = ref.child("cancion");
+        Usuario u = new Usuario("id", "nombre", "apellido", "email", "pwd", "genero",
+                null, "descripcion", "nombreusuario", null);
+        Usuario u1 = new Usuario("id1", "nombr1e", "apellid1o", "ema1il", "p1wd", "ge1nero",
+                null, "descripci1on", "nombreus1uario", null);
+        Map<String, Usuario> users = new HashMap<>();
+        users.put(u.getIdUsuario(), u);
+        users.put(u1.getIdUsuario(), u1);
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("cancion");
+        usersRef.setValue(users);*/
+
+        /*DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("cancion");
         mDatabase.child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -39,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                     System.out.println("adios");
                 }
             }
-        });
+        });*/
     }
 
     public void onClickIniciarSession (View view) {

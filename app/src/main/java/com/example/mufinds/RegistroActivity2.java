@@ -13,13 +13,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
     private ImageView ivFotoPerfilRegistro;
     private Uri imageUri;
-
+    EditText etNombreUsuarioRegistro, etDescripcionRegistro;
+    Usuario u;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +35,12 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         ivFotoPerfilRegistro = findViewById(R.id.ivFotoPerfilRegistro);
         ivFotoPerfilRegistro.setImageResource(R.drawable.fotoperfil);
+
+        etNombreUsuarioRegistro = findViewById(R.id.etNombreUsuarioRegistro);
+        etDescripcionRegistro = findViewById(R.id.etDescripcionRegistro);
+
+        Bundle bundle = this.getIntent().getExtras();
+        u = (Usuario) getIntent().getSerializableExtra("usuario");
     }
 
     public void onClickFotoDePerfil (View view) {
@@ -49,6 +63,7 @@ public class RegistroActivity2 extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         imageUri = data.getData();
         ivFotoPerfilRegistro.setImageURI(imageUri);
     }
@@ -60,6 +75,24 @@ public class RegistroActivity2 extends AppCompatActivity {
 
     public void onClickFinalizar (View view) {
         //comprobar los datos esten bien
+        String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
+        String descripcion = etDescripcionRegistro.getText().toString();
+
+        if ("".equals(nombre_usuario)) {
+            etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
+        }
+        else {
+            u.setNombre(nombre_usuario);
+            u.setDescripcion(descripcion);
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("project/mufinds-74868/firestore/data");
+            DatabaseReference usersRef = ref.child("cancion");
+            Map<String, Usuario> users = new HashMap<>();
+            users.put(u.getIdUsuario(), u);
+            usersRef.setValue(users);
+
+        }
 
         intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
         startActivity(intent);
