@@ -43,8 +43,16 @@ public class EditarPerfilActivity extends AppCompatActivity {
     public void onClickAceptar(View view) {
         String nombreUsuario = etNombreUsuarioEditarPerfil.getText().toString();
         String descripcion = etDescripcionEditarPerfil.getText().toString();
+        String genero = sp_editar_genero.getSelectedItem().toString();
 
-        finish();
+        if ("".equals(nombreUsuario)) {
+            etNombreUsuarioEditarPerfil.setError("Introduce un nombre de usuario");
+        }
+        else {
+            //actualizar los datos
+            finish();
+        }
+
     }
 
     public void onClickFotoDePerfil (View view) {

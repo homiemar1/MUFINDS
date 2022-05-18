@@ -40,7 +40,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
         })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
+
                     }
                 });
         alert.show();

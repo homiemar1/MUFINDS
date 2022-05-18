@@ -10,14 +10,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.android.material.card.MaterialCardView;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     private Button btEditarPerfil;
+    MaterialCardView kolFotoMusicaPrincipal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         btEditarPerfil = findViewById(R.id.btEditarPerfil);
+        kolFotoMusicaPrincipal = findViewById(R.id.kolFotoMusicaPrincipal);
+
     }
 
     @Override
@@ -108,4 +114,5 @@ public class PrincipalActivity extends AppCompatActivity {
         condicion = 2;
         btEditarPerfil.setText("Editar Perfil");
     }
+
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     TextView tvTituloCambio;
-    EditText etDatoAntiguo, etDatoNuevo, etDatoCOnfirmacion;
+    EditText etDatoAntiguo, etDatoNuevo, etDatoConfirmacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,21 +19,22 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         tvTituloCambio = findViewById(R.id.tvTituloCambio);
         etDatoAntiguo = findViewById(R.id.etDatoAntiguo);
         etDatoNuevo = findViewById(R.id.etDatoNuevo);
-        etDatoCOnfirmacion = findViewById(R.id.etDatoConfirmacion);
+        etDatoConfirmacion = findViewById(R.id.etDatoConfirmacion);
+
         int valor = getIntent().getIntExtra("variable", 1);
         if (valor == 1) {
             tvTituloCambio.setText("CAMBIAR NOMBRE DE USUARIO");
             etDatoAntiguo.setHint("Usuario");
             etDatoNuevo.setHint("Usuario nuevo");
-            etDatoCOnfirmacion.setHint("Contraseña");
+            etDatoConfirmacion.setHint("Contraseña");
 
-            etDatoCOnfirmacion.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+            etDatoConfirmacion.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         }
         else {
             tvTituloCambio.setText("CAMBIAR CONTRASEÑA");
             etDatoAntiguo.setHint("Contraseña");
             etDatoNuevo.setHint("Contraseña nueva");
-            etDatoCOnfirmacion.setHint("Usuario");
+            etDatoConfirmacion.setHint("Usuario");
 
             etDatoAntiguo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
             etDatoNuevo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
@@ -42,7 +43,29 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     }
 
     public void onClickAceptar(View view) {
-        finish();
+        String datoAntiguo = etDatoAntiguo.getText().toString();
+        String datoNuevo = etDatoNuevo.getText().toString();
+        String datoConfirmacion = etDatoConfirmacion.getText().toString();
+
+        if ("".equals(datoAntiguo)) {
+            etDatoAntiguo.setError("Introduce el dato antiguo");
+        }
+        else if ("".equals(datoNuevo)) {
+            etDatoNuevo.setError("Introduce el dato nuevo");
+        }
+        else if ("".equals(datoConfirmacion)) {
+            etDatoConfirmacion.setError("Introduce el dato confirmatorio");
+        }
+        else {
+            //comprobar datos
+
+            //si se puede hacer el cambio
+            finish();
+            //si no, mensaje de que no coinciden
+
+
+        }
+
     }
 
     public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {
