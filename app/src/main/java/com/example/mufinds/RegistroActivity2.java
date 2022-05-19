@@ -7,7 +7,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +26,8 @@ public class RegistroActivity2 extends AppCompatActivity {
     EditText etNombreUsuarioRegistro, etDescripcionRegistro;
     Usuario u;
     FirebaseFirestore database;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,9 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         u = (Usuario) getIntent().getSerializableExtra("usuario");
         database = FirebaseFirestore.getInstance();
+
+        sharedPref = this.getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
     }
 
     public void onClickFotoDePerfil (View view) {
@@ -84,6 +91,16 @@ public class RegistroActivity2 extends AppCompatActivity {
             u.setNombreUsuari(nombre_usuario);
 
             database.collection("users").document(u.getNombreUsuari()).set(u);
+            editor.putString("nombre", u.getNombre());
+            editor.putString("apellido", u.getApellido());
+            editor.putString("email", u.getEmail());
+            editor.putString("password", u.getPassword());
+            editor.putString("genero", u.getGenero());
+            editor.putString("descripcion", u.getDescripcion());
+            editor.putString("nombreUsuario", u.getNombreUsuari());
+            editor.putString("uriFoto", String.valueOf(u.getFotoPerfil()));
+
+            editor.commit();
 
             intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
             startActivity(intent);

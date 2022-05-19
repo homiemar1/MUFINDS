@@ -3,19 +3,23 @@ package com.example.mufinds;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
 public class ConfiguracionActivity extends AppCompatActivity {
-
     private Intent intent;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
+
+        sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
     }
 
     public void onClickCambiarNombreUsuario (View view) {
@@ -31,6 +35,9 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void onClickEliminarCuenta  (View view) {
+        String nombreUsuario = sharedPref.getString("nombreUsuario", "");
+
+
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Eliminar cuenta");
         alert.setMessage("Estas segur@ de que quieres eliminar tu cuenta? Esta acción será permanente").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
