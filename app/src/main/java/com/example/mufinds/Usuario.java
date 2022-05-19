@@ -22,7 +22,7 @@ public class Usuario implements Serializable {
 
     public Usuario(String idUsuario, String nombre, String apellido, String email, String password,
                    String genero, Date dataNaixement, String descripcion, String nombreUsuari, Uri fotoPerfil) {
-        this.idUsuario = nombreUsuari + "_" + email;
+        this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -38,8 +38,8 @@ public class Usuario implements Serializable {
         return nombreUsuari + "_" + email;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario() {
+        this.idUsuario = nombreUsuari + "_" + email;
     }
 
     public String getNombre() {

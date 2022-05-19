@@ -9,7 +9,7 @@ public class Canciones {
     private String portada;
 
     public Canciones(String idCancion, String titulo, String album, String artista, int año_lanzamiento, String portada) {
-        this.idCancion = idCancion;
+        this.idCancion = titulo + "-" + album;
         this.titulo = titulo;
         this.album = album;
         this.artista = artista;
@@ -20,7 +20,7 @@ public class Canciones {
     public Canciones(){}
 
     public String getIdCancion() {
-        return idCancion;
+        return titulo + "-" + album;
     }
     public void setIdCancion(String idCancion) {
         this.idCancion = idCancion;

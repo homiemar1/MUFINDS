@@ -10,18 +10,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.ArrayList;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     private Button btEditarPerfil;
-    MaterialCardView kolFotoMusicaPrincipal;
+    ImageView ivFotoMusicaPrincipal;
+    ArrayList<Integer> al;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,11 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         btEditarPerfil = findViewById(R.id.btEditarPerfil);
-        kolFotoMusicaPrincipal = findViewById(R.id.kolFotoMusicaPrincipal);
+        ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
 
+        al = new ArrayList<>();
+        al.add(R.drawable.xti19);
+        al.add(R.drawable.tusojos);
     }
 
     @Override
@@ -113,6 +120,32 @@ public class PrincipalActivity extends AppCompatActivity {
     public void onClickPersonas (View view) {
         condicion = 2;
         btEditarPerfil.setText("Editar Perfil");
+    }
+
+    public void onClickDislike(View view) {
+        if (i >= al.size()) {
+            i=0;
+            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            i += 1;
+        }
+        else {
+            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            i += 1;
+        }
+    }
+
+    public void onClickLike(View view) {
+        if (i >= al.size()) {
+            i=0;
+            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            i += 1;
+        }
+        else {
+            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            i += 1;
+        }
+
+
     }
 
 }

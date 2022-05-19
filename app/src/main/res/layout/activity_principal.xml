@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="1.0"
         app:singleSelection="true">
 
@@ -46,30 +46,18 @@
             android:text="Gestionar Musica" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/kolFotoMusicaPrincipal"
+    <ImageView
+        android:id="@+id/ivFotoMusicaPrincipal"
         android:layout_width="296dp"
         android:layout_height="278dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tusojos">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tusojos" />
-
-
-    </com.google.android.material.card.MaterialCardView>
+    </ImageView>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/tgMenuSuperiorPrincipal"
@@ -77,7 +65,7 @@
         android:layout_height="62dp"
         android:layout_marginBottom="28dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,11 +95,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:clickable="true"
+        android:onClick="onClickDislike"
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/btLikePrincipal"
         app:layout_constraintHorizontal_bias="0.016"
-        app:layout_constraintStart_toStartOf="@+id/kolFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -122,9 +111,10 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:clickable="true"
+        android:onClick="onClickLike"
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
-        app:layout_constraintEnd_toEndOf="@+id/kolFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/kolFotoMusicaPrincipal"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 

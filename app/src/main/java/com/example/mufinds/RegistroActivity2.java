@@ -35,7 +35,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     private Uri imageUri;
     EditText etNombreUsuarioRegistro, etDescripcionRegistro;
     Usuario u;
-    CollectionReference ref;
+    FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,7 @@ public class RegistroActivity2 extends AppCompatActivity {
         etDescripcionRegistro = findViewById(R.id.etDescripcionRegistro);
 
         u = (Usuario) getIntent().getSerializableExtra("usuario");
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        CollectionReference ref = database.collection("cancion");
-
-
+        database = FirebaseFirestore.getInstance();
     }
 
     public void onClickFotoDePerfil (View view) {
@@ -96,10 +93,13 @@ public class RegistroActivity2 extends AppCompatActivity {
         else {
             u.setNombreUsuari(nombre_usuario);
             u.setDescripcion(descripcion);
+            u.setIdUsuario();
 
-            Map<String, Usuario> users = new HashMap<>();
-            users.put(u.getIdUsuario(), u);
-            ref.document("cancion").set(users);
+            database.collection("cancion").document(u.getIdUsuario()).set(u);
+
+            intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
+            startActivity(intent);
+            finish();
 
             /*FirebaseFirestore db = null;
             CollectionReference dbCourses = db.collection("cancion");
@@ -117,12 +117,6 @@ public class RegistroActivity2 extends AppCompatActivity {
             });*/
 
         }
-
-        intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
-        startActivity(intent);
-        finish();
-
-
 
     }
 }

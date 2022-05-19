@@ -60,6 +60,7 @@ public class RegistroActivity extends AppCompatActivity {
             u.setNombre(nombre);
             u.setEmail(email);
             u.setPassword(pwd);
+            u.setGenero(genero);
 
             Intent intent = new Intent(this, RegistroActivity2.class);
             intent.putExtra("usuario",u);
