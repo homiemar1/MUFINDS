@@ -6,22 +6,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
     TextView tv_olvidado_contraseña, tv_olvidado_usuario;
     EditText editTextTextPersonName, etContraseñaIniciarSesion;
+    FirebaseFirestore database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         etContraseñaIniciarSesion = findViewById(R.id.etContraseñaIniciarSesion);
 
+        database = FirebaseFirestore.getInstance();
     }
 
     public void onClickIniciarSession (View view) {
@@ -47,20 +56,35 @@ public class LoginActivity extends AppCompatActivity {
             etContraseñaIniciarSesion.setError("Introduce tu contraseña");
         }
         else {
-            //comprobar los datos
-
-            //si coinciden
-            Intent intent = new Intent(this, PrincipalActivity.class);
-            startActivity(intent);
-            finish();
-
-            //si no coinciden
-            //editTextTextPersonName.setError("Usuario o Password incorrecto");
-            //etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
-
+            database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    System.out.println(document.getId() + " => " + document.getData());
+                                    if (document.getId().equals(nombreUsuario)) {
+                                        String pwd = document.getData().get("password").toString();
+                                        if (pwd.equals(password)) {
+                                            Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else {
+                                            editTextTextPersonName.setError("Usuario o Password incorrecto");
+                                            etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
+                                        }
+                                    }
+                                    else {
+                                        editTextTextPersonName.setError("Usuario o Password incorrecto");
+                                        etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
+                                    }
+                                }
+                            } else {
+                                System.out.println("Error getting documents." + task.getException());
+                            }
+                        }
+                    });
         }
-
-
     }
 
     public void onClickRecuperarContraseña (View view) {

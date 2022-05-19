@@ -4,11 +4,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,18 +14,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
@@ -83,39 +71,23 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        //comprobar los datos esten bien
+        //
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
+
+        u.setDescripcion(descripcion);
 
         if ("".equals(nombre_usuario)) {
             etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
         }
         else {
             u.setNombreUsuari(nombre_usuario);
-            u.setDescripcion(descripcion);
-            u.setIdUsuario();
 
-            database.collection("cancion").document(u.getIdUsuario()).set(u);
+            database.collection("users").document(u.getNombreUsuari()).set(u);
 
             intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
             startActivity(intent);
             finish();
-
-            /*FirebaseFirestore db = null;
-            CollectionReference dbCourses = db.collection("cancion");
-
-            dbCourses.add(u).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Toast.makeText(RegistroActivity2.this, "Your song has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(RegistroActivity2.this, "Fail to add song \n" + e, Toast.LENGTH_SHORT).show();
-                }
-            });*/
-
         }
 
     }

@@ -3,16 +3,16 @@ package com.example.mufinds;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Usuario implements Serializable {
-    private String idUsuario;
     private String nombre;
     private String apellido;
     private String email;
     private String password;
     private String genero;
-    private Date dataNaixement;
+    private Timestamp dataNaixement;
     private String descripcion;
     private String nombreUsuari;
     private Uri fotoPerfil;
@@ -20,9 +20,8 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(String idUsuario, String nombre, String apellido, String email, String password,
-                   String genero, Date dataNaixement, String descripcion, String nombreUsuari, Uri fotoPerfil) {
-        this.idUsuario = idUsuario;
+    public Usuario(String nombre, String apellido, String email, String password,
+                   String genero, Timestamp dataNaixement, String descripcion, String nombreUsuari, Uri fotoPerfil) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -32,14 +31,6 @@ public class Usuario implements Serializable {
         this.descripcion = descripcion;
         this.nombreUsuari = nombreUsuari;
         this.fotoPerfil = fotoPerfil;
-    }
-
-    public String getIdUsuario() {
-        return nombreUsuari + "_" + email;
-    }
-
-    public void setIdUsuario() {
-        this.idUsuario = nombreUsuari + "_" + email;
     }
 
     public String getNombre() {
@@ -86,7 +77,7 @@ public class Usuario implements Serializable {
         return dataNaixement;
     }
 
-    public void setDataNaixement(Date dataNaixement) {
+    public void setDataNaixement(Timestamp dataNaixement) {
         this.dataNaixement = dataNaixement;
     }
 
