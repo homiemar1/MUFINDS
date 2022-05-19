@@ -91,6 +91,7 @@ public class RegistroActivity2 extends AppCompatActivity {
             u.setNombreUsuari(nombre_usuario);
 
             database.collection("users").document(u.getNombreUsuari()).set(u);
+
             editor.putString("nombre", u.getNombre());
             editor.putString("apellido", u.getApellido());
             editor.putString("email", u.getEmail());

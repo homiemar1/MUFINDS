@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +12,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class AmistadesActivity extends AppCompatActivity {
+    TextView tvSolicitudes,tvAmigos;
     private AmigosList amigosList;
     private ListView lvSolicitudesAmistad, lvAmigos;
     private String[] users;
@@ -24,6 +27,12 @@ public class AmistadesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amistades);
+
+        tvSolicitudes = findViewById(R.id.tvSolicitudes);
+        tvAmigos = findViewById(R.id.tvAmigos);
+
+        tvSolicitudes.setPaintFlags(tvSolicitudes.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvAmigos.setPaintFlags(tvAmigos.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         users = new String[]{"enMic", "tu_xulo_99", "tu_jenny_fav"};
         cancionesEnComun = new String[]{"20 canciones en comun", "2 canciones en comun", "0 canciones en comun"};
