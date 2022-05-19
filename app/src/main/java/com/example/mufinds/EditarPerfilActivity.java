@@ -96,7 +96,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void actualizarDatos(String documento, String dato) {
-        database.collection("users").document("nerea").update(documento, dato)
+        database.collection("users").document(sharedPref.getString("nombreUsuario", "")).update(documento, dato)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
