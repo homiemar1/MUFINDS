@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,7 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.WriteResult;
@@ -39,6 +43,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
         ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
@@ -69,19 +75,40 @@ public class EditarPerfilActivity extends AppCompatActivity {
         else {
             //actualizar los datos
             editor.putString("descripcion",descripcion);
+            actualizarDatos("descripcion", descripcion);
+
             editor.putString("nombre", nombre);
+            actualizarDatos("nombre", nombre);
+
             editor.putString("genero", genero);
+            actualizarDatos("genero", genero);
+
             editor.putString("uriFoto", String.valueOf(imageUri));
+            actualizarDatos("uriFoto", String.valueOf(imageUri));
+
             editor.commit();
-
-            database = FirebaseFirestore.getInstance();
-
         }
     }
 
     public void onClickFotoDePerfil (View view) {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         someActivityResultLauncher.launch(gallery);
+    }
+
+    public void actualizarDatos(String documento, String dato) {
+        database.collection("users").document("nerea").update(documento, dato)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(EditarPerfilActivity.this, "Update satisfactorio", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditarPerfilActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
