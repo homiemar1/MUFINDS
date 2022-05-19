@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:inputType="textPassword"
         android:hint="Contraseña"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro"
@@ -61,11 +61,12 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="REGISTRO"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/etNombreRegistro"
         app:layout_constraintEnd_toEndOf="@+id/spGeneroRegistro"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/spGeneroRegistro" />
 
     <Spinner
