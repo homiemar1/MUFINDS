@@ -12,7 +12,7 @@ public class Usuario implements Serializable {
     private String email;
     private String password;
     private String genero;
-    private Timestamp dataNaixement;
+    private String dataNaixement;
     private String descripcion;
     private String nombreUsuari;
     private int fotoPerfil;
@@ -21,7 +21,7 @@ public class Usuario implements Serializable {
     }
 
     public Usuario(String nombre, String apellido, String email, String password,
-                   String genero, Timestamp dataNaixement, String descripcion, String nombreUsuari, int fotoPerfil) {
+                   String genero, String dataNaixement, String descripcion, String nombreUsuari, int fotoPerfil) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -73,11 +73,11 @@ public class Usuario implements Serializable {
         this.genero = genero;
     }
 
-    public Date getDataNaixement() {
+    public String getDataNaixement() {
         return dataNaixement;
     }
 
-    public void setDataNaixement(Timestamp dataNaixement) {
+    public void setDataNaixement(String dataNaixement) {
         this.dataNaixement = dataNaixement;
     }
 

@@ -3,8 +3,10 @@ package com.example.mufinds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,11 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Calendar;
+
 public class RecuperarContrasenaActivity extends AppCompatActivity {
-    EditText etNombreUsuarioRecuperarContraseña, etNombreRecuperarContraseña, etApellidosRecuperarContraseña;
+    EditText etNombreUsuarioRecuperarContraseña, etNombreRecuperarContraseña, etApellidosRecuperarContraseña, etdFechaNacimientoRecuperarContraseña;
     TextView tvRespuestaRecuperarContraseña;
-    EditText etdFechaNacimientoRecuperarContraseña;
-    String nombreUsuario, nombre, apellidos;
+    String nombreUsuario, nombre, apellidos, fecha = "";
     FirebaseFirestore database;
 
     @Override
@@ -30,6 +33,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         etNombreUsuarioRecuperarContraseña = findViewById(R.id.etNombreUsuarioRecuperarContraseña);
         etNombreRecuperarContraseña = findViewById(R.id.etNombreRecuperarContraseña);
         etApellidosRecuperarContraseña = findViewById(R.id.etApellidosRecuperarContraseña);
+        etdFechaNacimientoRecuperarContraseña = findViewById(R.id.etdFechaNacimientoRecuperarContraseña);
 
         tvRespuestaRecuperarContraseña = findViewById(R.id.tvRespuestaRecuperarContraseña);
 
@@ -52,6 +56,9 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         else if ("".equals(apellidos)) {
             etApellidosRecuperarContraseña.setError("Introduce tu nombre de usuario");
         }
+        else if ("".equals(fecha)) {
+            etdFechaNacimientoRecuperarContraseña.setError("Introduce tu fecha de nacimiento");
+        }
         else {
             database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -62,7 +69,8 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                             if (document.getId().equals(nombreUsuario)) {
                                 String dbNombre = document.getData().get("nombre").toString();
                                 String dbApellidos = document.getData().get("apellido").toString();
-                                if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos)) {
+                                String dbFecha = document.getData().get("dataNaixement").toString();
+                                if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos) && dbFecha.equals(fecha)) {
                                     tvRespuestaRecuperarContraseña.setText("Tu contraseña es: " + document.getData().get("password").toString());
                                 }
                                 else {
@@ -77,6 +85,35 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                 }
             });
         }
+
+    }
+
+    public void onClickFecha(View view) {
+        switch (view.getId()) {
+            case R.id.etdFechaNacimientoRecuperarContraseña:
+                showDatePickerDialog();
+                break;
+        }
+    }
+
+    private void showDatePickerDialog() {
+        Calendar c = Calendar.getInstance();
+        int any = c.get(Calendar.YEAR);
+        int mes = c.get(Calendar.MONDAY);
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog elegirFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int año, int mes, int dia) {
+                final int mesActual = mes+1;
+                String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
+                String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
+
+                fecha = diaFormateado + "/" + mesFormateado + "/" + any;
+                etdFechaNacimientoRecuperarContraseña.setText(fecha);
+
+            }
+        },any,mes,dia);
+        elegirFecha.show();
 
     }
 }

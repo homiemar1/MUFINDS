@@ -102,6 +102,7 @@ public class RegistroActivity2 extends AppCompatActivity {
             editor.putString("descripcion", u.getDescripcion());
             editor.putString("nombreUsuario", u.getNombreUsuari());
             editor.putInt("idFoto",u.getFotoPerfil());
+            editor.putString("fechaNacimiento", u.getDataNaixement());
 
             editor.commit();
 

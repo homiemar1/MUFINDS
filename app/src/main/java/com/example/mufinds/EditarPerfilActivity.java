@@ -32,6 +32,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private ImageView ivFotoPerfilEditarPerfil;
     private Uri imageUri;
     EditText etNombreUsuarioEditarPerfil, etDescripcionEditarPerfil;
+
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     FirebaseFirestore database;
