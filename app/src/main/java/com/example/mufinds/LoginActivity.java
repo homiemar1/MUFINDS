@@ -51,40 +51,43 @@ public class LoginActivity extends AppCompatActivity {
 
         if ("".equals(nombreUsuario)){
             editTextTextPersonName.setError("Introduce tu nombre de usuario");
+            return;
         }
         else if ("".equals(password)) {
             etContraseñaIniciarSesion.setError("Introduce tu contraseña");
+            return;
         }
-        else {
-            database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    System.out.println(document.getId() + " => " + document.getData());
-                                    if (document.getId().equals(nombreUsuario)) {
-                                        String pwd = document.getData().get("password").toString();
-                                        if (pwd.equals(password)) {
-                                            Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else {
-                                            editTextTextPersonName.setError("Usuario o Password incorrecto");
-                                            etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
-                                        }
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        boolean usuarioCheck = false;
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                System.out.println(document.getId() + " => " + document.getData());
+                                if (document.getId().equals(nombreUsuario)) {
+                                    usuarioCheck = true;
+                                    String pwd = document.getData().get("password").toString();
+                                    if (pwd.equals(password)) {
+                                        Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                     else {
-                                        editTextTextPersonName.setError("Usuario o Password incorrecto");
-                                        etContraseñaIniciarSesion.setError("Usuario o Password incorrecto");
+                                        editTextTextPersonName.setError("Usuario o contraseña incorrecto");
+                                        etContraseñaIniciarSesion.setError("Usuario o contraseña incorrecto");
+                                        return;
                                     }
                                 }
-                            } else {
-                                System.out.println("Error getting documents." + task.getException());
                             }
+                        } else {
+                            System.out.println("Error getting documents." + task.getException());
                         }
-                    });
-        }
+                        if (usuarioCheck == false) {
+                            editTextTextPersonName.setError("Usuario o contraseña incorrecto");
+                            etContraseñaIniciarSesion.setError("Usuario o contraseña incorrecto");
+                        }
+                    }
+                });
     }
 
     public void onClickRecuperarContraseña (View view) {
