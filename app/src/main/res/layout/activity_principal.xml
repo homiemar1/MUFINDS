@@ -52,18 +52,20 @@
         android:layout_height="278dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.456"
         app:srcCompat="@drawable/tusojos">
 
     </ImageView>
+
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/tgMenuSuperiorPrincipal"
         android:layout_width="222dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="12dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,17 +91,16 @@
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-
     <ImageView
         android:id="@+id/ivDislike"
-        android:layout_width="74dp"
-        android:layout_height="78dp"
+        android:layout_width="66dp"
+        android:layout_height="70dp"
         android:layout_marginTop="12dp"
         android:clickable="true"
         android:onClick="onClickDislike"
         app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
-        app:layout_constraintEnd_toStartOf="@+id/btLikePrincipal"
-        app:layout_constraintHorizontal_bias="0.016"
+        app:layout_constraintEnd_toStartOf="@+id/ivLike"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
@@ -107,8 +108,8 @@
 
     <ImageView
         android:id="@+id/ivLike"
-        android:layout_width="75dp"
-        android:layout_height="74dp"
+        android:layout_width="69dp"
+        android:layout_height="63dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:clickable="true"
@@ -117,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/fotolikeredimension" />
+        app:srcCompat="@drawable/like" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
