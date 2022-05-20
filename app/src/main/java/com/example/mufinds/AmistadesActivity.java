@@ -39,10 +39,10 @@ public class AmistadesActivity extends AppCompatActivity {
 
         lvSolicitudesAmistad = findViewById(R.id.lvSolicitudesAmistad);
 
-        Integer fotoPerfil = R.drawable.fotoperfil;
+        Integer[] fotosPerfil = new Integer[]{R.drawable.fotoperfil};
 
         //Solicitudes de amistad
-        amigosList = new AmigosList(this, users, cancionesEnComun, fotoPerfil);
+        amigosList = new AmigosList(this, users, cancionesEnComun, fotosPerfil);
         lvSolicitudesAmistad.setAdapter(amigosList);
         lvSolicitudesAmistad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class AmistadesActivity extends AppCompatActivity {
         });
 
         //Amigos actuales (hace falta cambiar las canciones en comun por una descripcion)
-        amigosList = new AmigosList(this, users, cancionesEnComun, fotoPerfil);
+        amigosList = new AmigosList(this, users, cancionesEnComun, fotosPerfil);
         lvAmigos = findViewById(R.id.lvAmigos);
         lvAmigos.setAdapter(amigosList);
         lvAmigos.setOnItemClickListener(new AdapterView.OnItemClickListener() {

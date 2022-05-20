@@ -21,11 +21,10 @@ import java.util.List;
 public class AmigosList extends ArrayAdapter {
     private String[] userNames;
     private String[] cancionComun;
-    private Integer perfilId;
+    private Integer[] perfilId;
     private Activity context;
 
-
-    public AmigosList(Activity context, String[] userNames, String[] cancionComun, Integer perfilId) {
+    public AmigosList(Activity context, String[] userNames, String[] cancionComun, Integer[] perfilId) {
         super(context, R.layout.activity_amistades, userNames);
         this.context = context;
         this.userNames = userNames;
@@ -46,7 +45,7 @@ public class AmigosList extends ArrayAdapter {
 
         textViewUsuario.setText(userNames[position]);
         textViewCancionesComun.setText(cancionComun[position]);
-        imageViewUsuario.setImageResource(perfilId);
+        imageViewUsuario.setImageResource(perfilId[position]);
 
         return row;
     }

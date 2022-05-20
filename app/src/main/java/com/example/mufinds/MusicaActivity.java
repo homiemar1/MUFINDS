@@ -13,19 +13,19 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class MusicaActivity extends AppCompatActivity {
-    ListView lvGestionarMusica;
+    private AmigosList amigosList;
+    private ListView lvGestionarMusica;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musica);
 
         lvGestionarMusica = findViewById(R.id.lvGestionarMusica);
-        ArrayList<String> al = new ArrayList<>();
-        al.add("a");
-        al.add("b");
-        al.add("c");
-        ArrayAdapter adapter =new ArrayAdapter(this,android.R.layout.simple_list_item_1,al);
-        lvGestionarMusica.setAdapter(adapter);
+        String[] nombreCanciones = new String[] {"Tus Ojos", "xti-19"};
+        String[] artistasCanciones = new String[] {"Sticky MA", "Slappy AV"};
+        Integer[] fotosPerfil = new Integer[]{R.drawable.xti19, R.drawable.tusojos};
+        amigosList = new AmigosList(this, nombreCanciones, artistasCanciones, fotosPerfil);
+        lvGestionarMusica.setAdapter(amigosList);
 
         lvGestionarMusica.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -38,16 +38,38 @@ public class MusicaActivity extends AppCompatActivity {
                 dialogo1.setCancelable(false);
                 dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        al.remove(posicion);
-                        adapter.notifyDataSetChanged();
+
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
+
                     }
                 });
                 dialogo1.show();
             }
         });
+    }
+
+    // remove element method
+    public String[] removeElement(String[] arrGiven, int index)
+    {
+        // if empty
+        if(arrGiven == null || index < 0 || index >= arrGiven.length)
+        {
+            return arrGiven;
+        }
+        // creating another array one less than initial array
+        String[] newArray = new String[arrGiven.length - 1];
+        // copying elements except index
+        for(int a = 0, b = 0; a < arrGiven.length; a++)
+        {
+            if(a == index)
+            {
+                continue;
+            }
+            newArray[b++] = arrGiven[a];
+        }
+        return newArray;
     }
 }
