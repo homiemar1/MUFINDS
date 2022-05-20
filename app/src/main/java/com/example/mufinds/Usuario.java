@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
     private String password;
     private String genero;
     private String dataNaixement;
+    //fechaNacimiento
     private String descripcion;
     private String nombreUsuari;
     private int fotoPerfil;

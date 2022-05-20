@@ -1,5 +1,6 @@
 package com.example.mufinds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -15,8 +16,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -76,8 +81,21 @@ public class PrincipalActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_logout:
-                Intent i1 = new Intent(this, IniciActivity.class);
-                startActivity(i1);
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Eliminar cuenta");
+                alert.setMessage("Estas segur@ de que quieres cerrrar la sesión?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alert.show();
+                        Intent i1 = new Intent(PrincipalActivity.this, IniciActivity.class);
+                        startActivity(i1);
+                        finish();
+                    }
+                })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        }); alert.show();
                 return true;
 
             case R.id.action_informacio:

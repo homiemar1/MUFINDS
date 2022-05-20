@@ -89,10 +89,11 @@
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btDislikePrincipal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:id="@+id/ivDislike"
+        android:layout_width="74dp"
+        android:layout_height="78dp"
         android:layout_marginTop="12dp"
         android:clickable="true"
         android:onClick="onClickDislike"
@@ -102,12 +103,12 @@
         app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/fotodislikeredimension" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btLikePrincipal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="75dp"
+        android:layout_height="74dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:clickable="true"
@@ -116,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/fotolikeredimension" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
