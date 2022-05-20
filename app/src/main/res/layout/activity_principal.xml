@@ -16,36 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/tgMenuInferiorPrincipal"
-        android:layout_width="417dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
-        app:layout_constraintVertical_bias="1.0"
-        app:singleSelection="true">
-
-        <Button
-            android:id="@+id/btAmistadPrincipal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickAmistades"
-            android:text="Amistad" />
-
-        <Button
-            android:id="@+id/btEditarPerfil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickEditarPerfil"
-            android:text="Gestionar Musica" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
     <ImageView
         android:id="@+id/ivFotoMusicaPrincipal"
         android:layout_width="296dp"
@@ -119,6 +89,27 @@
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/like" />
+
+    <ImageView
+        android:id="@+id/ivAmigos"
+        android:layout_width="92dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onClickAmistades"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDislike"
+        app:srcCompat="@drawable/amigosredimension" />
+
+    <Button
+        android:id="@+id/btEditarPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="onClickEditarPerfil"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/ivLike"
+        app:layout_constraintTop_toBottomOf="@+id/ivLike" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
