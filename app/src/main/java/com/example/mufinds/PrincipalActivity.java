@@ -82,10 +82,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
             case R.id.action_informacio:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("INFORMACION DE LA APLICACION");
+                dialog.setTitle("INFORMACIÓN DE LA APLICACIÓN");
                 dialog.setMessage("MUFINDS tiene el objetivo de ayudar al usuario a conocer personas con el mismo gusto musical. \n \n"
                         + "Esta app esta desarrollada por Marouan Hammich y Nerea López. \n \n"
-                        + "Version 1.0");
+                        + "Versión 1.0");
                 dialog.setPositiveButton(" OK ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
