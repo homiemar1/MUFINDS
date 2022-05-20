@@ -78,36 +78,67 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         }
 
         //comprobar datos
-        if (valor == 1) {
-            consultaExistencia(datoAntiguo, datoNuevo);
+        boolean check = consultaExistencia(datoAntiguo);
+        if (check) {
+            if (valor == 1) {
+                updateNombreUsuario(datoNuevo);
+            }
+            else {
+                updateConraseña(datoNuevo);
+            }
+            finish();
         }
-        else {
-
-        }
-        //si se puede hacer el cambio
-        finish();
-        //si no, mensaje de que no coinciden
-
     }
 
-    public void consultaExistencia(String datoAntiguo, String datoNuevo) {
+    public boolean consultaExistencia(String datoAntiguo) {
+        final boolean[] check = {false};
         database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.getId().equals(datoAntiguo)) {
-                            updateNombreUsuario(datoNuevo);
+                        if (valor == 1) {
+                            if (document.getId().equals(datoAntiguo)) {
+                                check[0] = true;
+                            }
                         }
                         else {
-                            etDatoAntiguo.setError("Usuario no existe");
+                            if (document.getData().get("password").equals(datoAntiguo)) {
+                                check[0] = true;
+                            }
                         }
+
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
                 }
+                if (!check[0]) {
+                    if (valor == 1) {
+                        etDatoAntiguo.setError("ERROR");
+                    }
+                    else {
+                        etDatoAntiguo.setError("ERROR");
+                    }
+                }
             }
         });
+        return check[0];
+    }
+
+    public void updateConraseña(String datoNuevo) {
+        database.collection("users").document("nerea").update("password", datoNuevo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Update satisfactorio", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void updateNombreUsuario(String datoNuevo) {
