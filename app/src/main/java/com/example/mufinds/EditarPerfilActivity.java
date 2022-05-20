@@ -57,7 +57,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         }*/
 
 
-        etNombreUsuarioEditarPerfil = findViewById(R.id.etNombreUsuarioEditarPerfil);
+        etNombreUsuarioEditarPerfil = findViewById(R.id.etNombreEditarPerfil);
         etDescripcionEditarPerfil = findViewById(R.id.etDescripcionEditarPerfil);
 
         sp_editar_genero = findViewById(R.id.spEditarGeneroEditarPerfil);
