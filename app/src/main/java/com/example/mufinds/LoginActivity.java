@@ -3,7 +3,9 @@ package com.example.mufinds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_olvidado_contraseña, tv_olvidado_usuario;
     EditText editTextTextPersonName, etContraseñaIniciarSesion;
     FirebaseFirestore database;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         etContraseñaIniciarSesion = findViewById(R.id.etContraseñaIniciarSesion);
 
         database = FirebaseFirestore.getInstance();
+
+        sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
     }
 
     public void onClickIniciarSession (View view) {
@@ -61,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         boolean usuarioCheck = false;
+                        boolean passwordCheck = false;
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 System.out.println(document.getId() + " => " + document.getData());
@@ -68,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
+                                        passwordCheck = true;
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -85,9 +95,46 @@ public class LoginActivity extends AppCompatActivity {
                         if (usuarioCheck == false) {
                             editTextTextPersonName.setError("Usuario o contraseña incorrecto");
                             etContraseñaIniciarSesion.setError("Usuario o contraseña incorrecto");
+                            return;
+                        }
+                        if (usuarioCheck && passwordCheck) {
+                            guardarInformacionSharedPreference(nombreUsuario, password);
                         }
                     }
                 });
+    }
+
+    public void guardarInformacionSharedPreference (String nombreUsuario, String password) {
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        System.out.println(document.getId() + " => " + document.getData());
+                        String nombreUsuario = document.getId();
+                        String nombre = document.getData().get("nombre").toString();
+                        String apellidos = document.getData().get("apellido").toString();
+                        //String fechaNacimiento = document.getData().get("dataNaixement").toString();
+                        String pwd = document.getData().get("password").toString();
+                        String descripcion = document.getData().get("descripcion").toString();
+                        String email = document.getData().get("email").toString();
+                        String genero = document.getData().get("genero").toString();
+
+                        editor.putString("nombre", nombre);
+                        editor.putString("apellido", apellidos);
+                        editor.putString("email", email);
+                        editor.putString("password", pwd);
+                        editor.putString("genero", genero);
+                        editor.putString("descripcion", descripcion);
+                        editor.putString("nombreUsuario", nombreUsuario);
+                        //editor.putString("fechaNacimiento", fechaNacimiento);
+                        editor.commit();
+                    }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
+                }
+            }
+        });
     }
 
     public void onClickRecuperarContraseña (View view) {

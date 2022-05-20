@@ -23,15 +23,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.WriteResult;
 
 public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner sp_editar_genero;
     private ImageView ivFotoPerfilEditarPerfil;
     private Uri imageUri;
-    EditText etNombreUsuarioEditarPerfil, etDescripcionEditarPerfil;
+    EditText etNombreEditarPerfil, etApellidoEditarPerfil, etDescripcionEditarPerfil;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     FirebaseFirestore database;
@@ -47,6 +45,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
+        ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
 
         /*int fotoPerfil = sharedPref.getInt("idFoto", 0);
         if (fotoPerfil == 0) {
@@ -57,45 +56,50 @@ public class EditarPerfilActivity extends AppCompatActivity {
         }*/
 
 
-        etNombreUsuarioEditarPerfil = findViewById(R.id.etNombreEditarPerfil);
+        etNombreEditarPerfil = findViewById(R.id.etNombreEditarPerfil);
+        etApellidoEditarPerfil = findViewById(R.id.etApellidoEditarPerfil);
         etDescripcionEditarPerfil = findViewById(R.id.etDescripcionEditarPerfil);
 
         sp_editar_genero = findViewById(R.id.spEditarGeneroEditarPerfil);
         String[] datos = new String[] {"Mujer", "Hombre", "Prefiero no contestar", "No binario"};
         sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
         String nombre = sharedPref.getString("nombre","");
+        String apellidos = sharedPref.getString("apellido","");
         String descripcion = sharedPref.getString("descripcion","");
 
-        etNombreUsuarioEditarPerfil.setText(nombre);
+        etNombreEditarPerfil.setText(nombre);
+        etApellidoEditarPerfil.setText(apellidos);
         etDescripcionEditarPerfil.setText(descripcion);
-
     }
 
     public void onClickAceptar(View view) {
-        String nombre = etNombreUsuarioEditarPerfil.getText().toString();
+        String nombre = etNombreEditarPerfil.getText().toString();
+        String apellido = etApellidoEditarPerfil.getText().toString();
         String descripcion = etDescripcionEditarPerfil.getText().toString();
         String genero = sp_editar_genero.getSelectedItem().toString();
 
         if ("".equals(nombre)) {
-            etNombreUsuarioEditarPerfil.setError("Introduce un nombre de usuario");
+            etNombreEditarPerfil.setError("Introduce un nombre de usuario");
             return;
         }
-        else {
-            //actualizar los datos
-            editor.putString("descripcion",descripcion);
-            actualizarDatos("descripcion", descripcion);
+        //actualizar los datos
+        editor.putString("descripcion",descripcion);
+        actualizarDatos("descripcion", descripcion);
 
-            editor.putString("nombre", nombre);
-            actualizarDatos("nombre", nombre);
+        editor.putString("nombre", nombre);
+        actualizarDatos("nombre", nombre);
 
-            editor.putString("genero", genero);
-            actualizarDatos("genero", genero);
+        editor.putString("apellido", apellido);
+        actualizarDatos("apellido", apellido);
 
-            editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
-            actualizarDatos("uriFoto", String.valueOf(imageUri));
+        editor.putString("genero", genero);
+        actualizarDatos("genero", genero);
 
-            editor.commit();
-        }
+        editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
+        actualizarDatos("uriFoto", String.valueOf(imageUri));
+
+        editor.commit();
+        finish();
     }
 
     public void onClickFotoDePerfil (View view) {
