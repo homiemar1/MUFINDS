@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore database;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    String nombreUsuario, password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickIniciarSession (View view) {
-        String nombreUsuario = editTextTextPersonName.getText().toString();
-        String password = etContraseñaIniciarSesion.getText().toString();
+        nombreUsuario = editTextTextPersonName.getText().toString();
+        password = etContraseñaIniciarSesion.getText().toString();
 
         if ("".equals(nombreUsuario)){
             editTextTextPersonName.setError("Introduce tu nombre de usuario");
@@ -111,24 +113,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         System.out.println(document.getId() + " => " + document.getData());
-                        String nombreUsuario = document.getId();
-                        String nombre = document.getData().get("nombre").toString();
-                        String apellidos = document.getData().get("apellido").toString();
-                        //String fechaNacimiento = document.getData().get("dataNaixement").toString();
-                        String pwd = document.getData().get("password").toString();
-                        String descripcion = document.getData().get("descripcion").toString();
-                        String email = document.getData().get("email").toString();
-                        String genero = document.getData().get("genero").toString();
+                        if (document.getId().equals(nombreUsuario)){
+                            String nombreUsuario = document.getId();
+                            String nombre = document.getData().get("nombre").toString();
+                            String apellidos = document.getData().get("apellido").toString();
+                            //String fechaNacimiento = document.getData().get("dataNaixement").toString();
+                            String pwd = document.getData().get("password").toString();
+                            String descripcion = document.getData().get("descripcion").toString();
+                            String email = document.getData().get("email").toString();
+                            String genero = document.getData().get("genero").toString();
 
-                        editor.putString("nombre", nombre);
-                        editor.putString("apellido", apellidos);
-                        editor.putString("email", email);
-                        editor.putString("password", pwd);
-                        editor.putString("genero", genero);
-                        editor.putString("descripcion", descripcion);
-                        editor.putString("nombreUsuario", nombreUsuario);
-                        //editor.putString("fechaNacimiento", fechaNacimiento);
-                        editor.commit();
+                            editor.putString("nombre", nombre);
+                            editor.putString("apellido", apellidos);
+                            editor.putString("email", email);
+                            editor.putString("password", pwd);
+                            editor.putString("genero", genero);
+                            editor.putString("descripcion", descripcion);
+                            editor.putString("nombreUsuario", nombreUsuario);
+                            //editor.putString("fechaNacimiento", fechaNacimiento);
+                            editor.commit();
+                        }
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
