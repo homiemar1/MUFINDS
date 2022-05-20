@@ -39,7 +39,7 @@ public class AmistadesActivity extends AppCompatActivity {
 
         lvSolicitudesAmistad = findViewById(R.id.lvSolicitudesAmistad);
 
-        Integer[] fotosPerfil = new Integer[]{R.drawable.fotoperfil};
+        Integer[] fotosPerfil = new Integer[]{R.drawable.fotoperfil, R.drawable.fotoperfil, R.drawable.fotoperfil};
 
         //Solicitudes de amistad
         amigosList = new AmigosList(this, users, cancionesEnComun, fotosPerfil);
