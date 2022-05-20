@@ -47,7 +47,15 @@ public class EditarPerfilActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
-        ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+
+        /*int fotoPerfil = sharedPref.getInt("idFoto", 0);
+        if (fotoPerfil == 0) {
+            ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+        }
+        else {
+            ivFotoPerfilEditarPerfil.setImageResource(fotoPerfil);
+        }*/
+
 
         etNombreUsuarioEditarPerfil = findViewById(R.id.etNombreUsuarioEditarPerfil);
         etDescripcionEditarPerfil = findViewById(R.id.etDescripcionEditarPerfil);
@@ -83,7 +91,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             editor.putString("genero", genero);
             actualizarDatos("genero", genero);
 
-            editor.putString("uriFoto", String.valueOf(imageUri));
+            editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
             actualizarDatos("uriFoto", String.valueOf(imageUri));
 
             editor.commit();

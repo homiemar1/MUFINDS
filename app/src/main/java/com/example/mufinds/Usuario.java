@@ -15,13 +15,13 @@ public class Usuario implements Serializable {
     private Timestamp dataNaixement;
     private String descripcion;
     private String nombreUsuari;
-    private Uri fotoPerfil;
+    private int fotoPerfil;
 
     public Usuario() {
     }
 
     public Usuario(String nombre, String apellido, String email, String password,
-                   String genero, Timestamp dataNaixement, String descripcion, String nombreUsuari, Uri fotoPerfil) {
+                   String genero, Timestamp dataNaixement, String descripcion, String nombreUsuari, int fotoPerfil) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -97,11 +97,11 @@ public class Usuario implements Serializable {
         this.nombreUsuari = nombreUsuari;
     }
 
-    public Uri getFotoPerfil() {
+    public int getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(Uri fotoPerfil) {
+    public void setFotoPerfil(int fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 }

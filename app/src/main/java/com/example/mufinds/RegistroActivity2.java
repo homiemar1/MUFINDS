@@ -61,6 +61,7 @@ public class RegistroActivity2 extends AppCompatActivity {
                         Intent intent = result.getData();
                         imageUri = intent.getData();
                         ivFotoPerfilRegistro.setImageURI(imageUri);
+
                     }
                 }
             });
@@ -78,7 +79,8 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        //
+        u.setFotoPerfil(ivFotoPerfilRegistro.getId());
+
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
 
@@ -99,7 +101,7 @@ public class RegistroActivity2 extends AppCompatActivity {
             editor.putString("genero", u.getGenero());
             editor.putString("descripcion", u.getDescripcion());
             editor.putString("nombreUsuario", u.getNombreUsuari());
-            editor.putString("uriFoto", String.valueOf(u.getFotoPerfil()));
+            editor.putInt("idFoto",u.getFotoPerfil());
 
             editor.commit();
 

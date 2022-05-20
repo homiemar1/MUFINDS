@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class PrincipalActivity extends AppCompatActivity {
     ArrayList<Integer> al;
     int i = 0;
 
+    FirebaseFirestore database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +38,15 @@ public class PrincipalActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().show();
 
+        database = FirebaseFirestore.getInstance();
+
         btEditarPerfil = findViewById(R.id.btEditarPerfil);
         ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
 
         al = new ArrayList<>();
         al.add(R.drawable.xti19);
         al.add(R.drawable.tusojos);
+
     }
 
     @Override
