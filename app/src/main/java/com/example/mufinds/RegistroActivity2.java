@@ -79,7 +79,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        u.setFotoPerfil(ivFotoPerfilRegistro.getId());
+        u.setFotoPerfil(imageUri.toString());
 
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
@@ -101,7 +101,7 @@ public class RegistroActivity2 extends AppCompatActivity {
             editor.putString("genero", u.getGenero());
             editor.putString("descripcion", u.getDescripcion());
             editor.putString("nombreUsuario", u.getNombreUsuari());
-            editor.putInt("idFoto",u.getFotoPerfil());
+            editor.putString("idFoto",u.getFotoPerfil());
             editor.putString("fechaNacimiento", u.getDataNaixement());
 
             editor.commit();

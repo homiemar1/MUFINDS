@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.example.mufinds">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MUFINDS">
-        <activity android:name=".CambiarUsuariooContraseñaActivity"/>
+        <activity android:name=".CambiarUsuariooContraseñaActivity"></activity>
         <activity android:name=".MusicaActivity" />
         <activity android:name=".AmistadesActivity" />
         <activity android:name=".VistaPerfilActivity" />

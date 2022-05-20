@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        System.out.println(document.getId() + " => " + document.getData());
                         if (document.getId().equals(nombreUsuario)){
                             String nombreUsuario = document.getId();
                             String nombre = document.getData().get("nombre").toString();
@@ -122,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                             String descripcion = document.getData().get("descripcion").toString();
                             String email = document.getData().get("email").toString();
                             String genero = document.getData().get("genero").toString();
+                            String fotoPerfil = document.getData().get("fotoPerfil").toString();
 
                             editor.putString("nombre", nombre);
                             editor.putString("apellido", apellidos);
@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("genero", genero);
                             editor.putString("descripcion", descripcion);
                             editor.putString("nombreUsuario", nombreUsuario);
+                            editor.putString("idFoto", fotoPerfil);
                             //editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.commit();
                         }

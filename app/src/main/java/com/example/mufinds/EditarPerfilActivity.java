@@ -45,15 +45,15 @@ public class EditarPerfilActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
-        ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+        //ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
 
-        /*int fotoPerfil = sharedPref.getInt("idFoto", 0);
-        if (fotoPerfil == 0) {
-            ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+        String fotoPerfil = sharedPref.getString("idFoto", "");
+        if (!fotoPerfil.equals("")) {
+            ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
         }
         else {
-            ivFotoPerfilEditarPerfil.setImageResource(fotoPerfil);
-        }*/
+            ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+        }
 
 
         etNombreEditarPerfil = findViewById(R.id.etNombreEditarPerfil);
