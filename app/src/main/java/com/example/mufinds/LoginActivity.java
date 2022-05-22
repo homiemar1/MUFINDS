@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -115,12 +116,12 @@ public class LoginActivity extends AppCompatActivity {
                             String nombreUsuario = document.getId();
                             String nombre = document.getData().get("nombre").toString();
                             String apellidos = document.getData().get("apellido").toString();
-                            //String fechaNacimiento = document.getData().get("dataNaixement").toString();
+                            String fechaNacimiento = document.getData().get("dataNaixement").toString();
                             String pwd = document.getData().get("password").toString();
                             String descripcion = document.getData().get("descripcion").toString();
                             String email = document.getData().get("email").toString();
                             String genero = document.getData().get("genero").toString();
-                            //String fotoPerfil = document.getData().get("fotoPerfil").toString();
+                            String fotoPerfil = document.getData().get("fotoPerfil").toString();
 
                             editor.putString("nombre", nombre);
                             editor.putString("apellido", apellidos);
@@ -129,8 +130,14 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("genero", genero);
                             editor.putString("descripcion", descripcion);
                             editor.putString("nombreUsuario", nombreUsuario);
-                            //editor.putString("idFoto", fotoPerfil);
-                            //editor.putString("fechaNacimiento", fechaNacimiento);
+                            if (fotoPerfil.equals("R.drawable.fotoperfil")) {
+                                editor.putString("idFoto", "R.drawable.fotoperfil");
+                            }
+                            else {
+                                editor.putString("idFoto", fotoPerfil);
+                            }
+                            editor.putString("idFoto", fotoPerfil);
+                            editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.commit();
                         }
                     }

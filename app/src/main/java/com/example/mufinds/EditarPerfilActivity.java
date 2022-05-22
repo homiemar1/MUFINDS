@@ -48,13 +48,13 @@ public class EditarPerfilActivity extends AppCompatActivity {
         etInstagramEditar = findViewById(R.id.etInstagramEditar);
 
 
-        String fotoPerfil = sharedPref.getString("idFoto", "");
-        if (fotoPerfil.equals("R.drawable.fotoperfil")) {
+        //String fotoPerfil = sharedPref.getString("idFoto", "");
+        /*if (fotoPerfil.equals("R.drawable.fotoperfil")) {
             ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
         else {
             ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
-        }
+        }*/
 
 
         etNombreEditarPerfil = findViewById(R.id.etNombreEditarPerfil);
@@ -81,6 +81,13 @@ public class EditarPerfilActivity extends AppCompatActivity {
         String descripcion = etDescripcionEditarPerfil.getText().toString();
         String genero = sp_editar_genero.getSelectedItem().toString();
         String insta = etInstagramEditar.getText().toString();
+        if (imageUri == null) {
+            String fotoPerfil = "R.drawable.fotoperfil";
+        }
+        else {
+            String fotoPerfil = imageUri.toString();
+        }
+
 
         if ("".equals(nombre)) {
             etNombreEditarPerfil.setError("Introduce un nombre de usuario");
@@ -104,7 +111,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         actualizarDatos("genero", genero);
 
         editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
-        actualizarDatos("uriFoto", String.valueOf(imageUri));
+        actualizarDatos("fotoPerfil", String.valueOf(imageUri));
 
         editor.putString("instagram", insta);
         actualizarDatos("instagram", insta);
