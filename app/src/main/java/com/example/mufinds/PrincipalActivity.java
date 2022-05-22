@@ -104,7 +104,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
             case R.id.action_logout:
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Eliminar cuenta");
+                alert.setTitle("Cerrar Sessión");
                 alert.setMessage("Estas segur@ de que quieres cerrrar la sesión?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         alert.show();
@@ -115,7 +115,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-
                             }
                         }); alert.show();
                 return true;

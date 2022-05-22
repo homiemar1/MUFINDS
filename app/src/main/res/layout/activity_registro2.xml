@@ -32,34 +32,33 @@
         app:layout_constraintVertical_bias="0.466" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btAtrasRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickAtras"
         android:text="Atras"
-        app:layout_constraintBottom_toBottomOf="@+id/btFinalizarRegistro"
-        app:layout_constraintStart_toStartOf="@+id/etDescripcionRegistro" />
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="@+id/etInstragram"
+        app:layout_constraintTop_toBottomOf="@+id/etInstragram" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btFinalizarRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickFinalizar"
         android:text="Finalizar"
-        app:layout_constraintEnd_toEndOf="@+id/etDescripcionRegistro"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btAtrasRegistro"
-        app:layout_constraintTop_toBottomOf="@+id/etDescripcionRegistro" />
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/etInstragram"
+        app:layout_constraintTop_toBottomOf="@+id/etInstragram" />
 
     <EditText
         android:id="@+id/etDescripcionRegistro"
-        android:layout_width="309dp"
-        android:layout_height="147dp"
+        android:layout_width="312dp"
+        android:layout_height="83dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
@@ -80,4 +79,16 @@
         app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfilRegistro"
         app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfilRegistro"
         app:layout_constraintStart_toStartOf="@+id/ivFotoPerfilRegistro" />
+
+    <EditText
+        android:id="@+id/etInstragram"
+        android:layout_width="306dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Instagram"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionRegistro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

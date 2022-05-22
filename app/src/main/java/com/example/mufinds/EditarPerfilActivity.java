@@ -29,7 +29,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner sp_editar_genero;
     private ImageView ivFotoPerfilEditarPerfil;
     private Uri imageUri;
-    EditText etNombreEditarPerfil, etApellidoEditarPerfil, etDescripcionEditarPerfil;
+    EditText etNombreEditarPerfil, etApellidoEditarPerfil, etDescripcionEditarPerfil, etInstagramEditar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     FirebaseFirestore database;
@@ -45,14 +45,15 @@ public class EditarPerfilActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilEditarPerfil = findViewById(R.id.ivFotoPerfilEditarPerfil);
-        //ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+        etInstagramEditar = findViewById(R.id.etInstagramEditar);
+
 
         String fotoPerfil = sharedPref.getString("idFoto", "");
-        if (!fotoPerfil.equals("")) {
-            ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
+        if (fotoPerfil.equals("R.drawable.fotoperfil")) {
+            ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
         else {
-            ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
+            ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
         }
 
 
@@ -66,10 +67,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
         String nombre = sharedPref.getString("nombre","");
         String apellidos = sharedPref.getString("apellido","");
         String descripcion = sharedPref.getString("descripcion","");
+        String instagram = sharedPref.getString("instagram","");
 
         etNombreEditarPerfil.setText(nombre);
         etApellidoEditarPerfil.setText(apellidos);
         etDescripcionEditarPerfil.setText(descripcion);
+        etInstagramEditar.setText(instagram);
     }
 
     public void onClickAceptar(View view) {
@@ -77,11 +80,16 @@ public class EditarPerfilActivity extends AppCompatActivity {
         String apellido = etApellidoEditarPerfil.getText().toString();
         String descripcion = etDescripcionEditarPerfil.getText().toString();
         String genero = sp_editar_genero.getSelectedItem().toString();
+        String insta = etInstagramEditar.getText().toString();
 
         if ("".equals(nombre)) {
             etNombreEditarPerfil.setError("Introduce un nombre de usuario");
             return;
         }
+        else if ("".equals(insta)) {
+            etInstagramEditar.setError("Introduce tu Instagram");
+        }
+
         //actualizar los datos
         editor.putString("descripcion",descripcion);
         actualizarDatos("descripcion", descripcion);
@@ -97,6 +105,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
         actualizarDatos("uriFoto", String.valueOf(imageUri));
+
+        editor.putString("instagram", insta);
+        actualizarDatos("instagram", insta);
 
         editor.commit();
         finish();

@@ -17,12 +17,13 @@ public class Usuario implements Serializable {
     private String descripcion;
     private String nombreUsuari;
     private String fotoPerfil;
+    private String instagram;
 
     public Usuario() {
     }
 
     public Usuario(String nombre, String apellido, String email, String password,
-                   String genero, String dataNaixement, String descripcion, String nombreUsuari, String fotoPerfil) {
+                   String genero, String dataNaixement, String descripcion, String nombreUsuari, String fotoPerfil, String instagram) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -32,6 +33,7 @@ public class Usuario implements Serializable {
         this.descripcion = descripcion;
         this.nombreUsuari = nombreUsuari;
         this.fotoPerfil = fotoPerfil;
+        this.instagram = instagram;
     }
 
     public String getNombre() {
@@ -104,5 +106,13 @@ public class Usuario implements Serializable {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 }

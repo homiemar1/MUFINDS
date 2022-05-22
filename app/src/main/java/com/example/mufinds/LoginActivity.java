@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                         boolean passwordCheck = false;
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println(document.getId() + " => " + document.getData());
                                 if (document.getId().equals(nombreUsuario)) {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();

@@ -28,7 +28,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
     private ImageView ivFotoPerfilRegistro;
     private Uri imageUri;
-    EditText etNombreUsuarioRegistro, etDescripcionRegistro;
+    EditText etNombreUsuarioRegistro, etDescripcionRegistro, etInstragram;
     Usuario u;
     FirebaseFirestore database;
     SharedPreferences sharedPref;
@@ -44,6 +44,8 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         etNombreUsuarioRegistro = findViewById(R.id.etNombreUsuarioRegistro);
         etDescripcionRegistro = findViewById(R.id.etDescripcionRegistro);
+
+        etInstragram = findViewById(R.id.etInstragram);
 
         u = (Usuario) getIntent().getSerializableExtra("usuario");
         database = FirebaseFirestore.getInstance();
@@ -84,15 +86,24 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        u.setFotoPerfil(imageUri.toString());
+        if (imageUri == null) {
+            u.setFotoPerfil("R.drawable.fotoperfil");
+        }
+        else {
+            u.setFotoPerfil(imageUri.toString());
+        }
+
 
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
-
-        u.setDescripcion(descripcion);
+        String instagram = etInstragram.getText().toString();
 
         if ("".equals(nombre_usuario)) {
             etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
+            return;
+        }
+        else if ("".equals(instagram)) {
+            etInstragram.setError("Introduce tu instagram");
             return;
         }
         database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -110,6 +121,8 @@ public class RegistroActivity2 extends AppCompatActivity {
                 }
                 if (check) {
                     u.setNombreUsuari(nombre_usuario);
+                    u.setInstagram(instagram);
+                    u.setDescripcion(descripcion);
 
                     database.collection("users").document(u.getNombreUsuari()).set(u);
 
@@ -122,6 +135,7 @@ public class RegistroActivity2 extends AppCompatActivity {
                     editor.putString("nombreUsuario", u.getNombreUsuari());
                     editor.putString("idFoto",u.getFotoPerfil());
                     editor.putString("fechaNacimiento", u.getDataNaixement());
+                    editor.putString("instagram", u.getInstagram());
 
                     editor.commit();
 

@@ -10,12 +10,13 @@
         android:id="@+id/btAceptarEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bordes_redondos"
         android:onClick="onClickAceptar"
         android:text="Aceptar"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/spEditarGeneroEditarPerfil"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="@+id/spEditarGeneroEditarPerfil"
         app:layout_constraintTop_toBottomOf="@+id/spEditarGeneroEditarPerfil" />
 
@@ -41,10 +42,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        app:layout_constraintVertical_bias="0.349" />
 
     <ImageView
         android:id="@+id/ivFotoPerfilEditarPerfil"
@@ -59,23 +60,21 @@
 
     <Spinner
         android:id="@+id/spEditarGeneroEditarPerfil"
-        android:layout_width="215dp"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/etDescripcionEditarPerfil"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etDescripcionEditarPerfil"
-        app:layout_constraintTop_toBottomOf="@+id/etDescripcionEditarPerfil"
-        app:layout_constraintVertical_bias="0.21" />
+        android:layout_width="209dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/etInstagramEditar"
+        app:layout_constraintStart_toStartOf="@+id/etInstagramEditar"
+        app:layout_constraintTop_toBottomOf="@+id/etInstagramEditar" />
 
     <EditText
         android:id="@+id/etDescripcionEditarPerfil"
         android:layout_width="209dp"
-        android:layout_height="145dp"
+        android:layout_height="80dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Descripcio"
+        android:hint="Descripción"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="@+id/etApellidoEditarPerfil"
         app:layout_constraintHorizontal_bias="1.0"
@@ -86,11 +85,24 @@
         android:id="@+id/tvTituloEditarPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:text="EDITAR PERFIL"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfilEditarPerfil"
         app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfilEditarPerfil"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="@+id/ivFotoPerfilEditarPerfil" />
+
+    <EditText
+        android:id="@+id/etInstagramEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Instagram"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/etDescripcionEditarPerfil"
+        app:layout_constraintStart_toStartOf="@+id/etDescripcionEditarPerfil"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionEditarPerfil" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
