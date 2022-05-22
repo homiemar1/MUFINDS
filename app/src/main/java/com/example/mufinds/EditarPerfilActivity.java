@@ -48,13 +48,13 @@ public class EditarPerfilActivity extends AppCompatActivity {
         etInstagramEditar = findViewById(R.id.etInstagramEditar);
 
 
-        //String fotoPerfil = sharedPref.getString("idFoto", "");
-        /*if (fotoPerfil.equals("R.drawable.fotoperfil")) {
+        String fotoPerfil =sharedPref.getString("idFoto", "R.drawable.fotoperfil");
+        if (fotoPerfil.equals("R.drawable.fotoperfil")) {
             ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
         else {
             ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
-        }*/
+        }
 
 
         etNombreEditarPerfil = findViewById(R.id.etNombreEditarPerfil);

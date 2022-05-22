@@ -101,7 +101,7 @@ public class RegistroActivity extends AppCompatActivity {
                 String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
                 String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
 
-                fecha = diaFormateado + "/" + mesFormateado + "/" + any;
+                fecha = diaFormateado + "/" + mesFormateado + "/" + año;
                 etdFechaNacimientoRegistro.setText(fecha);
 
                 int añoActual = año;

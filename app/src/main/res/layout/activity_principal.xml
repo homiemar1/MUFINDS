@@ -107,7 +107,7 @@
         android:onClick="onClickEditarPerfil"
         app:layout_constraintEnd_toEndOf="@+id/ivLike"
         app:layout_constraintTop_toBottomOf="@+id/ivLike"
-        app:srcCompat="@drawable/logoeditarperfilredimensionado" />
+        app:srcCompat="@drawable/logogestionarmusica" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

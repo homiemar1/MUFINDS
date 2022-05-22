@@ -100,13 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         if (usuarioCheck && passwordCheck) {
-                            guardarInformacionSharedPreference(nombreUsuario, password);
+                            guardarInformacionSharedPreference(nombreUsuario);
                         }
                     }
                 });
     }
 
-    public void guardarInformacionSharedPreference (String nombreUsuario, String password) {
+    public void guardarInformacionSharedPreference (String nombreUsuario) {
         database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                             String email = document.getData().get("email").toString();
                             String genero = document.getData().get("genero").toString();
                             String fotoPerfil = document.getData().get("fotoPerfil").toString();
+                            String instagram = document.getData().get("instagram").toString();
 
                             editor.putString("nombre", nombre);
                             editor.putString("apellido", apellidos);
@@ -130,14 +131,9 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("genero", genero);
                             editor.putString("descripcion", descripcion);
                             editor.putString("nombreUsuario", nombreUsuario);
-                            if (fotoPerfil.equals("R.drawable.fotoperfil")) {
-                                editor.putString("idFoto", "R.drawable.fotoperfil");
-                            }
-                            else {
-                                editor.putString("idFoto", fotoPerfil);
-                            }
                             editor.putString("idFoto", fotoPerfil);
                             editor.putString("fechaNacimiento", fechaNacimiento);
+                            editor.putString("instagram", instagram);
                             editor.commit();
                         }
                     }
