@@ -96,14 +96,34 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         else {
             String contraseña = recogerContraseña();
             if (!datoAntiguo.equals(contraseña) || "".equals(contraseña)) {
-                etDatoAntiguo.setError("La contraseña no coincide con el de la sesion actual");
+                etDatoNuevo.setError("La contraseña no coincide con el de la sesion actual");
                 return;
             }
         }
 
         //comprobar datos
         if (valor == 1) {
-            updateNombreUsuario(usuario, datoNuevo);
+            database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    boolean check = true;
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document.getId().equals(datoNuevo)){
+                                check = false;
+                            }
+                        }
+                    } else {
+                        System.out.println("Error getting documents." + task.getException());
+                    }
+                    if (check) {
+                        updateNombreUsuario(datoNuevo);
+                    }
+                    else {
+                        etDatoNuevo.setError("Ese nombre de usuario ya existe");
+                    }
+                }
+            });
         }
         else {
             updateContraseña(usuario, datoNuevo);
@@ -128,6 +148,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
                         editor.putString("password", datoNuevo);
+                        editor.commit();
                         finish();
                     }
                 })
@@ -139,22 +160,42 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
                 });
     }
 
-    public void updateNombreUsuario(String usuario, String datoNuevo) {
-        database.collection("users").document(usuario).update("ID", datoNuevo)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
-                        editor.putString("nombreUsuario", datoNuevo);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+    public void updateNombreUsuario(String datoNuevo) {
+        Usuario user = recogerDatosUsuario();
+        database.collection("users").document(user.getNombreUsuari()).delete();
+        user.setNombreUsuari(datoNuevo);
+
+        database.collection("users").document(user.getNombreUsuari()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                editor.putString("nombreUsuario", datoNuevo);
+                editor.commit();
+                Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Nombre usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "No se ha podido cambiar el nombre de usuario\nVuelve a intentarlo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this,
+                                "No se ha podido cambiar su nombre de usuario\n" +
+                                        "Vuelve a intentarlo", Toast.LENGTH_SHORT).show();
                     }
                 });
+        finish();
+    }
+
+    private Usuario recogerDatosUsuario() {
+        Usuario user = new Usuario();
+        user.setNombre(sharedPref.getString("nombre", ""));
+        user.setApellido(sharedPref.getString("apellido", ""));
+        user.setEmail(sharedPref.getString("email", ""));
+        user.setPassword(sharedPref.getString("password", ""));
+        user.setGenero(sharedPref.getString("genero", ""));
+        //user.setDataNaixement(sharedPref.getString("fechaNacimiento", ""));
+        user.setDescripcion(sharedPref.getString("descripcion", ""));
+        user.setNombreUsuari(sharedPref.getString("nombreUsuario", ""));
+        //user.setFotoPerfil(sharedPref.getString("idFoto", ""));
+        return user;
     }
 
     public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {

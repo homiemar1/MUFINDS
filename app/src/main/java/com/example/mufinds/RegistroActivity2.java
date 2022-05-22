@@ -88,28 +88,27 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         if ("".equals(nombre_usuario)) {
             etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
+            return;
         }
-        else {
-            u.setNombreUsuari(nombre_usuario);
+        u.setNombreUsuari(nombre_usuario);
 
-            database.collection("users").document(u.getNombreUsuari()).set(u);
+        database.collection("users").document(u.getNombreUsuari()).set(u);
 
-            editor.putString("nombre", u.getNombre());
-            editor.putString("apellido", u.getApellido());
-            editor.putString("email", u.getEmail());
-            editor.putString("password", u.getPassword());
-            editor.putString("genero", u.getGenero());
-            editor.putString("descripcion", u.getDescripcion());
-            editor.putString("nombreUsuario", u.getNombreUsuari());
-            editor.putString("idFoto",u.getFotoPerfil());
-            editor.putString("fechaNacimiento", u.getDataNaixement());
+        editor.putString("nombre", u.getNombre());
+        editor.putString("apellido", u.getApellido());
+        editor.putString("email", u.getEmail());
+        editor.putString("password", u.getPassword());
+        editor.putString("genero", u.getGenero());
+        editor.putString("descripcion", u.getDescripcion());
+        editor.putString("nombreUsuario", u.getNombreUsuari());
+        editor.putString("idFoto",u.getFotoPerfil());
+        editor.putString("fechaNacimiento", u.getDataNaixement());
 
-            editor.commit();
+        editor.commit();
 
-            intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 }
