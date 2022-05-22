@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -17,7 +18,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
@@ -90,25 +95,44 @@ public class RegistroActivity2 extends AppCompatActivity {
             etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
             return;
         }
-        u.setNombreUsuari(nombre_usuario);
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                boolean check = true;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(nombre_usuario)){
+                            check = false;
+                        }
+                    }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
+                }
+                if (check) {
+                    u.setNombreUsuari(nombre_usuario);
 
-        database.collection("users").document(u.getNombreUsuari()).set(u);
+                    database.collection("users").document(u.getNombreUsuari()).set(u);
 
-        editor.putString("nombre", u.getNombre());
-        editor.putString("apellido", u.getApellido());
-        editor.putString("email", u.getEmail());
-        editor.putString("password", u.getPassword());
-        editor.putString("genero", u.getGenero());
-        editor.putString("descripcion", u.getDescripcion());
-        editor.putString("nombreUsuario", u.getNombreUsuari());
-        editor.putString("idFoto",u.getFotoPerfil());
-        editor.putString("fechaNacimiento", u.getDataNaixement());
+                    editor.putString("nombre", u.getNombre());
+                    editor.putString("apellido", u.getApellido());
+                    editor.putString("email", u.getEmail());
+                    editor.putString("password", u.getPassword());
+                    editor.putString("genero", u.getGenero());
+                    editor.putString("descripcion", u.getDescripcion());
+                    editor.putString("nombreUsuario", u.getNombreUsuari());
+                    editor.putString("idFoto",u.getFotoPerfil());
+                    editor.putString("fechaNacimiento", u.getDataNaixement());
 
-        editor.commit();
+                    editor.commit();
 
-        intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
-        startActivity(intent);
-        finish();
-
+                    intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    etNombreUsuarioRegistro.setError("Ese nombre de usuario ya existe");
+                }
+            }
+        });
     }
 }
