@@ -6,9 +6,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,14 +27,22 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     ImageView ivFotoMusicaPrincipal;
-    ArrayList<Integer> al;
+    ArrayList<String> al;
     int i = 0;
 
     FirebaseFirestore database;
@@ -47,9 +60,20 @@ public class PrincipalActivity extends AppCompatActivity {
         ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
 
         al = new ArrayList<>();
-        al.add(R.drawable.xti19);
-        al.add(R.drawable.tusojos);
 
+        database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String link = document.getData().get("link").toString();
+                        al.add(link);
+                    }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
+                }
+            }
+        });
     }
 
     @Override
@@ -145,27 +169,38 @@ public class PrincipalActivity extends AppCompatActivity {
     public void onClickDislike(View view) {
         if (i >= al.size()) {
             i=0;
-            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            String enlaze = al.get(i);
+
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
+
             i += 1;
         }
         else {
-            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            String enlaze = al.get(i);
+
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
+
             i += 1;
         }
+
     }
 
     public void onClickLike(View view) {
         if (i >= al.size()) {
             i=0;
-            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            String enlaze = al.get(i);
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
+
             i += 1;
         }
         else {
-            ivFotoMusicaPrincipal.setImageResource(al.get(i));
+            String enlaze = al.get(i);
+
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
             i += 1;
         }
 
-
     }
+
 
 }
