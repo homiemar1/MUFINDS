@@ -201,5 +201,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }

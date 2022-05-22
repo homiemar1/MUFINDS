@@ -65,14 +65,21 @@ public class ConfiguracionActivity extends AppCompatActivity {
                         }
                     }
                 });
-                finishAffinity();
+                restartAplicacion();
+                //finishAffinity();
             }
-        })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }
                 });
         alert.show();
+    }
+
+    public void restartAplicacion(){
+        Intent mIntent = new Intent(ConfiguracionActivity.this,
+                IniciActivity.class);
+        finish();
+        startActivity(mIntent);
     }
 }

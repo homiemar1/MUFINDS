@@ -25,8 +25,6 @@ public class IniciActivity extends AppCompatActivity {
 
     }
 
-
-
     public void onClickRegistrar (View view) {
         Intent intent = new Intent(IniciActivity.this, RegistroActivity.class);
         startActivity(intent);
@@ -35,5 +33,10 @@ public class IniciActivity extends AppCompatActivity {
     public void onClickIniciarSesion (View view) {
         Intent intent = new Intent(IniciActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }
