@@ -3,7 +3,8 @@ package com.example.mufinds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,6 +25,8 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     private EditText etDatoAntiguo, etDatoNuevo, etDatoConfirmacion;
     private int valor;
     private FirebaseFirestore database;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,9 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cambiar_usuario);
 
         database = FirebaseFirestore.getInstance();
+        sharedPref = this.getSharedPreferences(getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
         tvTituloCambio = findViewById(R.id.tvTituloCambio);
         etDatoAntiguo = findViewById(R.id.etDatoAntiguo);
@@ -41,20 +46,19 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         valor = getIntent().getIntExtra("variable", 1);
         if (valor == 1) {
             tvTituloCambio.setText("CAMBIAR NOMBRE DE USUARIO");
-            etDatoAntiguo.setHint("Usuario");
+            etDatoAntiguo.setHint("Usuario actual");
             etDatoNuevo.setHint("Usuario nuevo");
-            etDatoConfirmacion.setHint("Contraseña");
-
-            etDatoConfirmacion.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+            etDatoConfirmacion.setHint("Confirmar usuario nuevo");
         }
         else {
             tvTituloCambio.setText("CAMBIAR CONTRASEÑA");
-            etDatoAntiguo.setHint("Contraseña");
+            etDatoAntiguo.setHint("Contraseña actual");
             etDatoNuevo.setHint("Contraseña nueva");
-            etDatoConfirmacion.setHint("Usuario");
+            etDatoConfirmacion.setHint("Confirmar contraseña nueva");
 
             etDatoAntiguo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
             etDatoNuevo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+            etDatoConfirmacion.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         }
 
     }
@@ -73,86 +77,82 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             return;
         }
         else if ("".equals(datoConfirmacion)) {
-            etDatoConfirmacion.setError("Introduce el dato confirmatorio");
+            etDatoConfirmacion.setError("Introduce el dato de confirmacion");
+            return;
+        }
+        else if (!datoNuevo.equals(datoConfirmacion)) {
+            etDatoNuevo.setError("Los nuevos datos deben coincidir");
+            etDatoConfirmacion.setError("Los nuevos datos deben coincidir");
             return;
         }
 
-        //comprobar datos
-        boolean check = consultaExistencia(datoAntiguo);
-        if (check) {
-            if (valor == 1) {
-                updateNombreUsuario(datoNuevo);
+        String usuario = recogerUsuario();
+        if (valor == 1) {
+            if (!datoAntiguo.equals(usuario) || "".equals(usuario)) {
+                etDatoAntiguo.setError("El usuario no coincide con el de la sesion actual");
+                return;
             }
-            else {
-                updateConraseña(datoNuevo);
-            }
-            finish();
         }
-    }
-
-    public boolean consultaExistencia(String datoAntiguo) {
-        final boolean[] check = {false};
-        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (valor == 1) {
-                            if (document.getId().equals(datoAntiguo)) {
-                                check[0] = true;
-                            }
-                        }
-                        else {
-                            if (document.getData().get("password").equals(datoAntiguo)) {
-                                check[0] = true;
-                            }
-                        }
-
-                    }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
-                }
-                if (!check[0]) {
-                    if (valor == 1) {
-                        etDatoAntiguo.setError("ERROR");
-                    }
-                    else {
-                        etDatoAntiguo.setError("ERROR");
-                    }
-                }
+        else {
+            String contraseña = recogerContraseña();
+            if (!datoAntiguo.equals(contraseña) || "".equals(contraseña)) {
+                etDatoAntiguo.setError("La contraseña no coincide con el de la sesion actual");
+                return;
             }
-        });
-        return check[0];
+        }
+
+        //comprobar datos
+        if (valor == 1) {
+            updateNombreUsuario(usuario, datoNuevo);
+        }
+        else {
+            updateContraseña(usuario, datoNuevo);
+        }
+
     }
 
-    public void updateConraseña(String datoNuevo) {
-        database.collection("users").document("nerea").update("password", datoNuevo)
+    private String recogerUsuario() {
+        String usuario = sharedPref.getString("nombreUsuario", "");
+        return usuario;
+    }
+
+    private String recogerContraseña() {
+        String contraseña = sharedPref.getString("password", "");
+        return contraseña;
+    }
+
+    public void updateContraseña(String usuario, String datoNuevo) {
+        database.collection("users").document(usuario).update("password", datoNuevo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Update satisfactorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
+                        editor.putString("password", datoNuevo);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "No se ha podido cambiar su contraseña\nVuelve a intentarlo", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void updateNombreUsuario(String datoNuevo) {
-        database.collection("users").document("nerea").update("ID", datoNuevo)
+    public void updateNombreUsuario(String usuario, String datoNuevo) {
+        database.collection("users").document(usuario).update("ID", datoNuevo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Update satisfactorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
+                        editor.putString("nombreUsuario", datoNuevo);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CambiarUsuariooContraseñaActivity.this, "No se ha podido cambiar el nombre de usuario\nVuelve a intentarlo", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
