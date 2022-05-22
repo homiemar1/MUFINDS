@@ -84,7 +84,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        u.setFotoPerfil(imageUri.toString());
+        //u.setFotoPerfil(imageUri.toString());
 
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
