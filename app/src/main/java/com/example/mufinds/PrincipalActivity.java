@@ -41,11 +41,11 @@ import static android.content.ContentValues.TAG;
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
-    ImageView ivFotoMusicaPrincipal;
-    ArrayList<String> al;
-    int i = 0;
+    private ImageView ivFotoMusicaPrincipal, ivBtEditarPerfil;
+    private ArrayList<String> al;
+    private int i = 0;
 
-    FirebaseFirestore database;
+    private FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class PrincipalActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
 
         ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
+        ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
         al = new ArrayList<>();
 
@@ -159,10 +160,12 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickMusica(View view) {
         condicion = 1;
+        ivBtEditarPerfil.setImageResource(R.drawable.logogestionarmusica);
     }
 
     public void onClickPersonas (View view) {
         condicion = 2;
+        ivBtEditarPerfil.setImageResource(R.drawable.logoeditarperfilredimensionado);
     }
 
     public void onClickDislike(View view) {
