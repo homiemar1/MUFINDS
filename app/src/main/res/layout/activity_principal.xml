@@ -68,7 +68,6 @@
         android:layout_marginTop="12dp"
         android:clickable="true"
         android:onClick="onClickDislike"
-        app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/ivLike"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
@@ -84,7 +83,6 @@
         android:layout_marginEnd="4dp"
         android:clickable="true"
         android:onClick="onClickLike"
-        app:layout_constraintBottom_toTopOf="@+id/tgMenuInferiorPrincipal"
         app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
@@ -101,15 +99,15 @@
         app:layout_constraintTop_toBottomOf="@+id/ivDislike"
         app:srcCompat="@drawable/amigosredimension" />
 
-    <Button
+    <ImageView
         android:id="@+id/btEditarPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="52dp"
         android:layout_marginTop="16dp"
         android:onClick="onClickEditarPerfil"
-        android:text="Button"
         app:layout_constraintEnd_toEndOf="@+id/ivLike"
-        app:layout_constraintTop_toBottomOf="@+id/ivLike" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLike"
+        app:srcCompat="@drawable/logoeditarperfilredimensionado" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

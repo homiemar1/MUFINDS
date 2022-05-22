@@ -2,8 +2,12 @@ package com.example.mufinds;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -18,7 +22,10 @@ public class IniciActivity extends AppCompatActivity {
 
         ivLogoInicio = findViewById(R.id.ivLogoInicio);
         ivLogoInicio.setImageResource(R.drawable.logomufinds);
+
     }
+
+
 
     public void onClickRegistrar (View view) {
         Intent intent = new Intent(IniciActivity.this, RegistroActivity.class);

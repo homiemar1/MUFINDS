@@ -28,7 +28,6 @@ import java.util.ArrayList;
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
-    private Button btEditarPerfil;
     ImageView ivFotoMusicaPrincipal;
     ArrayList<Integer> al;
     int i = 0;
@@ -45,7 +44,6 @@ public class PrincipalActivity extends AppCompatActivity {
 
         database = FirebaseFirestore.getInstance();
 
-        btEditarPerfil = findViewById(R.id.btEditarPerfil);
         ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
 
         al = new ArrayList<>();
@@ -138,12 +136,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickMusica(View view) {
         condicion = 1;
-        btEditarPerfil.setText("Gestionar Musica");
     }
 
     public void onClickPersonas (View view) {
         condicion = 2;
-        btEditarPerfil.setText("Editar Perfil");
     }
 
     public void onClickDislike(View view) {

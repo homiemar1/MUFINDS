@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                             String descripcion = document.getData().get("descripcion").toString();
                             String email = document.getData().get("email").toString();
                             String genero = document.getData().get("genero").toString();
-                            String fotoPerfil = document.getData().get("fotoPerfil").toString();
+                            //String fotoPerfil = document.getData().get("fotoPerfil").toString();
 
                             editor.putString("nombre", nombre);
                             editor.putString("apellido", apellidos);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("genero", genero);
                             editor.putString("descripcion", descripcion);
                             editor.putString("nombreUsuario", nombreUsuario);
-                            editor.putString("idFoto", fotoPerfil);
+                            //editor.putString("idFoto", fotoPerfil);
                             //editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.commit();
                         }
