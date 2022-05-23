@@ -1,10 +1,6 @@
 package com.example.mufinds;
 
-import android.net.Uri;
-
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class Usuario implements Serializable {
     private String nombre;

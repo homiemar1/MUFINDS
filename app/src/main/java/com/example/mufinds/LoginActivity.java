@@ -30,12 +30,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView tv_olvidado_contraseña, tv_olvidado_usuario;
-    EditText editTextTextPersonName, etContraseñaIniciarSesion;
-    FirebaseFirestore database;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-    String nombreUsuario, password;
+    private TextView tv_olvidado_contraseña, tv_olvidado_usuario;
+    private EditText editTextTextPersonName, etContraseñaIniciarSesion;
+    private FirebaseFirestore database;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private String nombreUsuario, password;
 
 
     @Override

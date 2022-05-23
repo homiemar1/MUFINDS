@@ -8,8 +8,10 @@ import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -26,9 +28,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
@@ -39,6 +43,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -52,6 +57,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private HashMap<String, ArrayList<String>> usuarios;
     private int i = 0;
     private int contadorUsuarios = 0;
+    private SharedPreferences sharedPref;
 
     private FirebaseFirestore database;
 
@@ -62,6 +68,8 @@ public class PrincipalActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().show();
+
+        sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
 
         database = FirebaseFirestore.getInstance();
 
@@ -270,6 +278,10 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void onClickLike(View view) {
+        String nombreUsuario = sharedPref.getString("nombreUsuario","");
+        /*Map<String, String> mapa = new HashMap<>();
+        mapa.put("haha", "hehe");
+        database.collection("relacion").document(nombreUsuario).set(mapa);*/
         if (condicion == 1) {
             if (i >= al.size()) {
                 i=0;
