@@ -23,7 +23,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class EditarPerfilActivity extends AppCompatActivity {
@@ -34,6 +39,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     FirebaseFirestore database;
+
+    String nombre2, apellido2, descripcion2,genero2, insta2, fotoPerfil2,fotoPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         etInstagramEditar = findViewById(R.id.etInstagramEditar);
 
 
-        String fotoPerfil = sharedPref.getString("idFoto", "R.drawable.fotoperfil");
+        fotoPerfil = sharedPref.getString("idFoto", "R.drawable.fotoperfil");
         if ("R.drawable.fotoperfil".equals(fotoPerfil) || "".equals(fotoPerfil)) {
             ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
@@ -77,49 +84,52 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void onClickAceptar(View view) {
-        String nombre = etNombreEditarPerfil.getText().toString();
-        String apellido = etApellidoEditarPerfil.getText().toString();
-        String descripcion = etDescripcionEditarPerfil.getText().toString();
-        String genero = sp_editar_genero.getSelectedItem().toString();
-        String insta = etInstagramEditar.getText().toString();
-        String fotoPerfil;
-        if (imageUri == null) {
-            fotoPerfil = "R.drawable.fotoperfil";
-        }
-        else {
-            fotoPerfil = imageUri.toString();
-        }
+        nombre2 = etNombreEditarPerfil.getText().toString();
+        apellido2 = etApellidoEditarPerfil.getText().toString();
+        descripcion2 = etDescripcionEditarPerfil.getText().toString();
+        genero2 = sp_editar_genero.getSelectedItem().toString();
+        insta2 = etInstagramEditar.getText().toString();
+        fotoPerfil2 = "";
 
-
-        if ("".equals(nombre)) {
+        if ("".equals(nombre2)) {
             etNombreEditarPerfil.setError("Introduce un nombre de usuario");
             return;
         }
-        else if ("".equals(insta)) {
+        if ("".equals(insta2)) {
             etInstagramEditar.setError("Introduce tu Instagram");
+            return;
         }
 
-        //actualizar los datos
-        editor.putString("descripcion",descripcion);
-        actualizarDatos("descripcion", descripcion);
+        if (imageUri == null) {
+            fotoPerfil2 = "";
+        }
+        else {
+            String nombreUsuario = sharedPref.getString("nombreUsuario","");
+            StorageReference sr = FirebaseStorage.getInstance().getReference();
+            StorageReference storage = sr.child("fotosperfiles").child(nombreUsuario);
+            if ("R.drawable.fotoperfil".equals(fotoPerfil) || "".equals(fotoPerfil)) {
+                recogerFoto(storage);
+            }
+            else {
+                deleteFoto(storage);
+            }
 
-        editor.putString("nombre", nombre);
-        actualizarDatos("nombre", nombre);
+        }
 
-        editor.putString("apellido", apellido);
-        actualizarDatos("apellido", apellido);
+    }
 
-        editor.putString("genero", genero);
-        actualizarDatos("genero", genero);
+    private void deleteFoto(StorageReference storage) {
+        storage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                recogerFoto(storage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
 
-        editor.putString("idFoto", fotoPerfil);
-        actualizarDatos("fotoPerfil", fotoPerfil);
-
-        editor.putString("instagram", insta);
-        actualizarDatos("instagram", insta);
-
-        editor.commit();
-        finish();
+            }
+        });
     }
 
     public void onClickFotoDePerfil (View view) {
@@ -141,6 +151,69 @@ public class EditarPerfilActivity extends AppCompatActivity {
                         Toast.makeText(EditarPerfilActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void recogerFoto(StorageReference storage) {
+        storage.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(EditarPerfilActivity.this, "Foto subida correctamente", Toast.LENGTH_SHORT).show();
+                descargarFoto(storage);
+            }
+        }).addOnFailureListener(EditarPerfilActivity.this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditarPerfilActivity.this, "Foto no subida", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void descargarFoto(StorageReference storage) {
+        storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                editor.putString("idFoto", uri.toString());
+                String nombreUsuario = sharedPref.getString("nombreUsuario","");
+                database.collection("users").document(nombreUsuario)
+                        .update("fotoPerfil", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                guardarDatos();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+
+                            }
+                        });
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(EditarPerfilActivity.this, "Foto no guardada", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void guardarDatos() {
+        editor.putString("descripcion",descripcion2);
+        actualizarDatos("descripcion", descripcion2);
+
+        editor.putString("nombre", nombre2);
+        actualizarDatos("nombre", nombre2);
+
+        editor.putString("apellido", apellido2);
+        actualizarDatos("apellido", apellido2);
+
+        editor.putString("genero", genero2);
+        actualizarDatos("genero", genero2);
+
+        editor.putString("instagram", insta2);
+        actualizarDatos("instagram", insta2);
+
+        editor.commit();
+        finish();
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
