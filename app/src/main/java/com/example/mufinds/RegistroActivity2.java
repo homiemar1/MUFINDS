@@ -101,7 +101,11 @@ public class RegistroActivity2 extends AppCompatActivity {
             etNombreUsuarioRegistro.setError("Introduce tu nombre de usuario");
             return;
         }
-        else if ("".equals(instagram)) {
+        if (" ".equals(nombre_usuario)) {
+            etNombreUsuarioRegistro.setError("No se permiten espacios");
+            return;
+        }
+        if ("".equals(instagram)) {
             etInstragram.setError("Introduce tu Instagram");
             return;
         }

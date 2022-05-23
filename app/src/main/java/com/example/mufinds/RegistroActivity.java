@@ -48,37 +48,51 @@ public class RegistroActivity extends AppCompatActivity {
 
         if ("".equals(nombre)) {
             etNombreRegistro.setError("Introduce tu nombre");
+            return;
         }
-        else if ("".equals(apellido)) {
+        if ("".equals(apellido)) {
             etApellidosRegistro.setError("Introduce tus apellidos");
+            return;
         }
-        else if ("".equals(email)) {
+        if ("".equals(email)) {
             etEmailRegistro.setError("Introduce tu email");
+            return;
         }
-        else if ("".equals(pwd)) {
+        if (!email.contains("@")) {
+            etEmailRegistro.setError("Este correo no es valido");
+            return;
+        }
+        if ("".equals(pwd)) {
             etContraseñaRegistro.setError("Introduce tu contraseño");
+            return;
         }
-        else if (edad == 0) {
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        if (!pwd.matches(pattern)) {
+            etContraseñaRegistro.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
+                    "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
+            return;
+        }
+
+        if (edad == 0) {
             etdFechaNacimientoRegistro.setError("Introduce tu fecha de nacimiento");
+            return;
         }
         else if (edad < 16) {
             etdFechaNacimientoRegistro.setError("Para acceder a esta app debes ser mayor de 16 años");
+            return;
         }
         //comprobar que los datos esten bien
-        else {
-            u = new Usuario();
-            u.setApellido(apellido);
-            u.setNombre(nombre);
-            u.setEmail(email);
-            u.setPassword(pwd);
-            u.setGenero(genero);
-            u.setDataNaixement(fecha);
+        u = new Usuario();
+        u.setApellido(apellido);
+        u.setNombre(nombre);
+        u.setEmail(email);
+        u.setPassword(pwd);
+        u.setGenero(genero);
+        u.setDataNaixement(fecha);
 
-            Intent intent = new Intent(this, RegistroActivity2.class);
-            intent.putExtra("usuario",u);
-            startActivity(intent);
-        }
-
+        Intent intent = new Intent(this, RegistroActivity2.class);
+        intent.putExtra("usuario",u);
+        startActivity(intent);
     }
 
     public void onClickFecha(View view) {

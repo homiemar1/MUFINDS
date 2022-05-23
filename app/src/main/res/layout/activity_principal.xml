@@ -8,27 +8,77 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivFotoMusicaPrincipal"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvPersonasPrincipal"
         android:layout_width="296dp"
         android:layout_height="278dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456"
-        app:srcCompat="@drawable/tusojos">
+        app:layout_constraintVertical_bias="0.456" >
 
-    </ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivFotoPerfilPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/fotoperfil" />
+
+            <TextView
+                android:id="@+id/tvNombreUsuarioPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tvCancionesComunPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tvDescripcionPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMusicaPrincipal"
+        android:layout_width="296dp"
+        android:layout_height="278dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.456">
+
+        <ImageView
+            android:id="@+id/ivFotoMusicaPrincipal"
+            android:layout_width="296dp"
+            android:layout_height="278dp"
+            app:srcCompat="@drawable/tusojos">
+
+        </ImageView>
+    </androidx.cardview.widget.CardView>
 
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -37,7 +87,7 @@
         android:layout_height="62dp"
         android:layout_marginBottom="12dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintBottom_toTopOf="@+id/cvMusicaPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,8 +120,8 @@
         android:onClick="onClickDislike"
         app:layout_constraintEnd_toStartOf="@+id/ivLike"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ivFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintStart_toStartOf="@+id/cvMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/cvMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/fotodislikeredimension" />
 
@@ -83,8 +133,8 @@
         android:layout_marginEnd="4dp"
         android:clickable="true"
         android:onClick="onClickLike"
-        app:layout_constraintEnd_toEndOf="@+id/ivFotoMusicaPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoMusicaPrincipal"
+        app:layout_constraintEnd_toEndOf="@+id/cvMusicaPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/cvMusicaPrincipal"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/like" />
 
@@ -108,6 +158,4 @@
         app:layout_constraintEnd_toEndOf="@+id/ivLike"
         app:layout_constraintTop_toBottomOf="@+id/ivLike"
         app:srcCompat="@drawable/logogestionarmusica" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
