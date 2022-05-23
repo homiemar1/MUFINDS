@@ -219,7 +219,31 @@ public class PrincipalActivity extends AppCompatActivity {
         ivBtEditarPerfil.setImageResource(R.drawable.logoeditarperfilredimensionado);
         cvMusicaPrincipal.setVisibility(View.INVISIBLE);
         cvPersonasPrincipal.setVisibility(View.VISIBLE);
-        //añadirInformacionUsuario();
+
+        añadirInformacionUsuario(false);
+    }
+
+    private void añadirInformacionUsuario(boolean valor) {
+        if (!valor && contadorUsuarios != 0) {
+            contadorUsuarios -= 1;
+        }
+        if (contadorUsuarios >= nombresUsuario.size()) {
+            contadorUsuarios = 0;
+        }
+        String nombreUsuario = nombresUsuario.get(contadorUsuarios);
+        ArrayList<String> array = usuarios.get(nombreUsuario);
+        String cancionComun = array.get(0);
+        String descripcion = array.get(1);
+        //String fotPerfil = array.get(2);
+
+        tvNombreUsuarioPrincipal.setText(nombreUsuario);
+        tvCancionesComunPrincipal.setText(cancionComun);
+        tvDescripcionPrincipal.setText(descripcion);
+        //String enlaze = al.get(i);
+        //Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
+        //ivFotoPerfilPrincipal;ç
+
+        contadorUsuarios += 1;
     }
 
     public void onClickDislike(View view) {
@@ -230,17 +254,14 @@ public class PrincipalActivity extends AppCompatActivity {
 
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
 
-                i += 1;
             } else {
                 String enlaze = al.get(i);
-
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-
-                i += 1;
             }
+            i += 1;
         }
         else {
-
+            añadirInformacionUsuario(true);
         }
     }
 
@@ -251,17 +272,16 @@ public class PrincipalActivity extends AppCompatActivity {
                 String enlaze = al.get(i);
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
 
-                i += 1;
             }
             else {
                 String enlaze = al.get(i);
 
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-                i += 1;
             }
+            i += 1;
         }
         else {
-
+            añadirInformacionUsuario(true);
         }
     }
 
