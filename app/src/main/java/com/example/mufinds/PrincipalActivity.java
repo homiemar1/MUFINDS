@@ -234,14 +234,18 @@ public class PrincipalActivity extends AppCompatActivity {
         ArrayList<String> array = usuarios.get(nombreUsuario);
         String cancionComun = array.get(0);
         String descripcion = array.get(1);
-        //String fotPerfil = array.get(2);
+        String fotPerfil = array.get(2);
 
         tvNombreUsuarioPrincipal.setText(nombreUsuario);
         tvCancionesComunPrincipal.setText(cancionComun);
         tvDescripcionPrincipal.setText(descripcion);
-        //String enlaze = al.get(i);
-        //Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-        //ivFotoPerfilPrincipal;ç
+
+        if ("".equals(fotPerfil) || "R.drawable.fotoperfil".equals(fotPerfil)) {
+            ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
+        }
+        else {
+            Picasso.with(this).load(Uri.parse(fotPerfil)).into(ivFotoPerfilPrincipal);
+        }
 
         contadorUsuarios += 1;
     }

@@ -31,31 +31,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/ivFotoPerfilPrincipal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
                 app:srcCompat="@drawable/fotoperfil" />
 
             <TextView
                 android:id="@+id/tvNombreUsuarioPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvCancionesComunPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvDescripcionPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
