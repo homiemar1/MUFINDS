@@ -17,12 +17,19 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
@@ -33,6 +40,7 @@ public class RegistroActivity2 extends AppCompatActivity {
     FirebaseFirestore database;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    StorageReference sr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,7 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         u = (Usuario) getIntent().getSerializableExtra("usuario");
         database = FirebaseFirestore.getInstance();
+        sr = FirebaseStorage.getInstance().getReference();
 
         sharedPref = this.getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -85,14 +94,6 @@ public class RegistroActivity2 extends AppCompatActivity {
     }
 
     public void onClickFinalizar (View view) {
-        if (imageUri == null) {
-            u.setFotoPerfil("R.drawable.fotoperfil");
-        }
-        else {
-            u.setFotoPerfil(imageUri.toString());
-        }
-
-
         String nombre_usuario = etNombreUsuarioRegistro.getText().toString();
         String descripcion = etDescripcionRegistro.getText().toString();
         String instagram = etInstragram.getText().toString();
@@ -128,28 +129,71 @@ public class RegistroActivity2 extends AppCompatActivity {
                     u.setDescripcion(descripcion);
                     u.setInstagram(instagram);
 
-                    database.collection("users").document(u.getNombreUsuari()).set(u);
+                    if (imageUri == null) {
+                        u.setFotoPerfil("");
+                    }
+                    else {
+                        StorageReference storage = sr.child("fotosperfiles").child(nombre_usuario);
+                        recogerFoto(storage);
 
-                    editor.putString("nombre", u.getNombre());
-                    editor.putString("apellido", u.getApellido());
-                    editor.putString("email", u.getEmail());
-                    editor.putString("password", u.getPassword());
-                    editor.putString("genero", u.getGenero());
-                    editor.putString("descripcion", u.getDescripcion());
-                    editor.putString("nombreUsuario", u.getNombreUsuari());
-                    editor.putString("idFoto",u.getFotoPerfil());
-                    editor.putString("fechaNacimiento", u.getDataNaixement());
-                    editor.putString("instagram", u.getInstagram());
+                    }
 
-                    editor.commit();
-
-                    intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
-                    startActivity(intent);
-                    finish();
+                    guardarDatos();
                 }
                 else {
                     etNombreUsuarioRegistro.setError("Ese nombre de usuario ya existe");
                 }
+            }
+        });
+    }
+
+    public void guardarDatos() {
+        database.collection("users").document(u.getNombreUsuari()).set(u);
+
+        editor.putString("nombre", u.getNombre());
+        editor.putString("apellido", u.getApellido());
+        editor.putString("email", u.getEmail());
+        editor.putString("password", u.getPassword());
+        editor.putString("genero", u.getGenero());
+        editor.putString("descripcion", u.getDescripcion());
+        editor.putString("nombreUsuario", u.getNombreUsuari());
+        editor.putString("idFoto",u.getFotoPerfil());
+        editor.putString("fechaNacimiento", u.getDataNaixement());
+        editor.putString("instagram", u.getInstagram());
+
+        editor.commit();
+
+        intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void descargarFoto(StorageReference storage) {
+        storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                u.setFotoPerfil(uri.toString());
+                guardarDatos();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(RegistroActivity2.this, "Foto no guardada", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void recogerFoto(StorageReference storage) {
+        storage.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(RegistroActivity2.this, "Foto subida correctamente", Toast.LENGTH_SHORT).show();
+                descargarFoto(storage);
+            }
+        }).addOnFailureListener(RegistroActivity2.this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RegistroActivity2.this, "Foto no subida", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner sp_editar_genero;
@@ -48,12 +49,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
         etInstagramEditar = findViewById(R.id.etInstagramEditar);
 
 
-        String fotoPerfil =sharedPref.getString("idFoto", "R.drawable.fotoperfil");
-        if (fotoPerfil.equals("R.drawable.fotoperfil")) {
+        String fotoPerfil = sharedPref.getString("idFoto", "R.drawable.fotoperfil");
+        if ("R.drawable.fotoperfil".equals(fotoPerfil) || "".equals(fotoPerfil)) {
             ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
         else {
-            ivFotoPerfilEditarPerfil.setImageURI(Uri.parse(fotoPerfil));
+            Picasso.with(this).load(Uri.parse(fotoPerfil)).into(ivFotoPerfilEditarPerfil);
         }
 
 
@@ -81,11 +82,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
         String descripcion = etDescripcionEditarPerfil.getText().toString();
         String genero = sp_editar_genero.getSelectedItem().toString();
         String insta = etInstagramEditar.getText().toString();
+        String fotoPerfil;
         if (imageUri == null) {
-            String fotoPerfil = "R.drawable.fotoperfil";
+            fotoPerfil = "R.drawable.fotoperfil";
         }
         else {
-            String fotoPerfil = imageUri.toString();
+            fotoPerfil = imageUri.toString();
         }
 
 
@@ -110,8 +112,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editor.putString("genero", genero);
         actualizarDatos("genero", genero);
 
-        editor.putInt("idFoto", ivFotoPerfilEditarPerfil.getId());
-        actualizarDatos("fotoPerfil", String.valueOf(imageUri));
+        editor.putString("idFoto", fotoPerfil);
+        actualizarDatos("fotoPerfil", fotoPerfil);
 
         editor.putString("instagram", insta);
         actualizarDatos("instagram", insta);
