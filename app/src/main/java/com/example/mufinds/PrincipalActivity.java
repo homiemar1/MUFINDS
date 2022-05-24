@@ -21,14 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
@@ -69,6 +76,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
         nombresUsuario = new ArrayList<>();
         arrayIdCanciones = new ArrayList<>();
+        arrayLinks = new ArrayList<>();
+        getCanciones();
+
+
 
         usuarios = getUsuarios();
     }
@@ -103,7 +114,6 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void getCanciones() {
-        ArrayList<String> al = new ArrayList<>();
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -118,6 +128,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 } else {
                     System.out.println("Error getting documents." + task.getException());
                 }
+                Picasso.with(PrincipalActivity.this).load(Uri.parse(arrayLinks.get(i))).into(ivFotoMusicaPrincipal);
             }
         });
 
@@ -250,16 +261,11 @@ public class PrincipalActivity extends AppCompatActivity {
     public void onClickDislike(View view) {
         if (condicion == 1) {
             if (i >= arrayLinks.size()) {
-                i = 0;
-                String enlaze = arrayLinks.get(i);
-
-                Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-
-            } else {
-                String enlaze = arrayLinks.get(i);
-                Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
+                i=0;
             }
             i += 1;
+            String enlaze = arrayLinks.get(i);
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
         }
         else {
             añadirInformacionUsuario(true);
@@ -268,25 +274,46 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickLike(View view) {
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
-
-        //database.collection("relacion").document(nombreUsuario).set(relacion);
         if (condicion == 1) {
             if (i >= arrayLinks.size()) {
                 i=0;
-                String enlaze = arrayLinks.get(i);
-                Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-
             }
-            else {
-                String enlaze = arrayLinks.get(i);
-
-                Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
-            }
+            String idcancion = arrayIdCanciones.get(i);
+            insertarDatos(idcancion, nombreUsuario);
             i += 1;
+            String enlaze = arrayLinks.get(i);
+            Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
         }
         else {
             añadirInformacionUsuario(true);
         }
+    }
+
+    public void insertarDatos(String idcancion, String nombreUsuario) {
+
+        database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    WriteBatch batch = database.batch();
+
+                    for (DocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(nombreUsuario)) {
+                            DocumentReference docRef = document.getReference();
+                            Map<String, Object> new_map = new HashMap<>();
+                            new_map.put(idcancion, idcancion);
+                            batch.update(docRef, new_map);
+                        }
+                    }
+                    batch.commit();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     @Override

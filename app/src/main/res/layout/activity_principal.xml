@@ -81,8 +81,7 @@
         <ImageView
             android:id="@+id/ivFotoMusicaPrincipal"
             android:layout_width="296dp"
-            android:layout_height="278dp"
-            app:srcCompat="@drawable/tusojos">
+            android:layout_height="278dp">
 
         </ImageView>
     </androidx.cardview.widget.CardView>

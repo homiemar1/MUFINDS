@@ -31,6 +31,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
     private ImageView ivFotoPerfilRegistro;
@@ -149,6 +152,9 @@ public class RegistroActivity2 extends AppCompatActivity {
 
     public void guardarDatos() {
         database.collection("users").document(u.getNombreUsuari()).set(u);
+
+        Map<String, String> map = new HashMap<>();
+        database.collection("relacion").document(u.getNombreUsuari()).set(map);
 
         editor.putString("nombre", u.getNombre());
         editor.putString("apellido", u.getApellido());
