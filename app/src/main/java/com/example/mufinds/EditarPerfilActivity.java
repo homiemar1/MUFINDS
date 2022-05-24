@@ -35,12 +35,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner sp_editar_genero;
     private ImageView ivFotoPerfilEditarPerfil;
     private Uri imageUri;
-    EditText etNombreEditarPerfil, etApellidoEditarPerfil, etDescripcionEditarPerfil, etInstagramEditar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-    FirebaseFirestore database;
+    private EditText etNombreEditarPerfil, etApellidoEditarPerfil, etDescripcionEditarPerfil, etInstagramEditar;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private FirebaseFirestore database;
 
-    String nombre2, apellido2, descripcion2,genero2, insta2, fotoPerfil2,fotoPerfil;
+    private String nombre2, apellido2, descripcion2,genero2, insta2, fotoPerfil2,fotoPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +71,31 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         sp_editar_genero = findViewById(R.id.spEditarGeneroEditarPerfil);
         String[] datos = new String[] {"Mujer", "Hombre", "Prefiero no contestar", "No binario"};
-        sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
+        sp_editar_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_dropdown_item,datos));
         String nombre = sharedPref.getString("nombre","");
         String apellidos = sharedPref.getString("apellido","");
         String descripcion = sharedPref.getString("descripcion","");
         String instagram = sharedPref.getString("instagram","");
+        String genero = sharedPref.getString("genero","");
 
         etNombreEditarPerfil.setText(nombre);
         etApellidoEditarPerfil.setText(apellidos);
         etDescripcionEditarPerfil.setText(descripcion);
         etInstagramEditar.setText(instagram);
+        int posicion = buscarPosicion(datos, genero);
+        sp_editar_genero.setSelection(posicion);
+    }
+
+    private int buscarPosicion(String[] datos, String genero) {
+        int posicion = 0;
+        for (String dato : datos) {
+            if (genero.equals(dato)) {
+                break;
+            }
+            posicion ++;
+        }
+        return posicion;
     }
 
     public void onClickAceptar(View view) {
@@ -102,6 +117,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         if (imageUri == null) {
             fotoPerfil2 = "";
+            guardarDatos();
         }
         else {
             String nombreUsuario = sharedPref.getString("nombreUsuario","");
