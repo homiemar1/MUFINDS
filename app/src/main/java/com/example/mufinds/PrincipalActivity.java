@@ -96,16 +96,19 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String nombreUsuario = document.getId();
-                        String cancionesComun = "11" + " canciones en comun";
-                        String descripcion = document.getData().get("descripcion").toString();
-                        String fotoPerfil = document.getData().get("fotoPerfil").toString();
-                        nombresUsuario.add(nombreUsuario);
-                        ArrayList<String> infoUser = new ArrayList<String>();
-                        infoUser.add(cancionesComun);
-                        infoUser.add(descripcion);
-                        infoUser.add(fotoPerfil);
-                        usuarios.put(nombreUsuario, infoUser);
+                        if (!document.getId().equals(sharedPref.getString("nombreUsuario",""))) {
+                            String nombreUsuario = document.getId();
+                            String cancionesComun = "11" + " canciones en comun";
+                            String descripcion = document.getData().get("descripcion").toString();
+                            String fotoPerfil = document.getData().get("fotoPerfil").toString();
+                            nombresUsuario.add(nombreUsuario);
+                            ArrayList<String> infoUser = new ArrayList<String>();
+                            infoUser.add(cancionesComun);
+                            infoUser.add(descripcion);
+                            infoUser.add(fotoPerfil);
+                            usuarios.put(nombreUsuario, infoUser);
+                        }
+
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
