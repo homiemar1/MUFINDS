@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -35,12 +36,9 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         etApellidosRecuperarContraseña = findViewById(R.id.etApellidosRecuperarContraseña);
         etdFechaNacimientoRecuperarContraseña = findViewById(R.id.etdFechaNacimientoRecuperarContraseña);
 
-        tvRespuestaRecuperarContraseña = findViewById(R.id.tvRespuestaRecuperarContraseña);
-
     }
 
     public void onClickRecuperar(View view) {
-        //comprobar que sea igual al de la base de datos
 
         nombreUsuario = etNombreUsuarioRecuperarContraseña.getText().toString();
         nombre = etNombreRecuperarContraseña.getText().toString();
@@ -71,12 +69,13 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                                 String dbApellidos = document.getData().get("apellido").toString();
                                 String dbFecha = document.getData().get("dataNaixement").toString();
                                 if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos) && dbFecha.equals(fecha)) {
-                                    tvRespuestaRecuperarContraseña.setText("Tu contraseña es: " + document.getData().get("password").toString());
+                                    Intent intent = new Intent(RecuperarContrasenaActivity.this, CambiarUsuariooContraseñaActivity.class);
+                                    intent.putExtra("variable", 2);
+                                    startActivity(intent);
                                 }
                                 else {
                                     tvRespuestaRecuperarContraseña.setText("Los datos no coinciden. Vuelva a intentarlo");
                                 }
-
                             }
                         }
                     } else {
@@ -108,7 +107,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                 String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
                 String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
 
-                fecha = diaFormateado + "/" + mesFormateado + "/" + any;
+                fecha = diaFormateado + "/" + mesFormateado + "/" + año;
                 etdFechaNacimientoRecuperarContraseña.setText(fecha);
 
             }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
@@ -53,8 +54,13 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         else {
             tvTituloCambio.setText("CAMBIAR CONTRASEÑA");
             etDatoAntiguo.setHint("Contraseña actual");
+            etDatoAntiguo.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
             etDatoNuevo.setHint("Contraseña nueva");
+            etDatoNuevo.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
             etDatoConfirmacion.setHint("Confirmar contraseña nueva");
+            etDatoConfirmacion.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
             etDatoAntiguo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
             etDatoNuevo.setTransformationMethod(new AsteriskPasswordTransformationMethod());
@@ -72,34 +78,53 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             etDatoAntiguo.setError("Introduce el dato antiguo");
             return;
         }
-        else if ("".equals(datoNuevo)) {
+        if ("".equals(datoNuevo)) {
             etDatoNuevo.setError("Introduce el dato nuevo");
             return;
         }
-        else if ("".equals(datoConfirmacion)) {
+        if ("".equals(datoConfirmacion)) {
             etDatoConfirmacion.setError("Introduce el dato de confirmacion");
-            return;
-        }
-        else if (!datoNuevo.equals(datoConfirmacion)) {
-            etDatoNuevo.setError("Los nuevos datos deben coincidir");
-            etDatoConfirmacion.setError("Los nuevos datos deben coincidir");
             return;
         }
 
         String usuario = recogerUsuario();
         if (valor == 1) {
-            if (!datoAntiguo.equals(usuario) || "".equals(usuario)) {
-                etDatoAntiguo.setError("El usuario no coincide con el de la sesion actual");
+            if (!datoAntiguo.equals(usuario)) {
+                etDatoAntiguo.setError("El usuario no coincide con el de la sesión actual");
                 return;
             }
         }
         else {
             String contraseña = recogerContraseña();
-            if (!datoAntiguo.equals(contraseña) || "".equals(contraseña)) {
-                etDatoNuevo.setError("La contraseña no coincide con el de la sesion actual");
+            if (!datoAntiguo.equals(contraseña)) {
+                etDatoAntiguo.setError("La contraseña no coincide con el de la sesión actual");
                 return;
             }
         }
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        if (!datoNuevo.matches(pattern)) {
+            etDatoNuevo.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
+                    "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
+            return;
+        }
+        if (!datoNuevo.matches(pattern)) {
+            etDatoConfirmacion.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
+                    "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
+            return;
+        }
+        if (!datoNuevo.equals(datoConfirmacion)) {
+            etDatoNuevo.setError("Los nuevos datos deben coincidir");
+            etDatoConfirmacion.setError("Los nuevos datos deben coincidir");
+            return;
+        }
+        if (datoAntiguo.equals(datoNuevo) && datoAntiguo.equals(datoConfirmacion)) {
+            etDatoNuevo.setError("Los nuevos datos no pueden ser iguales que el dato a cambiar");
+            etDatoConfirmacion.setError("Los nuevos datos no pueden ser iguales que el dato a cambiar");
+            return;
+        }
+
+
+
 
         //comprobar datos
         if (valor == 1) {
@@ -210,7 +235,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
                 mSource = source; // Store char sequence
             }
             public char charAt(int index) {
-                return '*'; // This is the important part
+                return '•'; // This is the important part
             }
             public int length() {
                 return mSource.length(); // Return default
