@@ -1,6 +1,7 @@
 package com.example.mufinds;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.util.ArrayUtils;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -21,10 +23,10 @@ import java.util.List;
 public class AmigosList extends ArrayAdapter {
     private String[] userNames;
     private String[] cancionComun;
-    private Integer[] perfilId;
+    private String[] perfilId;
     private Activity context;
 
-    public AmigosList(Activity context, String[] userNames, String[] cancionComun, Integer[] perfilId) {
+    public AmigosList(Activity context, String[] userNames, String[] cancionComun, String[] perfilId) {
         super(context, R.layout.activity_amistades, userNames);
         this.context = context;
         this.userNames = userNames;
@@ -45,8 +47,8 @@ public class AmigosList extends ArrayAdapter {
 
         textViewUsuario.setText(userNames[position]);
         textViewCancionesComun.setText(cancionComun[position]);
-        imageViewUsuario.setImageResource(perfilId[position]);
-
+        //Picasso.with(context).load(Uri.parse(perfilId[position])).into(imageViewUsuario);
+        imageViewUsuario.setImageResource(R.drawable.fotoperfil);
         return row;
     }
 }
