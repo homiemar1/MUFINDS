@@ -44,23 +44,25 @@
                 android:id="@+id/tvNombreUsuarioPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/impact"
                 android:text="TextView"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/tvCancionesComunPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/impact"
                 android:text="TextView"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvDescripcionPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/impact"
                 android:text="TextView"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
