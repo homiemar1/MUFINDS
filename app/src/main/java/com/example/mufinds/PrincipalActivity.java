@@ -7,45 +7,28 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
@@ -53,7 +36,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private CardView cvMusicaPrincipal, cvPersonasPrincipal;
     private ImageView ivFotoMusicaPrincipal, ivBtEditarPerfil, ivFotoPerfilPrincipal;
     private TextView tvNombreUsuarioPrincipal, tvCancionesComunPrincipal, tvDescripcionPrincipal;
-    private ArrayList<String> al, nombresUsuario;
+    private ArrayList<String> arrayLinks, nombresUsuario, arrayIdCanciones;
     private HashMap<String, ArrayList<String>> usuarios;
     private int i = 0;
     private int contadorUsuarios = 0;
@@ -84,8 +67,9 @@ public class PrincipalActivity extends AppCompatActivity {
         ivFotoMusicaPrincipal = findViewById(R.id.ivFotoMusicaPrincipal);
         ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
-        al = getCanciones();
         nombresUsuario = new ArrayList<>();
+        arrayIdCanciones = new ArrayList<>();
+
         usuarios = getUsuarios();
     }
 
@@ -118,7 +102,7 @@ public class PrincipalActivity extends AppCompatActivity {
         return usuarios;
     }
 
-    public ArrayList<String> getCanciones() {
+    public void getCanciones() {
         ArrayList<String> al = new ArrayList<>();
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -126,7 +110,10 @@ public class PrincipalActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String link = document.getData().get("link").toString();
-                        al.add(link);
+                        arrayLinks.add(link);
+                        String idcancion = document.getId();
+                        arrayIdCanciones.add(idcancion);
+
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
@@ -134,7 +121,6 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
-        return al;
     }
 
     @Override
@@ -263,14 +249,14 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickDislike(View view) {
         if (condicion == 1) {
-            if (i >= al.size()) {
+            if (i >= arrayLinks.size()) {
                 i = 0;
-                String enlaze = al.get(i);
+                String enlaze = arrayLinks.get(i);
 
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
 
             } else {
-                String enlaze = al.get(i);
+                String enlaze = arrayLinks.get(i);
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
             }
             i += 1;
@@ -282,18 +268,17 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickLike(View view) {
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
-        /*Map<String, String> mapa = new HashMap<>();
-        mapa.put("haha", "hehe");
-        database.collection("relacion").document(nombreUsuario).set(mapa);*/
+
+        //database.collection("relacion").document(nombreUsuario).set(relacion);
         if (condicion == 1) {
-            if (i >= al.size()) {
+            if (i >= arrayLinks.size()) {
                 i=0;
-                String enlaze = al.get(i);
+                String enlaze = arrayLinks.get(i);
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
 
             }
             else {
-                String enlaze = al.get(i);
+                String enlaze = arrayLinks.get(i);
 
                 Picasso.with(this).load(Uri.parse(enlaze)).into(ivFotoMusicaPrincipal);
             }
