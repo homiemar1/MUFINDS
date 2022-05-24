@@ -63,7 +63,7 @@ public class RegistroActivity extends AppCompatActivity {
             return;
         }
         if ("".equals(pwd)) {
-            etContraseñaRegistro.setError("Introduce tu contraseño");
+            etContraseñaRegistro.setError("Introduce tu contraseña");
             return;
         }
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
@@ -81,7 +81,9 @@ public class RegistroActivity extends AppCompatActivity {
             etdFechaNacimientoRegistro.setError("Para acceder a esta app debes ser mayor de 16 años");
             return;
         }
-        //comprobar que los datos esten bien
+
+        pwd = EncriptarContraseña.encriptarMensaje(pwd);
+
         u = new Usuario();
         u.setApellido(apellido);
         u.setNombre(nombre);

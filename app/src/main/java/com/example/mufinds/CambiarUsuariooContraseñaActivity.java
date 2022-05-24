@@ -96,6 +96,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         }
         else {
             String contraseña = recogerContraseña();
+            datoAntiguo = EncriptarContraseña.encriptarMensaje(datoAntiguo);
             if (!datoAntiguo.equals(contraseña)) {
                 etDatoAntiguo.setError("La contraseña no coincide con el de la sesión actual");
                 return;
@@ -167,12 +168,13 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     }
 
     public void updateContraseña(String usuario, String datoNuevo) {
-        database.collection("users").document(usuario).update("password", datoNuevo)
+        String contraseña = EncriptarContraseña.encriptarMensaje(datoNuevo);
+        database.collection("users").document(usuario).update("password", contraseña)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
-                        editor.putString("password", datoNuevo);
+                        editor.putString("password", contraseña);
                         editor.commit();
                         finish();
                     }

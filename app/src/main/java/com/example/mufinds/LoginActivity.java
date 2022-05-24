@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             etContraseñaIniciarSesion.setError("Introduce tu contraseña");
             return;
         }
+        password = EncriptarContraseña.encriptarMensaje(password);
         database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
