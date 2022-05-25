@@ -28,23 +28,22 @@ public class MusicaActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private AmigosList amigosList;
     private ListView lvGestionarMusica;
-    private String[] nombreCanciones;
-    private String[] artistasCanciones;
-    private String[] portadas;
+    private String[] idCanciones;
+    private int cantidad =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musica);
 
+        amigosList = null;
+
         database = FirebaseFirestore.getInstance();
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
 
         lvGestionarMusica = findViewById(R.id.lvGestionarMusica);
 
-        nombreCanciones = new String[23];
-        artistasCanciones = new String[23];
-        portadas = new String[23];
+        idCanciones = new String[50];
 
         lvGestionarMusica.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,7 +71,6 @@ public class MusicaActivity extends AppCompatActivity {
 
     private void getInfoCanciones () {
         String nombreUsuario = sharedPref.getString("nombreUsuario", "");
-        String[] idCanciones = new String[50];
         database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(Task<QuerySnapshot> task) {
@@ -91,6 +89,7 @@ public class MusicaActivity extends AppCompatActivity {
                     int i = 0;
                     for (String idCancion : allInfo.keySet()) {
                         idCanciones[i] = idCancion;
+                        cantidad++;
                         i++;
                     }
                     getCanciones(idCanciones);
@@ -99,23 +98,28 @@ public class MusicaActivity extends AppCompatActivity {
         });
     }
 
-    private void getCanciones(String [] idCanciones) {
+    private void getCanciones(String[] idCancion) {
+        String[] nombreCanciones = new String[cantidad];
+        String[] artistasCanciones = new String[cantidad];
+        String[] portadas = new String[cantidad];
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                int i = 0;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.getId().equals(idCanciones[i])){
-                            nombreCanciones[i] = document.getData().get("titulo").toString();
-                            artistasCanciones[i] = document.getData().get("artista").toString();
-                            portadas[i] = document.getData().get("link").toString();
+                        for (int x = 0; x<idCancion.length; x++) {
+                            if (document.getId().equals(idCancion[x])){
+                                nombreCanciones[x] = document.getData().get("titulo").toString();
+                                artistasCanciones[x] = document.getData().get("artista").toString();
+                                portadas[x] = document.getData().get("link").toString();
+
+                            }
                         }
-                        i++;
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
                 }
+
                 amigosList = new AmigosList(MusicaActivity.this, nombreCanciones, artistasCanciones, portadas);
                 lvGestionarMusica.setAdapter(amigosList);
             }
