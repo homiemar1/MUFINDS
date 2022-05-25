@@ -229,9 +229,11 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickDislike(View view) {
         if (condicion == 1) {
+            contadorMusica+=1;
             añadirInformacionMusica(true);
         }
         else {
+            contadorUsuarios+=1;
             añadirInformacionUsuario(true);
         }
     }
@@ -246,8 +248,37 @@ public class PrincipalActivity extends AppCompatActivity {
             añadirInformacionMusica(true);
         }
         else {
+            String idUsuario = nombresUsuario.get(contadorUsuarios);
+            contadorUsuarios += 1;
+            System.out.println(idUsuario);
+            insertarDatosUsuario(idUsuario, nombreUsuario);
             añadirInformacionUsuario(true);
         }
+    }
+
+    private void insertarDatosUsuario(String idUsuario, String nombreUsuario) {
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    WriteBatch batch = database.batch();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(idUsuario)) {
+                            DocumentReference docRef = document.getReference();
+                            Map<String, Object> new_map = new HashMap<>();
+                            new_map.put(nombreUsuario, false);
+                            batch.update(docRef, new_map);
+                        }
+                    }
+                    batch.commit();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     private void añadirInformacionUsuario(boolean valor) {
@@ -258,6 +289,7 @@ public class PrincipalActivity extends AppCompatActivity {
             contadorUsuarios = 0;
         }
         String nombreUsuario = nombresUsuario.get(contadorUsuarios);
+
         ArrayList<String> array = usuarios.get(nombreUsuario);
         String cancionComun = array.get(0);
         String descripcion = array.get(1);
@@ -274,7 +306,6 @@ public class PrincipalActivity extends AppCompatActivity {
             Picasso.with(this).load(Uri.parse(fotPerfil)).into(ivFotoPerfilPrincipal);
         }
 
-        //contadorUsuarios += 1;
     }
 
     private void añadirInformacionMusica(boolean valor) {
