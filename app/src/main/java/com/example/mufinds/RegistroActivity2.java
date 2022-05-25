@@ -154,7 +154,8 @@ public class RegistroActivity2 extends AppCompatActivity {
         database.collection("users").document(u.getNombreUsuari()).set(u);
 
         Map<String, String> map = new HashMap<>();
-        database.collection("relacion").document(u.getNombreUsuari()).set(map);
+        database.collection("relacionUsuarioMusica").document(u.getNombreUsuari()).set(map);
+        database.collection("relacionUsuarioUsuario").document(u.getNombreUsuari()).set(map);
 
         editor.putString("nombre", u.getNombre());
         editor.putString("apellido", u.getApellido());
