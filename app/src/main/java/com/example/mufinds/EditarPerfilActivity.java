@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +41,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private FirebaseFirestore database;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
+
 
     private String nombre2, apellido2, descripcion2,genero2, insta2, fotoPerfil2,fotoPerfil;
 
@@ -46,6 +51,10 @@ public class EditarPerfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
+        builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.loading_dialog);
+        dialog = builder.create();
 
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -124,9 +133,11 @@ public class EditarPerfilActivity extends AppCompatActivity {
             StorageReference sr = FirebaseStorage.getInstance().getReference();
             StorageReference storage = sr.child("fotosperfiles").child(nombreUsuario);
             if ("R.drawable.fotoperfil".equals(fotoPerfil) || "".equals(fotoPerfil)) {
+                dialog.show();
                 recogerFoto(storage);
             }
             else {
+                dialog.show();
                 deleteFoto(storage);
             }
 
@@ -158,13 +169,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(EditarPerfilActivity.this, "Update satisfactorio", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(EditarPerfilActivity.this, "Updatn't satisfactorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditarPerfilActivity.this, "No se han podido cambiar bien los datos", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -173,13 +183,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
         storage.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(EditarPerfilActivity.this, "Foto subida correctamente", Toast.LENGTH_SHORT).show();
                 descargarFoto(storage);
             }
         }).addOnFailureListener(EditarPerfilActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditarPerfilActivity.this, "Foto no subida", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditarPerfilActivity.this, "La imagen no se ha podido subir correctamente", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,6 +238,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         actualizarDatos("instagram", insta2);
 
         editor.commit();
+        dialog.dismiss();
         finish();
     }
 

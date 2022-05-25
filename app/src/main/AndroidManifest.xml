@@ -17,7 +17,6 @@
         <activity android:name=".CambiarUsuariooContraseñaActivity"/>
         <activity android:name=".MusicaActivity" />
         <activity android:name=".AmistadesActivity" />
-        <activity android:name=".VistaPerfilActivity" />
         <activity android:name=".PrincipalActivity" />
         <activity android:name=".ConfiguracionActivity" />
         <activity android:name=".IniciActivity">
