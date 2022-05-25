@@ -57,6 +57,7 @@ public class MusicaActivity extends AppCompatActivity {
                 dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
                         amigosList.removeData(posicion, "relacionUsuarioMusica", nombreUsuario, idCancion.get(posicion));
+                        idCancion.remove(posicion);
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
