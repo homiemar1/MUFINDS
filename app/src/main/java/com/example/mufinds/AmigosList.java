@@ -63,14 +63,38 @@ public class AmigosList extends ArrayAdapter {
     }
 
     public void removeData(int position, String colectionPath, String nombreUsuario, String idCancion) {
-        userNames.remove(position);
-        cancionComun.remove(position);
-        perfilId.remove(position);
+        this.userNames.remove(position);
+        this.cancionComun.remove(position);
+        this.perfilId.remove(position);
 
         docRef = database.collection(colectionPath).document(nombreUsuario);
         Map<String,Object> eliminar = new HashMap<>();
         eliminar.put(idCancion, FieldValue.delete());
         docRef.update(eliminar);
         AmigosList.this.notifyDataSetChanged();
+    }
+
+    public List<String> getUserNames() {
+        return userNames;
+    }
+
+    public void setUserNames(List<String> userNames) {
+        this.userNames = userNames;
+    }
+
+    public List<String> getCancionComun() {
+        return cancionComun;
+    }
+
+    public void setCancionComun(List<String> cancionComun) {
+        this.cancionComun = cancionComun;
+    }
+
+    public List<String> getPerfilId() {
+        return perfilId;
+    }
+
+    public void setPerfilId(List<String> perfilId) {
+        this.perfilId = perfilId;
     }
 }

@@ -29,13 +29,15 @@ public class MusicaActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private AmigosList amigosList;
     private ListView lvGestionarMusica;
+    private List<String> nombreCanciones = new ArrayList<>();
+    private List<String> artistasCanciones = new ArrayList<>();
+    private List<String> portadas = new ArrayList<>();
 
     private List<String> idCancion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musica);
-
 
         database = FirebaseFirestore.getInstance();
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
@@ -95,9 +97,9 @@ public class MusicaActivity extends AppCompatActivity {
     }
 
     private void getCanciones(List<String> idCanciones) {
-        List<String> nombreCanciones = new ArrayList<>();
-        List<String> artistasCanciones = new ArrayList<>();
-        List<String> portadas = new ArrayList<>();
+        nombreCanciones = new ArrayList<>();
+        artistasCanciones = new ArrayList<>();
+        portadas = new ArrayList<>();
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
