@@ -239,7 +239,9 @@ public class PrincipalActivity extends AppCompatActivity {
     public void onClickLike(View view) {
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
         if (condicion == 1) {
+
             String idcancion = idsCanciones.get(contadorMusica);
+            contadorMusica += 1;
             insertarDatos(idcancion, nombreUsuario);
             añadirInformacionMusica(true);
         }
@@ -272,7 +274,7 @@ public class PrincipalActivity extends AppCompatActivity {
             Picasso.with(this).load(Uri.parse(fotPerfil)).into(ivFotoPerfilPrincipal);
         }
 
-        contadorUsuarios += 1;
+        //contadorUsuarios += 1;
     }
 
     private void añadirInformacionMusica(boolean valor) {
@@ -282,7 +284,9 @@ public class PrincipalActivity extends AppCompatActivity {
         if (contadorMusica >= idsCanciones.size()) {
             contadorMusica = 0;
         }
+
         String idCancion = idsCanciones.get(contadorMusica);
+
         ArrayList<String> array = canciones.get(idCancion);
         String linkPortada = array.get(0);
         String titulo = array.get(1);
@@ -295,8 +299,6 @@ public class PrincipalActivity extends AppCompatActivity {
         tvNombreUsuarioPrincipal.setText(nombreFecha);
         tvCancionesComunPrincipal.setText(album);
         tvDescripcionPrincipal.setText(artista);
-
-        contadorMusica += 1;
     }
 
     public void insertarDatos(String idcancion, String nombreUsuario) {
