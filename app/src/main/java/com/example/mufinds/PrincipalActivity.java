@@ -288,6 +288,7 @@ public class PrincipalActivity extends AppCompatActivity {
         if (contadorUsuarios >= nombresUsuario.size()) {
             contadorUsuarios = 0;
         }
+
         String nombreUsuario = nombresUsuario.get(contadorUsuarios);
 
         ArrayList<String> array = usuarios.get(nombreUsuario);

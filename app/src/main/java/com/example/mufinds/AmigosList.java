@@ -1,6 +1,7 @@
 package com.example.mufinds;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,8 +59,7 @@ public class AmigosList extends ArrayAdapter {
 
         textViewUsuario.setText(userNames.get(position));
         textViewCancionesComun.setText(cancionComun.get(position));
-        //Picasso.with(context).load(Uri.parse(perfilId.get(position)).into(imageViewUsuario);
-        imageViewUsuario.setImageResource(R.drawable.fotoperfil);
+        Picasso.with(context).load(Uri.parse(perfilId.get(position))).into(imageViewUsuario);
         return row;
     }
 
