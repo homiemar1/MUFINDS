@@ -64,9 +64,10 @@ public class MusicaActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         amigosList.removeData(posicion, "relacionUsuarioMusica", nombreUsuario, idCancion.get(posicion));
                         idCancion.remove(posicion);
-                        /*cancionesLike.remove(posicion);
+                        System.out.println(cancionesLike.get(posicion));
+                        cancionesLike.remove(posicion);
                         editor.putStringSet("canciones", saveArraySharedPreference(cancionesLike));
-                        editor.commit();*/
+                        editor.commit();
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

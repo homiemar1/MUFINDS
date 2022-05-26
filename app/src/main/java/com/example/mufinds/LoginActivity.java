@@ -74,14 +74,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         boolean usuarioCheck = false;
-                        boolean passwordCheck = false;
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getId().equals(nombreUsuario)) {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
-                                        passwordCheck = true;
+                                        getCancionesUsuario(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -96,13 +95,10 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             System.out.println("Error getting documents." + task.getException());
                         }
-                        if (usuarioCheck == false) {
+                        if (!usuarioCheck) {
                             editTextTextPersonName.setError("Usuario o contraseña incorrecto");
                             etContraseñaIniciarSesion.setError("Usuario o contraseña incorrecto");
                             return;
-                        }
-                        if (usuarioCheck && passwordCheck) {
-                            getCancionesUsuario(nombreUsuario);
                         }
                     }
                 });
@@ -136,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("idFoto", fotoPerfil);
                             editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.putString("instagram", instagram);
-                            //editor.putStringSet("canciones", saveArraySharedPreference(idCanciones));
+                            editor.putStringSet("canciones", saveArraySharedPreference(idCanciones));
                             editor.commit();
                         }
                     }
@@ -166,12 +162,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void getCancionesUsuario(String nombreUsuario) {
-        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        idCanciones.add(document.getId());
+                        if (nombreUsuario.equals(document.getId())) {
+                            idCanciones.add(document.getData().toString());
+                        }
+
                     }
                 }
                 guardarInformacionSharedPreference(nombreUsuario);
