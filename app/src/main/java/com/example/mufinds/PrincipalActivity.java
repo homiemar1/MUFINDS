@@ -313,7 +313,7 @@ public class PrincipalActivity extends AppCompatActivity {
             ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
         }
         else {
-            Picasso.with(this).load(Uri.parse(fotPerfil)).into(ivFotoPerfilPrincipal);
+            Picasso.with(this).load(Uri.parse(fotPerfil)).noFade().into(ivFotoPerfilPrincipal);
         }
 
     }
@@ -335,7 +335,7 @@ public class PrincipalActivity extends AppCompatActivity {
         String album = array.get(3);
         String fechaLanzamiento = array.get(4);
 
-        Picasso.with(this).load(Uri.parse(linkPortada)).into(ivFotoPerfilPrincipal);
+        Picasso.with(this).load(Uri.parse(linkPortada)).noFade().into(ivFotoPerfilPrincipal);
         String nombreFecha = titulo + " - " + fechaLanzamiento;
         tvNombreUsuarioPrincipal.setText(nombreFecha);
         tvCancionesComunPrincipal.setText(album);
