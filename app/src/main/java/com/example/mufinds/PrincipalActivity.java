@@ -60,7 +60,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-        //cancionesLike = recogerArraySharedPreference();
+        cancionesLike = recogerArraySharedPreference();
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilPrincipal = findViewById(R.id.ivFotoPrincipal);
@@ -110,26 +110,35 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 String idcancion = "";
+                Boolean b = false;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //if (!cancionesLike.contains(document.getId())) {
-                        idcancion = document.getId();
-                        String link = document.getData().get("link").toString();
-                        String titulo = document.getData().get("titulo").toString();
-                        String artista = document.getData().get("artista").toString();
-                        String album = document.getData().get("album").toString();
-                        String fechaLanzamiento = Long.toString((Long) document.getData().get("fecha_lanzamiento"));
+                        for (int i = 0; i <cancionesLike.size(); i++) {
+                            if (!cancionesLike.get(i).equals(document.getId())) {
+                                b = true;
+                            }
+                            else {
+                                b = false;
+                            }
+                        }
+                        if (b) {
+                            idcancion = document.getId();
+                            String link = document.getData().get("link").toString();
+                            String titulo = document.getData().get("titulo").toString();
+                            String artista = document.getData().get("artista").toString();
+                            String album = document.getData().get("album").toString();
+                            String fechaLanzamiento = Long.toString((Long) document.getData().get("fecha_lanzamiento"));
 
-                        ArrayList<String> infoCancion = new ArrayList<String>();
-                        infoCancion.add(link);
-                        infoCancion.add(titulo);
-                        infoCancion.add(artista);
-                        infoCancion.add(album);
-                        infoCancion.add(fechaLanzamiento);
+                            ArrayList<String> infoCancion = new ArrayList<String>();
+                            infoCancion.add(link);
+                            infoCancion.add(titulo);
+                            infoCancion.add(artista);
+                            infoCancion.add(album);
+                            infoCancion.add(fechaLanzamiento);
 
-                        idsCanciones.add(idcancion);
-                        canciones.put(idcancion, infoCancion);
-                        //}
+                            idsCanciones.add(idcancion);
+                            canciones.put(idcancion, infoCancion);
+                        }
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
@@ -249,9 +258,9 @@ public class PrincipalActivity extends AppCompatActivity {
         if (condicion == 1) {
 
             String idcancion = idsCanciones.get(contadorMusica);
-            /*cancionesLike.add(idcancion);
+            cancionesLike.add(idcancion);
             editor.putStringSet("canciones", saveArraySharedPreference(cancionesLike));
-            editor.commit();*/
+            editor.commit();
             contadorMusica += 1;
             insertarDatos(idcancion, nombreUsuario);
             añadirInformacionMusica(true);
@@ -368,7 +377,7 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    /*public ArrayList<String> recogerArraySharedPreference () {
+    public ArrayList<String> recogerArraySharedPreference () {
         ArrayList<String> array = new ArrayList<>();
         Set<String> set = sharedPref.getStringSet("canciones", new HashSet<String>());
         array.addAll(set);
@@ -379,7 +388,7 @@ public class PrincipalActivity extends AppCompatActivity {
         Set<String> set = new HashSet<String>();
         set.addAll(array);
         return set;
-    }*/
+    }
 
 
     @Override
