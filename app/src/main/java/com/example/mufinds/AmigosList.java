@@ -57,6 +57,7 @@ public class AmigosList extends ArrayAdapter {
         TextView textViewCancionesComun = (TextView) row.findViewById(R.id.tvCancionesComunAmigosList);
         ImageView imageViewUsuario = (ImageView) row.findViewById(R.id.fotoPerfilAmigosList);
 
+
         textViewUsuario.setText(userNames.get(position));
         textViewCancionesComun.setText(cancionComun.get(position));
         if ("".equals(perfilId.get(position))) {
@@ -65,6 +66,7 @@ public class AmigosList extends ArrayAdapter {
         else {
             Picasso.with(context).load(Uri.parse(perfilId.get(position))).noFade().into(imageViewUsuario);
         }
+
         return row;
     }
 

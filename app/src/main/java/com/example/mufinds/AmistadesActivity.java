@@ -1,9 +1,12 @@
 package com.example.mufinds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,18 +18,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AmistadesActivity extends AppCompatActivity {
-    TextView tvSolicitudes,tvAmigos;
+    private FirebaseFirestore database;
+    private SharedPreferences sharedPref;
+    private TextView tvSolicitudes,tvAmigos;
     private AmigosList amigosList;
     private ListView lvSolicitudesAmistad, lvAmigos;
-    private String[] users;
-    String[] cancionesEnComun;
+    private ArrayList<String> usuariosSolicitud, cancionesEnComunSolicitud, fotosPerfilSolicitud;
+    private ArrayList<String> usuariosAmistad, instagramAmistad, fotosPerfilAmistad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amistades);
+
+        database = FirebaseFirestore.getInstance();
+        sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
 
         tvSolicitudes = findViewById(R.id.tvSolicitudes);
         tvAmigos = findViewById(R.id.tvAmigos);
@@ -34,16 +53,18 @@ public class AmistadesActivity extends AppCompatActivity {
         tvSolicitudes.setPaintFlags(tvSolicitudes.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tvAmigos.setPaintFlags(tvAmigos.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        users = new String[]{"enMic", "tu_xulo_99", "tu_jenny_fav"};
-        cancionesEnComun = new String[]{"20 canciones en comun", "2 canciones en comun", "0 canciones en comun"};
-
-        lvSolicitudesAmistad = findViewById(R.id.lvSolicitudesAmistad);
-
-        Integer[] fotosPerfil = new Integer[]{R.drawable.fotoperfil, R.drawable.fotoperfil, R.drawable.fotoperfil};
-
         //Solicitudes de amistad
-        //amigosList = new AmigosList(this, users, cancionesEnComun, fotosPerfil);
-        lvSolicitudesAmistad.setAdapter(amigosList);
+        lvSolicitudesAmistad = findViewById(R.id.lvSolicitudesAmistad);
+        onClickLvSolicitudesAmistad();
+
+        //Amigos actuales
+        lvAmigos = findViewById(R.id.lvAmigos);
+        onClickLvAmigos();
+
+        getInformacionUsuarios();
+    }
+
+    private void onClickLvSolicitudesAmistad() {
         lvSolicitudesAmistad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -53,10 +74,11 @@ public class AmistadesActivity extends AppCompatActivity {
                 alert.setMessage("Estas segur@ de que quieres añadir a este usuario?")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                alert.show();
-                                users = removeElement(users, position);
-                                cancionesEnComun = removeElement(cancionesEnComun, position);
-                                amigosList.remove(position);
+                                Map<String,Object> update = new HashMap<>();
+                                update.put(usuariosSolicitud.get(position), true);
+                                database.collection("relacionUsuarioUsuario").document(sharedPref.getString("nombreUsuario", ""))
+                                        .update(update);
+                                getInformacionUsuarios();
                                 amigosList.notifyDataSetChanged();
                             }
                         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -64,14 +86,12 @@ public class AmistadesActivity extends AppCompatActivity {
 
                     }
                 });
-
+                alert.show();
             }
         });
+    }
 
-        //Amigos actuales (hace falta cambiar las canciones en comun por una descripcion)
-        //amigosList = new AmigosList(this, users, cancionesEnComun, fotosPerfil);
-        lvAmigos = findViewById(R.id.lvAmigos);
-        lvAmigos.setAdapter(amigosList);
+    private void onClickLvAmigos() {
         lvAmigos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -80,38 +100,79 @@ public class AmistadesActivity extends AppCompatActivity {
                 alert.setTitle("Eliminar amistad");
                 alert.setMessage("Estas segur@ de que quieres eliminar de tus contactos a este usuario? Esta acción será permanente")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                amigosList.removeData(position, "relacionUsuarioUsuario",
+                                        sharedPref.getString("nombreUsuario", ""), usuariosAmistad.get(position));
+                            }
+                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
+                });
                 alert.show();
             }
         });
     }
 
-    // remove element method
-    public String[] removeElement(String[] arrGiven, int index)
-    {
-        // if empty
-        if(arrGiven == null || index < 0 || index >= arrGiven.length)
-        {
-            return arrGiven;
-        }
-        // creating another array one less than initial array
-        String[] newArray = new String[arrGiven.length - 1];
-        // copying elements except index
-        for(int a = 0, b = 0; a < arrGiven.length; a++)
-        {
-            if(a == index)
-            {
-                continue;
+    private void getInformacionUsuarios() {
+        usuariosSolicitud = new ArrayList<>();
+        cancionesEnComunSolicitud = new ArrayList<>();
+        fotosPerfilSolicitud = new ArrayList<>();
+        usuariosAmistad = new ArrayList<>();
+        instagramAmistad = new ArrayList<>();
+        fotosPerfilAmistad = new ArrayList<>();
+
+        String nombreUsuario = sharedPref.getString("nombreUsuario", "");
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(nombreUsuario)){
+                            for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
+                                if (!(boolean)entry.getValue()) {
+                                    usuariosSolicitud.add(entry.getKey());
+                                }
+                                else {
+                                    usuariosAmistad.add(entry.getKey());
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
+                    return;
+                }
+                getInformacionUsuariosAmpliada();
             }
-            newArray[b++] = arrGiven[a];
-        }
-        return newArray;
+        });
+    }
+
+    private void getInformacionUsuariosAmpliada() {
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (usuariosSolicitud.contains(document.getId())){
+                            //cancionesEnComunSolicitud.add((String) document.getData().get("cancionesComun"));
+                            cancionesEnComunSolicitud.add("11" + " canciones en comun");
+                            fotosPerfilSolicitud.add((String) document.getData().get("fotoPerfil"));
+                        }
+                        else if (usuariosAmistad.contains(document.getId())) {
+                            instagramAmistad.add((String) document.getData().get("instagram"));
+                            fotosPerfilAmistad.add((String) document.getData().get("fotoPerfil"));
+                        }
+                    }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
+                }
+
+                amigosList = new AmigosList(AmistadesActivity.this, usuariosSolicitud, cancionesEnComunSolicitud, fotosPerfilSolicitud);
+                lvSolicitudesAmistad.setAdapter(amigosList);
+                amigosList = new AmigosList(AmistadesActivity.this, usuariosAmistad, instagramAmistad, fotosPerfilAmistad);
+                lvAmigos.setAdapter(amigosList);
+            }
+        });
     }
 }
