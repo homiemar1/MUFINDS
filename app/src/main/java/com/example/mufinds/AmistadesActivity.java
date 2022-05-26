@@ -124,11 +124,13 @@ public class AmistadesActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document.getId().equals(nombreUsuario)){
                             for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
-                                if (!(boolean)entry.getValue()) {
-                                    usuariosSolicitud.add(entry.getKey());
-                                }
-                                else {
-                                    usuariosAmistad.add(entry.getKey());
+                                if (!nombreUsuario.equals(entry.getKey())) {
+                                    if (!(boolean)entry.getValue()) {
+                                        usuariosSolicitud.add(entry.getKey());
+                                    }
+                                    else {
+                                        usuariosAmistad.add(entry.getKey());
+                                    }
                                 }
                             }
                         }
