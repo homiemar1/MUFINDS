@@ -7,27 +7,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import static android.content.ContentValues.TAG;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+import java.util.Set;
+
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tv_olvidado_contraseña, tv_olvidado_usuario;
@@ -36,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private String nombreUsuario, password;
+    private ArrayList<String> idCanciones;
 
 
     @Override
@@ -49,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         etContraseñaIniciarSesion = findViewById(R.id.etContraseñaIniciarSesion);
+
+        idCanciones = new ArrayList<>();
 
         database = FirebaseFirestore.getInstance();
 
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         if (usuarioCheck && passwordCheck) {
-                            guardarInformacionSharedPreference(nombreUsuario);
+                            getCancionesUsuario(nombreUsuario);
                         }
                     }
                 });
@@ -135,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("idFoto", fotoPerfil);
                             editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.putString("instagram", instagram);
+                            //editor.putStringSet("canciones", saveArraySharedPreference(idCanciones));
                             editor.commit();
                         }
                     }
@@ -143,6 +145,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public Set<String> saveArraySharedPreference(ArrayList<String> array) {
+        Set<String> set = new HashSet<String>();
+        set.addAll(array);
+        return set;
     }
 
     public void onClickRecuperarContraseña (View view) {
@@ -155,5 +163,19 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, RecuperarUsuarioActivity.class);
         intent.putExtra("confirmacon", 2);
         startActivity(intent);
+    }
+
+    public void getCancionesUsuario(String nombreUsuario) {
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        idCanciones.add(document.getId());
+                    }
+                }
+                guardarInformacionSharedPreference(nombreUsuario);
+            }
+        });
     }
 }

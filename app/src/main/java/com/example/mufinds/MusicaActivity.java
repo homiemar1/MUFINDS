@@ -21,8 +21,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MusicaActivity extends AppCompatActivity {
     private FirebaseFirestore database;
@@ -32,8 +34,10 @@ public class MusicaActivity extends AppCompatActivity {
     private List<String> nombreCanciones = new ArrayList<>();
     private List<String> artistasCanciones = new ArrayList<>();
     private List<String> portadas = new ArrayList<>();
-
     private List<String> idCancion;
+    private SharedPreferences.Editor editor;
+    private ArrayList<String> cancionesLike;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,8 @@ public class MusicaActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
+
+        cancionesLike = recogerArraySharedPreference();
 
         lvGestionarMusica = findViewById(R.id.lvGestionarMusica);
 
@@ -58,6 +64,9 @@ public class MusicaActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         amigosList.removeData(posicion, "relacionUsuarioMusica", nombreUsuario, idCancion.get(posicion));
                         idCancion.remove(posicion);
+                        /*cancionesLike.remove(posicion);
+                        editor.putStringSet("canciones", saveArraySharedPreference(cancionesLike));
+                        editor.commit();*/
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -124,4 +133,17 @@ public class MusicaActivity extends AppCompatActivity {
             }
         });
     }
+    public ArrayList<String> recogerArraySharedPreference () {
+        ArrayList<String> array = new ArrayList<>();
+        Set<String> set = sharedPref.getStringSet("canciones", null);
+        array.addAll(set);
+        return array;
+    }
+
+    public Set<String> saveArraySharedPreference(ArrayList<String> array) {
+        Set<String> set = new HashSet<String>();
+        set.addAll(array);
+        return set;
+    }
+
 }
