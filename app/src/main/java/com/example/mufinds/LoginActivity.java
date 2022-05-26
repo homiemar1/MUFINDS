@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private String nombreUsuario, password;
-    private ArrayList<String> idCanciones;
 
 
     @Override
@@ -48,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         etContraseñaIniciarSesion = findViewById(R.id.etContraseñaIniciarSesion);
-
-        idCanciones = new ArrayList<>();
 
         database = FirebaseFirestore.getInstance();
 
@@ -80,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
-                                        getCancionesUsuario(nombreUsuario);
+                                        guardarInformacionSharedPreference(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -132,7 +128,6 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("idFoto", fotoPerfil);
                             editor.putString("fechaNacimiento", fechaNacimiento);
                             editor.putString("instagram", instagram);
-                            editor.putStringSet("canciones", saveArraySharedPreference(idCanciones));
                             editor.commit();
                         }
                     }
@@ -161,20 +156,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void getCancionesUsuario(String nombreUsuario) {
-        database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        if (nombreUsuario.equals(document.getId())) {
-                            idCanciones.add(document.getData().toString());
-                        }
-
-                    }
-                }
-                guardarInformacionSharedPreference(nombreUsuario);
-            }
-        });
-    }
 }

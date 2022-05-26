@@ -32,21 +32,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     private ImageView ivBtEditarPerfil, ivFotoPerfilPrincipal;
     private TextView tvNombreUsuarioPrincipal, tvCancionesComunPrincipal, tvDescripcionPrincipal;
-    private ArrayList<String> nombresUsuario, idsCanciones, cancionesLike;
+    private ArrayList<String> nombresUsuario, idsCanciones;
     private HashMap<String, ArrayList<String>> usuarios, canciones;
     private int contadorMusica = 0;
     private int contadorUsuarios = 0;
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor editor;
 
     private FirebaseFirestore database;
 
@@ -59,8 +57,6 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
-        cancionesLike = recogerArraySharedPreference();
         database = FirebaseFirestore.getInstance();
 
         ivFotoPerfilPrincipal = findViewById(R.id.ivFotoPrincipal);
@@ -71,7 +67,8 @@ public class PrincipalActivity extends AppCompatActivity {
         ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
         idsCanciones = new ArrayList<>();
-        getCanciones();
+        String nombreUsuario = sharedPref.getString("nombreUsuario","");
+        getCancionesUsuario(nombreUsuario);
         nombresUsuario = new ArrayList<>();
         getUsuarios();
     }
@@ -104,25 +101,48 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    public void getCanciones() {
+    public void getCancionesUsuario(String nombreUsuario) {
+        ArrayList<String> lista= new ArrayList<>();
+        DocumentReference docRef = database.collection("relacionUsuarioMusica").document(nombreUsuario);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = task.getResult().getData();
+
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        lista.add(entry.getKey());
+                    }
+                    getCanciones(lista);
+                }
+            }
+        });
+        /*database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        if (nombreUsuario.equals(document.getId())) {
+                            lista.add(document.getData().toString());
+                        }
+                    }
+                    getCanciones(lista);
+                }
+            }
+        });*/
+    }
+
+    public void getCanciones(ArrayList<String> cancionesLike) {
         canciones = new HashMap<String, ArrayList<String>>();
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 String idcancion = "";
-                Boolean b = false;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        for (int i = 0; i <cancionesLike.size(); i++) {
-                            if (!cancionesLike.get(i).equals(document.getId())) {
-                                b = true;
-                            }
-                            else {
-                                b = false;
-                            }
-                        }
-                        if (b) {
+                        if (!cancionesLike.contains(document.getId())) {
                             idcancion = document.getId();
+
                             String link = document.getData().get("link").toString();
                             String titulo = document.getData().get("titulo").toString();
                             String artista = document.getData().get("artista").toString();
@@ -140,10 +160,11 @@ public class PrincipalActivity extends AppCompatActivity {
                             canciones.put(idcancion, infoCancion);
                         }
                     }
+                    añadirInformacionMusica(false);
                 } else {
                     System.out.println("Error getting documents." + task.getException());
                 }
-                añadirInformacionMusica(false);
+
             }
         });
 
@@ -258,9 +279,6 @@ public class PrincipalActivity extends AppCompatActivity {
         if (condicion == 1) {
 
             String idcancion = idsCanciones.get(contadorMusica);
-            cancionesLike.add(idcancion);
-            editor.putStringSet("canciones", saveArraySharedPreference(cancionesLike));
-            editor.commit();
             contadorMusica += 1;
             insertarDatos(idcancion, nombreUsuario);
             añadirInformacionMusica(true);
@@ -377,22 +395,8 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<String> recogerArraySharedPreference () {
-        ArrayList<String> array = new ArrayList<>();
-        Set<String> set = sharedPref.getStringSet("canciones", new HashSet<String>());
-        array.addAll(set);
-        return array;
-    }
-
-    public Set<String> saveArraySharedPreference(ArrayList<String> array) {
-        Set<String> set = new HashSet<String>();
-        set.addAll(array);
-        return set;
-    }
-
 
     @Override
     public void onBackPressed() {
-        return;
     }
 }
