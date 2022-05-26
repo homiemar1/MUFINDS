@@ -191,10 +191,12 @@ public class AmistadesActivity extends AppCompatActivity {
         update.put(usuariosSolicitud.get(position), true);
         database.collection("relacionUsuarioUsuario").document(sharedPref.getString("nombreUsuario", ""))
                 .update(update);
+
         update = new HashMap<>();
         update.put(sharedPref.getString("nombreUsuario", ""), true);
         database.collection("relacionUsuarioUsuario").document(usuariosSolicitud.get(position))
                 .update(update);
+
         getInformacionUsuarios();
         amigosList.notifyDataSetChanged();
     }
