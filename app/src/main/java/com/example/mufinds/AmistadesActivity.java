@@ -74,12 +74,7 @@ public class AmistadesActivity extends AppCompatActivity {
                 alert.setMessage("Estas segur@ de que quieres añadir a este usuario?")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Map<String,Object> update = new HashMap<>();
-                                update.put(usuariosSolicitud.get(position), true);
-                                database.collection("relacionUsuarioUsuario").document(sharedPref.getString("nombreUsuario", ""))
-                                        .update(update);
-                                getInformacionUsuarios();
-                                amigosList.notifyDataSetChanged();
+                                añadirUsuario(position);
                             }
                         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -101,8 +96,7 @@ public class AmistadesActivity extends AppCompatActivity {
                 alert.setMessage("Estas segur@ de que quieres eliminar de tus contactos a este usuario? Esta acción será permanente")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                amigosList.removeData(position, "relacionUsuarioUsuario",
-                                        sharedPref.getString("nombreUsuario", ""), usuariosAmistad.get(position));
+                                borrarUsuario(position);
                             }
                         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -174,5 +168,34 @@ public class AmistadesActivity extends AppCompatActivity {
                 lvAmigos.setAdapter(amigosList);
             }
         });
+    }
+
+    private void borrarUsuario (int position) {
+        Map<String,Object> eliminar = new HashMap<>();
+        eliminar.put(usuariosAmistad.get(position), FieldValue.delete());
+        database.collection("relacionUsuarioUsuario").document(sharedPref.getString("nombreUsuario", "")).update(eliminar);
+
+        eliminar = new HashMap<>();
+        eliminar.put(sharedPref.getString("nombreUsuario", ""), FieldValue.delete());
+        database.collection("relacionUsuarioUsuario").document(usuariosAmistad.get(position)).update(eliminar);
+
+        usuariosAmistad.remove(position);
+        instagramAmistad.remove(position);
+        fotosPerfilAmistad.remove(position);
+
+        amigosList.notifyDataSetChanged();
+    }
+
+    private void añadirUsuario(int position){
+        Map<String,Object> update = new HashMap<>();
+        update.put(usuariosSolicitud.get(position), true);
+        database.collection("relacionUsuarioUsuario").document(sharedPref.getString("nombreUsuario", ""))
+                .update(update);
+        update = new HashMap<>();
+        update.put(sharedPref.getString("nombreUsuario", ""), true);
+        database.collection("relacionUsuarioUsuario").document(usuariosSolicitud.get(position))
+                .update(update);
+        getInformacionUsuarios();
+        amigosList.notifyDataSetChanged();
     }
 }
