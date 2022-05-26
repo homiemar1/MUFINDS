@@ -76,6 +76,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //getCanciones(cancionesLike);
         nombresUsuario = new ArrayList<>();
         getUsuarios();
+        //getUsuariosLike(nombreUsuario);
     }
 
     private void getUsuarios() {
@@ -86,6 +87,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (!document.getId().equals(sharedPref.getString("nombreUsuario",""))) {
+                            //if (!lista.contains(document.getId())) {
                             String nombreUsuario = document.getId();
                             String cancionesComun = "11" + " canciones en comun";
                             String descripcion = document.getData().get("descripcion").toString();
@@ -96,6 +98,8 @@ public class PrincipalActivity extends AppCompatActivity {
                             infoUser.add(descripcion);
                             infoUser.add(fotoPerfil);
                             usuarios.put(nombreUsuario, infoUser);
+                            //}
+
                         }
 
                     }
@@ -105,6 +109,24 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*public void getUsuariosLike(String nombreUsuario) {
+        ArrayList<String> lista= new ArrayList<>();
+        DocumentReference docRef = database.collection("relacionUsuarioUsuario").get());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = task.getResult().getData();
+
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        lista.add(entry.getKey());
+                    }
+                    getUsuarios(lista);
+                }
+            }
+        });
+    }*/
 
     public void getCancionesUsuario(String nombreUsuario) {
         ArrayList<String> lista= new ArrayList<>();

@@ -35,8 +35,6 @@ public class MusicaActivity extends AppCompatActivity {
     private List<String> artistasCanciones = new ArrayList<>();
     private List<String> portadas = new ArrayList<>();
     private List<String> idCancion;
-    private SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

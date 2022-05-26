@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
                                         getCancionesUsuario(nombreUsuario);
-                                        //guardarInformacionSharedPreference(nombreUsuario);
+                                        guardarInformacionSharedPreference(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
                                         finish();
