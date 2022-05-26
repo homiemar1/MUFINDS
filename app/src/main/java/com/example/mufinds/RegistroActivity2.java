@@ -79,7 +79,6 @@ public class RegistroActivity2 extends AppCompatActivity {
                         Intent intent = result.getData();
                         imageUri = intent.getData();
                         ivFotoPerfilRegistro.setImageURI(imageUri);
-
                     }
                 }
             });

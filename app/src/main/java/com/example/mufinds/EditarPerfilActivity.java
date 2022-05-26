@@ -70,7 +70,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             ivFotoPerfilEditarPerfil.setImageResource(R.drawable.fotoperfil);
         }
         else {
-            Picasso.with(this).load(Uri.parse(fotoPerfil)).into(ivFotoPerfilEditarPerfil);
+            Picasso.with(this).load(Uri.parse(fotoPerfil)).noFade().into(ivFotoPerfilEditarPerfil);
         }
 
 
