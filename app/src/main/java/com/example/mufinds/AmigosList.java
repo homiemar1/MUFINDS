@@ -59,7 +59,12 @@ public class AmigosList extends ArrayAdapter {
 
         textViewUsuario.setText(userNames.get(position));
         textViewCancionesComun.setText(cancionComun.get(position));
-        Picasso.with(context).load(Uri.parse(perfilId.get(position))).noFade().into(imageViewUsuario);
+        if ("".equals(perfilId.get(position))) {
+            imageViewUsuario.setImageResource(R.drawable.fotoperfil);
+        }
+        else {
+            Picasso.with(context).load(Uri.parse(perfilId.get(position))).noFade().into(imageViewUsuario);
+        }
         return row;
     }
 
