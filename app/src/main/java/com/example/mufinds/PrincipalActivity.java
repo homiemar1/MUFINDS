@@ -34,13 +34,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
     private int tema = 1;
     private ImageView ivBtEditarPerfil, ivFotoPerfilPrincipal;
     private TextView tvNombreUsuarioPrincipal, tvCancionesComunPrincipal, tvDescripcionPrincipal;
-    private ArrayList<String> nombresUsuario, idsCanciones;
+    private ArrayList<String> nombresUsuario;
+    private ArrayList<String> idsCanciones;
+    private ArrayList<String> cancionesLike;
     private HashMap<String, ArrayList<String>> usuarios, canciones;
     private int contadorMusica = 0;
     private int contadorUsuarios = 0;
@@ -67,8 +70,10 @@ public class PrincipalActivity extends AppCompatActivity {
         ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
         idsCanciones = new ArrayList<>();
+        //cancionesLike =sharedPref.getStringSet("canciones", null);
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
         getCancionesUsuario(nombreUsuario);
+        //getCanciones(cancionesLike);
         nombresUsuario = new ArrayList<>();
         getUsuarios();
     }
@@ -117,19 +122,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 }
             }
         });
-        /*database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        if (nombreUsuario.equals(document.getId())) {
-                            lista.add(document.getData().toString());
-                        }
-                    }
-                    getCanciones(lista);
-                }
-            }
-        });*/
+
     }
 
     public void getCanciones(ArrayList<String> cancionesLike) {

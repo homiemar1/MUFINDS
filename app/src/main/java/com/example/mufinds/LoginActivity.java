@@ -15,14 +15,18 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import java.util.Map;
 import java.util.Set;
 
 
@@ -76,7 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
-                                        guardarInformacionSharedPreference(nombreUsuario);
+                                        getCancionesUsuario(nombreUsuario);
+                                        //guardarInformacionSharedPreference(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -154,6 +159,28 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, RecuperarUsuarioActivity.class);
         intent.putExtra("confirmacon", 2);
         startActivity(intent);
+    }
+
+    public void getCancionesUsuario(String nombreUsuario) {
+        ArrayList<String> lista= new ArrayList<>();
+        DocumentReference docRef = database.collection("relacionUsuarioMusica").document(nombreUsuario);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = task.getResult().getData();
+
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        lista.add(entry.getKey());
+                        //Set<String> set = null;
+                        //set.addAll(lista);
+                        //editor.putStringSet("canciones", set);
+                        guardarInformacionSharedPreference(nombreUsuario);
+                    }
+                }
+            }
+        });
+
     }
 
 }
