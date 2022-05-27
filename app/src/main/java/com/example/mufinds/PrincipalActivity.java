@@ -32,9 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
@@ -43,11 +41,11 @@ public class PrincipalActivity extends AppCompatActivity {
     private TextView tvNombreUsuarioPrincipal, tvCancionesComunPrincipal, tvDescripcionPrincipal;
     private ArrayList<String> nombresUsuario;
     private ArrayList<String> idsCanciones;
-    private ArrayList<String> cancionesLike;
     private HashMap<String, ArrayList<String>> usuarios, canciones;
     private int contadorMusica = 0;
     private int contadorUsuarios = 0;
     private SharedPreferences sharedPref;
+    private String nombreUsuario;
 
     private FirebaseFirestore database;
 
@@ -69,25 +67,28 @@ public class PrincipalActivity extends AppCompatActivity {
 
         ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
-        idsCanciones = new ArrayList<>();
-        //cancionesLike =sharedPref.getStringSet("canciones", null);
-        String nombreUsuario = sharedPref.getString("nombreUsuario","");
-        getCancionesUsuario(nombreUsuario);
-        //getCanciones(cancionesLike);
-        nombresUsuario = new ArrayList<>();
-        getUsuarios();
-        //getUsuariosLike(nombreUsuario);
+        nombreUsuario = sharedPref.getString("nombreUsuario","");
+
+        getCancionesUsuario();
+        getUsuariosLike();
     }
 
-    private void getUsuarios() {
-        usuarios = new HashMap<String, ArrayList<String>>();
+    @Override
+    protected void onResume () {
+        super.onResume();
+        getCancionesUsuario();
+        getUsuariosLike();
+    }
+
+    private void getUsuarios(ArrayList<String> lista) {
+        nombresUsuario = new ArrayList<>();
+        usuarios = new HashMap<>();
         database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (!document.getId().equals(sharedPref.getString("nombreUsuario",""))) {
-                            //if (!lista.contains(document.getId())) {
+                        if (!document.getId().equals(sharedPref.getString("nombreUsuario","")) && !lista.contains(document.getId())) {
                             String nombreUsuario = document.getId();
                             String cancionesComun = "11" + " canciones en comun";
                             String descripcion = document.getData().get("descripcion").toString();
@@ -98,10 +99,7 @@ public class PrincipalActivity extends AppCompatActivity {
                             infoUser.add(descripcion);
                             infoUser.add(fotoPerfil);
                             usuarios.put(nombreUsuario, infoUser);
-                            //}
-
                         }
-
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
@@ -110,25 +108,26 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    /*public void getUsuariosLike(String nombreUsuario) {
-        ArrayList<String> lista= new ArrayList<>();
-        DocumentReference docRef = database.collection("relacionUsuarioUsuario").get());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void getUsuariosLike() {
+        ArrayList<String> lista = new ArrayList<>();
+        database.collection("relacionUsuarioUsuario").document(nombreUsuario).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     Map<String, Object> map = task.getResult().getData();
 
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
-                        lista.add(entry.getKey());
+                        if ((boolean)entry.getValue()) {
+                            lista.add(entry.getKey());
+                        }
                     }
                     getUsuarios(lista);
                 }
             }
         });
-    }*/
+    }
 
-    public void getCancionesUsuario(String nombreUsuario) {
+    public void getCancionesUsuario() {
         ArrayList<String> lista= new ArrayList<>();
         DocumentReference docRef = database.collection("relacionUsuarioMusica").document(nombreUsuario);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -148,15 +147,15 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void getCanciones(ArrayList<String> cancionesLike) {
-        canciones = new HashMap<String, ArrayList<String>>();
+        canciones = new HashMap<>();
+        idsCanciones = new ArrayList<>();
         database.collection("canciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                String idcancion = "";
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (!cancionesLike.contains(document.getId())) {
-                            idcancion = document.getId();
+                            String idcancion = document.getId();
 
                             String link = document.getData().get("link").toString();
                             String titulo = document.getData().get("titulo").toString();
@@ -221,9 +220,9 @@ public class PrincipalActivity extends AppCompatActivity {
                         startActivity(i1);
                         finish();
                     }
-                })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+
                             }
                         }); alert.show();
                 return true;
@@ -250,14 +249,14 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void onClickEditarPerfil(View view) {
+        Intent intent;
         if (condicion == 1) {
-            Intent intent = new Intent(PrincipalActivity.this, MusicaActivity.class);
-            startActivity(intent);
+            intent = new Intent(PrincipalActivity.this, MusicaActivity.class);
         }
         else {
-            Intent intent = new Intent(PrincipalActivity.this, EditarPerfilActivity.class);
-            startActivity(intent);
+            intent = new Intent(PrincipalActivity.this, EditarPerfilActivity.class);
         }
+        startActivity(intent);
 
     }
 
@@ -280,30 +279,36 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void onClickDislike(View view) {
         if (condicion == 1) {
-            contadorMusica+=1;
-            añadirInformacionMusica(true);
+            if (!idsCanciones.isEmpty()) {
+                contadorMusica+=1;
+                añadirInformacionMusica(true);
+            }
         }
         else {
-            contadorUsuarios+=1;
-            añadirInformacionUsuario(true);
+            if (!nombresUsuario.isEmpty()) {
+                contadorUsuarios += 1;
+                añadirInformacionUsuario(true);
+            }
         }
     }
 
     public void onClickLike(View view) {
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
         if (condicion == 1) {
-
-            String idcancion = idsCanciones.get(contadorMusica);
-            contadorMusica += 1;
-            insertarDatos(idcancion, nombreUsuario);
-            añadirInformacionMusica(true);
+            if (!idsCanciones.isEmpty()) {
+                String idcancion = idsCanciones.get(contadorMusica);
+                contadorMusica += 1;
+                insertarDatos(idcancion, nombreUsuario);
+                añadirInformacionMusica(true);
+            }
         }
         else {
-            String idUsuario = nombresUsuario.get(contadorUsuarios);
-            contadorUsuarios += 1;
-            System.out.println(idUsuario);
-            insertarDatosUsuario(idUsuario, nombreUsuario);
-            añadirInformacionUsuario(true);
+            if (!nombresUsuario.isEmpty()) {
+                String idUsuario = nombresUsuario.get(contadorUsuarios);
+                contadorUsuarios += 1;
+                insertarDatosUsuario(idUsuario, nombreUsuario);
+                añadirInformacionUsuario(true);
+            }
         }
     }
 
@@ -333,55 +338,71 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void añadirInformacionUsuario(boolean valor) {
-        if (!valor && contadorUsuarios != 0) {
-            contadorUsuarios -= 1;
-        }
-        if (contadorUsuarios >= nombresUsuario.size()) {
-            contadorUsuarios = 0;
-        }
+        if (!nombresUsuario.isEmpty()) {
+            if (!valor && contadorUsuarios != 0) {
+                contadorUsuarios -= 1;
+            }
+            if (contadorUsuarios >= nombresUsuario.size()) {
+                contadorUsuarios = 0;
+                getUsuariosLike();
+            }
 
-        String nombreUsuario = nombresUsuario.get(contadorUsuarios);
+            String nombreUsuario = nombresUsuario.get(contadorUsuarios);
 
-        ArrayList<String> array = usuarios.get(nombreUsuario);
-        String cancionComun = array.get(0);
-        String descripcion = array.get(1);
-        String fotPerfil = array.get(2);
+            ArrayList<String> array = usuarios.get(nombreUsuario);
+            String cancionComun = array.get(0);
+            String descripcion = array.get(1);
+            String fotPerfil = array.get(2);
 
-        tvNombreUsuarioPrincipal.setText(nombreUsuario);
-        tvCancionesComunPrincipal.setText(cancionComun);
-        tvDescripcionPrincipal.setText(descripcion);
+            tvNombreUsuarioPrincipal.setText(nombreUsuario);
+            tvCancionesComunPrincipal.setText(cancionComun);
+            tvDescripcionPrincipal.setText(descripcion);
 
-        if ("".equals(fotPerfil) || "R.drawable.fotoperfil".equals(fotPerfil)) {
-            ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
+            if ("".equals(fotPerfil) || "R.drawable.fotoperfil".equals(fotPerfil)) {
+                ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
+            } else {
+                Picasso.with(this).load(Uri.parse(fotPerfil)).noFade().into(ivFotoPerfilPrincipal);
+            }
         }
         else {
-            Picasso.with(this).load(Uri.parse(fotPerfil)).noFade().into(ivFotoPerfilPrincipal);
+            tvNombreUsuarioPrincipal.setText("No hay más usuarios");
+            tvCancionesComunPrincipal.setText("-");
+            tvDescripcionPrincipal.setText("-");
+            ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
         }
-
     }
 
     private void añadirInformacionMusica(boolean valor) {
-        if (!valor && contadorMusica != 0) {
-            contadorMusica -= 1;
+        if (!idsCanciones.isEmpty()) {
+            if (!valor && contadorMusica != 0) {
+                contadorMusica -= 1;
+            }
+            if (contadorMusica >= idsCanciones.size()) {
+                contadorMusica = 0;
+                getCancionesUsuario();
+            }
+
+            String idCancion = idsCanciones.get(contadorMusica);
+
+            ArrayList<String> array = canciones.get(idCancion);
+            String linkPortada = array.get(0);
+            String titulo = array.get(1);
+            String artista = array.get(2);
+            String album = array.get(3);
+            String fechaLanzamiento = array.get(4);
+
+            Picasso.with(this).load(Uri.parse(linkPortada)).noFade().into(ivFotoPerfilPrincipal);
+            String nombreFecha = titulo + " - " + fechaLanzamiento;
+            tvNombreUsuarioPrincipal.setText(nombreFecha);
+            tvCancionesComunPrincipal.setText(album);
+            tvDescripcionPrincipal.setText(artista);
         }
-        if (contadorMusica >= idsCanciones.size()) {
-            contadorMusica = 0;
+        else {
+            tvNombreUsuarioPrincipal.setText("No hay más canciones");
+            tvCancionesComunPrincipal.setText("-");
+            tvDescripcionPrincipal.setText("-");
+            ivFotoPerfilPrincipal.setImageResource(R.drawable.fotoperfil);
         }
-
-        String idCancion = idsCanciones.get(contadorMusica);
-
-        ArrayList<String> array = canciones.get(idCancion);
-        String linkPortada = array.get(0);
-        String titulo = array.get(1);
-        String artista = array.get(2);
-        String album = array.get(3);
-        String fechaLanzamiento = array.get(4);
-
-        Picasso.with(this).load(Uri.parse(linkPortada)).noFade().into(ivFotoPerfilPrincipal);
-        String nombreFecha = titulo + " - " + fechaLanzamiento;
-        tvNombreUsuarioPrincipal.setText(nombreFecha);
-        tvCancionesComunPrincipal.setText(album);
-        tvDescripcionPrincipal.setText(artista);
     }
 
     public void insertarDatos(String idcancion, String nombreUsuario) {

@@ -43,7 +43,6 @@ public class AmistadesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amistades);
-        //añadir
 
         database = FirebaseFirestore.getInstance();
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);

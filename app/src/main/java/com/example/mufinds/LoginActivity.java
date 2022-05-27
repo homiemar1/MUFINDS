@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.ArraySet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -80,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
-                                        getCancionesUsuario(nombreUsuario);
+                                        //getCancionesUsuario(nombreUsuario);
                                         guardarInformacionSharedPreference(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
@@ -172,15 +174,20 @@ public class LoginActivity extends AppCompatActivity {
 
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
                         lista.add(entry.getKey());
-                        //Set<String> set = null;
-                        //set.addAll(lista);
-                        //editor.putStringSet("canciones", set);
-                        guardarInformacionSharedPreference(nombreUsuario);
+
                     }
+                    Set<String> set = saveArray(lista);
+                    editor.putStringSet("canciones", set);
+                    guardarInformacionSharedPreference(nombreUsuario);
                 }
             }
         });
 
     }
 
+    public Set<String> saveArray(ArrayList<String> array) {
+        Set<String> set = new ArraySet<>();
+        set.addAll(array);
+        return set;
+    }
 }
