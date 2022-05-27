@@ -46,6 +46,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private int contadorUsuarios = 0;
     private SharedPreferences sharedPref;
     private String nombreUsuario;
+    private CalcularCancionesComun calcularCancionesComun;
 
     private FirebaseFirestore database;
 
@@ -56,6 +57,8 @@ public class PrincipalActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().show();
+
+        calcularCancionesComun = new CalcularCancionesComun();
 
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         database = FirebaseFirestore.getInstance();
@@ -68,14 +71,14 @@ public class PrincipalActivity extends AppCompatActivity {
         ivBtEditarPerfil = findViewById(R.id.btEditarPerfil);
 
         nombreUsuario = sharedPref.getString("nombreUsuario","");
-
         getCancionesUsuario();
         getUsuariosLike();
     }
 
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
+        nombreUsuario = sharedPref.getString("nombreUsuario","");
         getCancionesUsuario();
         getUsuariosLike();
     }
@@ -88,17 +91,17 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (!document.getId().equals(sharedPref.getString("nombreUsuario","")) && !lista.contains(document.getId())) {
-                            String nombreUsuario = document.getId();
-                            String cancionesComun = "11" + " canciones en comun";
+                        if (!document.getId().equals(nombreUsuario) && !lista.contains(document.getId())) {
+                            String nombreUsuario2 = document.getId();
+                            String cancionesComun = calcularCancionesComun.cancionesEnComun(nombreUsuario, nombreUsuario2) + " canciones en común";
                             String descripcion = document.getData().get("descripcion").toString();
                             String fotoPerfil = document.getData().get("fotoPerfil").toString();
-                            nombresUsuario.add(nombreUsuario);
+                            nombresUsuario.add(nombreUsuario2);
                             ArrayList<String> infoUser = new ArrayList<String>();
                             infoUser.add(cancionesComun);
                             infoUser.add(descripcion);
                             infoUser.add(fotoPerfil);
-                            usuarios.put(nombreUsuario, infoUser);
+                            usuarios.put(nombreUsuario2, infoUser);
                         }
                     }
                 } else {

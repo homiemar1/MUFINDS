@@ -38,6 +38,7 @@ public class AmistadesActivity extends AppCompatActivity {
     private ListView lvSolicitudesAmistad, lvAmigos;
     private ArrayList<String> usuariosSolicitud, cancionesEnComunSolicitud, fotosPerfilSolicitud;
     private ArrayList<String> usuariosAmistad, instagramAmistad, fotosPerfilAmistad;
+    private CalcularCancionesComun calcularCancionesComun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,8 @@ public class AmistadesActivity extends AppCompatActivity {
         //Amigos actuales
         lvAmigos = findViewById(R.id.lvAmigos);
         onClickLvAmigos();
+
+        calcularCancionesComun = new CalcularCancionesComun();
 
         getInformacionUsuarios();
     }
@@ -151,8 +154,8 @@ public class AmistadesActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (usuariosSolicitud.contains(document.getId())){
-                            //cancionesEnComunSolicitud.add((String) document.getData().get("cancionesComun"));
-                            cancionesEnComunSolicitud.add("11" + " canciones en comun");
+                            cancionesEnComunSolicitud.add(calcularCancionesComun.cancionesEnComun(sharedPref.getString("nombreUsuario","")
+                                    , document.getId()) + " canciones en comun");
                             fotosPerfilSolicitud.add((String) document.getData().get("fotoPerfil"));
                         }
                         else if (usuariosAmistad.contains(document.getId())) {

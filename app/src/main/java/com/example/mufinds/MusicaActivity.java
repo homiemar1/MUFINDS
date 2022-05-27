@@ -44,7 +44,6 @@ public class MusicaActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         String nombreUsuario = sharedPref.getString("nombreUsuario","");
 
-
         lvGestionarMusica = findViewById(R.id.lvGestionarMusica);
 
         idCancion = new ArrayList<>();
