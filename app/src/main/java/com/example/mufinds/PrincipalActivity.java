@@ -36,7 +36,6 @@ import java.util.Map;
 
 public class PrincipalActivity extends AppCompatActivity {
     private int condicion = 1;
-    private int tema = 1;
     private ImageView ivBtEditarPerfil, ivFotoPerfilPrincipal;
     private TextView tvNombreUsuarioPrincipal, tvCancionesComunPrincipal, tvDescripcionPrincipal;
     private ArrayList<String> nombresUsuario;

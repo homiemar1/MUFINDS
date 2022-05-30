@@ -63,31 +63,12 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
     }
 
     public void onClickFotoDePerfil (View view) {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         someActivityResultLauncher.launch(gallery);
-    }
-
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent intent = result.getData();
-                        imageUri = intent.getData();
-                        ivFotoPerfilRegistro.setImageURI(imageUri);
-                    }
-                }
-            });
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        imageUri = data.getData();
-        ivFotoPerfilRegistro.setImageURI(imageUri);
     }
 
     public void onClickAtras (View view) {
@@ -203,4 +184,17 @@ public class RegistroActivity2 extends AppCompatActivity {
             }
         });
     }
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        imageUri = intent.getData();
+                        ivFotoPerfilRegistro.setImageURI(imageUri);
+                    }
+                }
+            });
 }
