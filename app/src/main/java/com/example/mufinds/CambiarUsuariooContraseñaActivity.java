@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
@@ -17,9 +18,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     private TextView tvTituloCambio;
@@ -117,12 +125,12 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             }
         }
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
-        if (!datoNuevo.matches(pattern)) {
+        if (!datoNuevo.matches(pattern) && valor!=1) {
             etDatoNuevo.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
                     "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
             return;
         }
-        if (!datoNuevo.matches(pattern)) {
+        if (!datoNuevo.matches(pattern) && valor!=1) {
             etDatoConfirmacion.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
                     "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
             return;
@@ -206,9 +214,11 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         database.collection("users").document(user.getNombreUsuari()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                String datoAntiguo = sharedPref.getString("nombreUsuario", "").toString();
                 editor.putString("nombreUsuario", datoNuevo);
                 editor.commit();
                 Toast.makeText(CambiarUsuariooContraseñaActivity.this, "Nombre usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
+                actualizarDatosUsuarioMusica(datoNuevo, datoAntiguo);
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -222,6 +232,63 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         finish();
     }
 
+    private void actualizarDatosUsuarioMusica(String datoNuevo, String datoAntiguo) {
+        database.collection("relacionUsuarioMusica").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Map<String, Object> datos = null;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(datoAntiguo)) {
+                            datos = document.getData();
+                        }
+                    }
+                    database.collection("relacionUsuarioMusica").document(datoAntiguo).delete();
+                    database.collection("relacionUsuarioMusica").document(datoNuevo).set(datos);
+                    actualizarDatosUsuarioUsuario(datoNuevo, datoAntiguo);
+                }
+            }
+        });
+    }
+
+    private void actualizarDatosUsuarioUsuario(String datoNuevo, String datoAntiguo) {
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Map<String, Object> datos = null;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(datoAntiguo)) {
+                            datos = document.getData();
+                        }
+                    }
+                    database.collection("relacionUsuarioUsuario").document(datoAntiguo).delete();
+                    database.collection("relacionUsuarioUsuario").document(datoNuevo).set(datos);
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getData().get(datoAntiguo) != null) {
+                            boolean valor = (boolean) document.getData().get(datoAntiguo);
+                            Map<String, Object> mapa = new HashMap<String, Object>();
+                            mapa.put(datoNuevo, valor);
+
+                            Map<String,Object> updates = new HashMap<>();
+                            updates.put(datoAntiguo, FieldValue.delete());
+                            DocumentReference docRef = database.collection("relacionUsuarioUsuario").document(document.getId());
+                            docRef.update(updates);
+
+                            WriteBatch batch = database.batch();
+                            DocumentReference docRef2 = document.getReference();
+                            batch.update(docRef2, mapa);
+                            batch.commit();
+
+                        }
+
+                    }
+                }
+            }
+        });
+    }
+
     private Usuario recogerDatosUsuario() {
         Usuario user = new Usuario();
         user.setNombre(sharedPref.getString("nombre", ""));
@@ -229,10 +296,11 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         user.setEmail(sharedPref.getString("email", ""));
         user.setPassword(sharedPref.getString("password", ""));
         user.setGenero(sharedPref.getString("genero", ""));
-        //user.setDataNaixement(sharedPref.getString("fechaNacimiento", ""));
+        user.setDataNaixement(sharedPref.getString("fechaNacimiento", ""));
         user.setDescripcion(sharedPref.getString("descripcion", ""));
         user.setNombreUsuari(sharedPref.getString("nombreUsuario", ""));
-        //user.setFotoPerfil(sharedPref.getString("idFoto", ""));
+        user.setFotoPerfil(sharedPref.getString("idFoto", ""));
+        user.setInstagram(sharedPref.getString("instagram",""));
         return user;
     }
 
@@ -245,16 +313,16 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         private class PasswordCharSequence implements CharSequence {
             private CharSequence mSource;
             public PasswordCharSequence(CharSequence source) {
-                mSource = source; // Store char sequence
+                mSource = source;
             }
             public char charAt(int index) {
-                return '•'; // This is the important part
+                return '•';
             }
             public int length() {
-                return mSource.length(); // Return default
+                return mSource.length();
             }
             public CharSequence subSequence(int start, int end) {
-                return mSource.subSequence(start, end); // Return default
+                return mSource.subSequence(start, end);
             }
         }
     };
