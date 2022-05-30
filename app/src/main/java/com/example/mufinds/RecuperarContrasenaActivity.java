@@ -71,6 +71,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                                     intent.putExtra("variable", 3);
                                     intent.putExtra("usuario", nombreUsuario);
                                     startActivity(intent);
+                                    finish();
                                 }
                                 else {
                                     etNombreUsuarioRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
