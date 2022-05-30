@@ -21,7 +21,6 @@ import java.util.Calendar;
 
 public class RecuperarContrasenaActivity extends AppCompatActivity {
     EditText etNombreUsuarioRecuperarContraseña, etNombreRecuperarContraseña, etApellidosRecuperarContraseña, etdFechaNacimientoRecuperarContraseña;
-    TextView tvRespuestaRecuperarContraseña;
     String nombreUsuario, nombre, apellidos, fecha = "";
     FirebaseFirestore database;
 
@@ -39,7 +38,6 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
     }
 
     public void onClickRecuperar(View view) {
-
         nombreUsuario = etNombreUsuarioRecuperarContraseña.getText().toString();
         nombre = etNombreRecuperarContraseña.getText().toString();
         apellidos = etApellidosRecuperarContraseña.getText().toString();
@@ -70,11 +68,15 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                                 String dbFecha = document.getData().get("dataNaixement").toString();
                                 if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos) && dbFecha.equals(fecha)) {
                                     Intent intent = new Intent(RecuperarContrasenaActivity.this, CambiarUsuariooContraseñaActivity.class);
-                                    intent.putExtra("variable", 2);
+                                    intent.putExtra("variable", 3);
+                                    intent.putExtra("usuario", nombreUsuario);
                                     startActivity(intent);
                                 }
                                 else {
-                                    tvRespuestaRecuperarContraseña.setText("Los datos no coinciden. Vuelva a intentarlo");
+                                    etNombreUsuarioRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                    etNombreRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                    etApellidosRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                    etdFechaNacimientoRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
                                 }
                             }
                         }

@@ -9,23 +9,18 @@
 
     <!-- Settings, should always be in the overflow -->
     <item
-        android:id="@+id/action_cambiarTema"
-        app:showAsAction="never"
-        android:title="Tema" />
-
-    <item
         android:id="@+id/action_logout"
-        app:showAsAction="never"
-        android:title="Logout" />
+        android:title="Cerrar sesión"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_informacio"
-        app:showAsAction="never"
-        android:title="Informacion" />
+        android:title="Información"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_exit"
-        app:showAsAction="never"
-        android:title="Exit" />
+        android:title="Salir"
+        app:showAsAction="never" />
 
 </menu>

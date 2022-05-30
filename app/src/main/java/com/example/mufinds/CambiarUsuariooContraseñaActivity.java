@@ -28,6 +28,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
     private FirebaseFirestore database;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
+    private String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,21 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        valor = getIntent().getIntExtra("variable", 1);
+
+        usuario = "";
+        if (valor != 3) {
+            usuario = recogerUsuario();
+        }
+        else {
+            usuario = getIntent().getStringExtra("usuario");
+        }
+
         tvTituloCambio = findViewById(R.id.tvTituloCambio);
         etDatoAntiguo = findViewById(R.id.etDatoAntiguo);
         etDatoNuevo = findViewById(R.id.etDatoNuevo);
         etDatoConfirmacion = findViewById(R.id.etDatoConfirmacion);
 
-        valor = getIntent().getIntExtra("variable", 1);
         if (valor == 1) {
             tvTituloCambio.setText("CAMBIAR NOMBRE DE USUARIO");
             etDatoAntiguo.setHint("Usuario actual");
@@ -52,6 +62,9 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             etDatoConfirmacion.setHint("Confirmar usuario nuevo");
         }
         else {
+            if (valor == 3) {
+                etDatoAntiguo.setVisibility(View.INVISIBLE);
+            }
             tvTituloCambio.setText("CAMBIAR CONTRASEÑA");
             etDatoAntiguo.setHint("Contraseña actual");
             etDatoAntiguo.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
@@ -74,7 +87,7 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         String datoNuevo = etDatoNuevo.getText().toString();
         String datoConfirmacion = etDatoConfirmacion.getText().toString();
 
-        if ("".equals(datoAntiguo)) {
+        if ("".equals(datoAntiguo) && valor != 3) {
             etDatoAntiguo.setError("Introduce el dato antiguo");
             return;
         }
@@ -87,7 +100,6 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             return;
         }
 
-        String usuario = recogerUsuario();
         if (valor == 1) {
             if (!datoAntiguo.equals(usuario)) {
                 etDatoAntiguo.setError("El usuario no coincide con el de la sesión actual");
@@ -95,11 +107,13 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             }
         }
         else {
-            String contraseña = recogerContraseña();
-            datoAntiguo = EncriptarContraseña.encriptarMensaje(datoAntiguo);
-            if (!datoAntiguo.equals(contraseña)) {
-                etDatoAntiguo.setError("La contraseña no coincide con el de la sesión actual");
-                return;
+            if (valor != 3) {
+                String contraseña = recogerContraseña();
+                datoAntiguo = EncriptarContraseña.encriptarMensaje(datoAntiguo);
+                if (!datoAntiguo.equals(contraseña)) {
+                    etDatoAntiguo.setError("La contraseña no coincide con el de la sesión actual");
+                    return;
+                }
             }
         }
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
@@ -118,14 +132,11 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
             etDatoConfirmacion.setError("Los nuevos datos deben coincidir");
             return;
         }
-        if (datoAntiguo.equals(datoNuevo) && datoAntiguo.equals(datoConfirmacion)) {
+        if (datoAntiguo.equals(datoNuevo) && datoAntiguo.equals(datoConfirmacion) && valor != 3) {
             etDatoNuevo.setError("Los nuevos datos no pueden ser iguales que el dato a cambiar");
             etDatoConfirmacion.setError("Los nuevos datos no pueden ser iguales que el dato a cambiar");
             return;
         }
-
-
-
 
         //comprobar datos
         if (valor == 1) {

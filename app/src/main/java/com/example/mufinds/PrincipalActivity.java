@@ -201,18 +201,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_cambiarTema:
-                Toast.makeText(this, "Has seleccionado cambiar tema", Toast.LENGTH_SHORT).show();
-                if (tema == 1) {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    tema = 2;
-                }
-                else {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    tema = 1;
-                }
-                return true;
-
             case R.id.action_logout:
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.setTitle("Cerrar Sessión");
