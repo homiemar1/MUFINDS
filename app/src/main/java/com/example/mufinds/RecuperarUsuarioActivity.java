@@ -53,23 +53,21 @@ public class RecuperarUsuarioActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     boolean comprobar = true;
+                    String usuario = "";
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String dbEmail = document.getData().get("email").toString();
-                            if (dbEmail.equals(email)) {
-                                String dbPassword = document.getData().get("password").toString();
-                                String usuario = document.getData().get("nombreUsuari").toString();
-                                if (dbPassword.equals(contraseña) && dbEmail.equals(email)) {
-                                    mensajeFinal(usuario);
-                                }
-                                else {
-                                    comprobar = false;
-                                }
+                            String dbPassword = document.getData().get("password").toString();
+                            if (dbEmail.equals(email) && dbPassword.equals(contraseña)) {
+                                usuario = document.getData().get("nombreUsuari").toString();
+                                comprobar = true;
+                                mensajeFinal(usuario);
+                                break;
                             }
-                            comprobar = false;
+                            else {
+                                comprobar = false;
+                            }
                         }
-                    } else {
-                        System.out.println("Error getting documents." + task.getException());
                     }
 
                     if (!comprobar) {
