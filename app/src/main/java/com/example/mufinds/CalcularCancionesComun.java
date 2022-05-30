@@ -35,9 +35,6 @@ public class CalcularCancionesComun {
         if (map1 == null || map2 == null) {
             return 0;
         }
-        else if (map1.isEmpty() || map2.isEmpty()) {
-            return 0;
-        }
 
         for (Map.Entry<String, Object> entry : map1.entrySet()) {
             cancionesUsuario1.add(entry.getKey());
