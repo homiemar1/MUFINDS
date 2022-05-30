@@ -41,15 +41,6 @@
         app:layout_constraintStart_toStartOf="@+id/etContraseñaRecuperarUsuario"
         app:layout_constraintTop_toBottomOf="@+id/etContraseñaRecuperarUsuario" />
 
-    <TextView
-        android:id="@+id/tvRespuestaRecuperarUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Tu usuario es: "
-        app:layout_constraintStart_toStartOf="@+id/etContraseñaRecuperarUsuario"
-        app:layout_constraintTop_toBottomOf="@+id/btRecuperarRecuperarUsuario" />
-
     <EditText
         android:id="@+id/etContraseñaRecuperarUsuario"
         android:layout_width="wrap_content"
