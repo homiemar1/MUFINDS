@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CalcularCancionesComun {
@@ -31,9 +32,17 @@ public class CalcularCancionesComun {
         Map<String, Object> map1 = task1.getResult().getData();
         Map<String, Object> map2 = task2.getResult().getData();
 
+        if (map1 == null || map2 == null) {
+            return 0;
+        }
+        else if (map1.isEmpty() || map2.isEmpty()) {
+            return 0;
+        }
+
         for (Map.Entry<String, Object> entry : map1.entrySet()) {
             cancionesUsuario1.add(entry.getKey());
         }
+
         for (Map.Entry<String, Object> entry : map2.entrySet()) {
             cancionesUsuario2.add(entry.getKey());
         }

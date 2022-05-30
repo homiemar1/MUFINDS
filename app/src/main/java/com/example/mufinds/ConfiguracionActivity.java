@@ -13,9 +13,14 @@ import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ConfiguracionActivity extends AppCompatActivity {
     private Intent intent;
@@ -54,10 +59,11 @@ public class ConfiguracionActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println(document.getId() + " => " + document.getData());
                                 if (document.getId().equals(nombreUsuario)) {
                                     database.collection("users").document(nombreUsuario).delete();
-                                    System.out.println("eliminado");
+                                    database.collection("relacionUsuarioMusica").document(nombreUsuario).delete();
+                                    database.collection("relacionUsuarioUsuario").document(nombreUsuario).delete();
+                                    eliminarSubRegistros(nombreUsuario);
                                 }
                             }
                         } else {
@@ -74,6 +80,20 @@ public class ConfiguracionActivity extends AppCompatActivity {
                     }
                 });
         alert.show();
+    }
+
+    private void eliminarSubRegistros(String nombreUsuario) {
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        document.getData().remove(nombreUsuario);
+                    }
+                }
+            }
+        });
+
     }
 
     public void restartAplicacion(){
