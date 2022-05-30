@@ -113,8 +113,25 @@ public class EditarPerfilActivity extends AppCompatActivity {
         insta2 = etInstagramEditar.getText().toString();
         fotoPerfil2 = "";
 
+        String caracteres = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String numeros = "[?=.*[0-9]]";
+
+
         if ("".equals(nombre2)) {
-            etNombreEditarPerfil.setError("Introduce un nombre de usuario");
+            etNombreEditarPerfil.setError("Introduce tu nombre");
+            return;
+        }
+        else if (nombre2.matches(caracteres) || nombre2.matches(numeros)) {
+            etNombreEditarPerfil.setError("El nombre no acepta caracteres especiales ni numeros");
+            return;
+        }
+
+        if ("".equals(apellido2)) {
+            etApellidoEditarPerfil.setError("Introduce tu apellido");
+            return;
+        }
+        else if (apellido2.matches(caracteres) || nombre2.matches(numeros)) {
+            etApellidoEditarPerfil.setError("El apellido no acepta caracteres especiales ni numeros");
             return;
         }
         if ("".equals(insta2)) {

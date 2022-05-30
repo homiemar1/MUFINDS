@@ -62,14 +62,25 @@ public class RegistroActivity extends AppCompatActivity {
         String genero = sp_genero.getSelectedItem().toString();
         Usuario u;
 
+        String caracteres = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String numeros = "[?=.*[0-9]]";
         if ("".equals(nombre)) {
             etNombreRegistro.setError("Introduce tu nombre");
+            return;
+        }
+        else if (nombre.matches(caracteres) && nombre.matches(numeros)) {
+            etNombreRegistro.setError("El nombre no acepta caracteres especiales ni numeros");
             return;
         }
         if ("".equals(apellido)) {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
+        else if (apellido.matches(caracteres) && apellido.matches(numeros)) {
+            etApellidosRegistro.setError("El apellido no acepta caracteres especiales ni numeros");
+            return;
+        }
+
         boolean valor = comprobarEmail(email);
         if ("".equals(email)) {
             etEmailRegistro.setError("Introduce tu email");
