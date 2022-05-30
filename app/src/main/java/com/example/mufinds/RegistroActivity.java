@@ -1,5 +1,6 @@
 package com.example.mufinds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -11,20 +12,35 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistroActivity extends AppCompatActivity {
     Spinner sp_genero;
     EditText etNombreRegistro, etApellidosRegistro, etEmailRegistro, etContraseñaRegistro, etdFechaNacimientoRegistro;
     String fecha = "";
     int edad = 0;
+    FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        database = FirebaseFirestore.getInstance();
 
         etNombreRegistro = findViewById(R.id.etNombreRegistro);
         etApellidosRegistro = findViewById(R.id.etApellidosRegistro);
@@ -54,8 +70,13 @@ public class RegistroActivity extends AppCompatActivity {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
+        boolean valor = comprobarEmail(email);
         if ("".equals(email)) {
             etEmailRegistro.setError("Introduce tu email");
+            return;
+        }
+        else if (valor) {
+            etEmailRegistro.setError("Este email ya existe");
             return;
         }
         if (!email.contains("@")) {
@@ -95,6 +116,19 @@ public class RegistroActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegistroActivity2.class);
         intent.putExtra("usuario",u);
         startActivity(intent);
+    }
+
+    private boolean comprobarEmail(String email) {
+        boolean valor = false;
+        Task<QuerySnapshot> task1 = database.collection("users").get();
+        while(!task1.isComplete()){}
+        for (DocumentSnapshot document : task1.getResult()) {
+            if (email.equals(document.getData().get("email"))) {
+                valor = true;
+            }
+        }
+
+        return valor;
     }
 
     public void onClickFecha(View view) {
