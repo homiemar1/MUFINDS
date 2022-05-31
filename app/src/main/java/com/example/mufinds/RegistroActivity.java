@@ -59,7 +59,7 @@ public class RegistroActivity extends AppCompatActivity {
         Usuario u;
 
         //pattern nombre y apellido
-        String numeros = "\\d*";
+        String numeros = ".*\\d.*";
         //pattern contraseña
         String patternContraseña = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
         //pattern email
