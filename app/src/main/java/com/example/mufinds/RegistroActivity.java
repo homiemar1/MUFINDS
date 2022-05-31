@@ -92,7 +92,8 @@ public class RegistroActivity extends AppCompatActivity {
             etEmailRegistro.setError("Introduce tu email");
             return;
         }
-        if (emparejadorEmail.find()) {
+
+        if (!emparejadorEmail.find()) {
             etEmailRegistro.setError("Este email no es valido");
             return;
         }

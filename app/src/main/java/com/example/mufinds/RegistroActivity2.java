@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,8 @@ public class RegistroActivity2 extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private StorageReference sr;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,11 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.loading_dialog);
+        dialog = builder.create();
 
     }
 
@@ -119,7 +127,7 @@ public class RegistroActivity2 extends AppCompatActivity {
                         StorageReference storage = sr.child("fotosperfiles").child(nombre_usuario);
                         recogerFoto(storage);
                     }
-
+                    dialog.show();
                     guardarDatos();
                 }
                 else {
@@ -149,6 +157,7 @@ public class RegistroActivity2 extends AppCompatActivity {
 
         editor.commit();
 
+        dialog.dismiss();
         intent = new Intent(RegistroActivity2.this, PrincipalActivity.class);
         startActivity(intent);
         finish();
@@ -161,11 +170,6 @@ public class RegistroActivity2 extends AppCompatActivity {
                 u.setFotoPerfil(uri.toString());
                 guardarDatos();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(RegistroActivity2.this, "Foto no guardada", Toast.LENGTH_SHORT).show();
-            }
         });
     }
 
@@ -173,13 +177,7 @@ public class RegistroActivity2 extends AppCompatActivity {
         storage.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(RegistroActivity2.this, "Foto subida correctamente", Toast.LENGTH_SHORT).show();
                 descargarFoto(storage);
-            }
-        }).addOnFailureListener(RegistroActivity2.this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegistroActivity2.this, "Foto no subida", Toast.LENGTH_SHORT).show();
             }
         });
     }
