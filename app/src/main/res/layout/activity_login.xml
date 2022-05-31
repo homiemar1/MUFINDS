@@ -10,74 +10,81 @@
         android:id="@+id/tv_iniciar_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
         android:text="INICIAR SESIÓN"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.291" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Nombre de usuario"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/etContraseñaIniciarSesion"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickIniciarSession"
         android:text="Iniciar Sesión"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
+        app:layout_constraintVertical_bias="0.597" />
 
     <TextView
         android:id="@+id/tv_olvidado_contraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
         android:onClick="onClickRecuperarContraseña"
         android:text="Has olvidado la contraseña?"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.679" />
 
     <TextView
         android:id="@+id/tv_olvidado_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:onClick="onClickRecuperarUsuario"
         android:text="Has olvidado el nombre de usuario?"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion"
-        app:layout_constraintTop_toBottomOf="@+id/tv_olvidado_contraseña" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.751" />
 
     <EditText
         android:id="@+id/etContraseñaIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btIniciarSesion"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesion"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.475" />
 </androidx.constraintlayout.widget.ConstraintLayout>

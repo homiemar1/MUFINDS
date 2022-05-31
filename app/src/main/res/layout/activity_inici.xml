@@ -10,21 +10,21 @@
         android:id="@+id/ivLogoInicio"
         android:layout_width="303dp"
         android:layout_height="149dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/btIniciarSesionInicio"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesionInicio"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesionInicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321"
         tools:srcCompat="@drawable/logomufinds" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btIniciarSesionInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickIniciarSesion"
         android:text="Iniciar Sesión"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.471"
@@ -33,16 +33,17 @@
         app:layout_constraintVertical_bias="0.617" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btRegistrarseInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickRegistrar"
         android:text="Registrarse"
-        app:layout_constraintEnd_toEndOf="@+id/btIniciarSesionInicio"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="@+id/btIniciarSesionInicio"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesionInicio" />
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.743" />
 </androidx.constraintlayout.widget.ConstraintLayout>

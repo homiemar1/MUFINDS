@@ -10,12 +10,13 @@
         android:id="@+id/btCambiarNombreUsuarioConfiguracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:onClick="onClickCambiarNombreUsuario"
         android:text="Cambiar nombre usuario"
-        app:layout_constraintBottom_toTopOf="@+id/btCambiarContraseñaConfiguracion"
-        app:layout_constraintEnd_toEndOf="@+id/btCambiarContraseñaConfiguracion"
-        app:layout_constraintStart_toStartOf="@+id/btCambiarContraseñaConfiguracion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.411" />
 
     <Button
         android:id="@+id/btCambiarContraseñaConfiguracion"
@@ -25,31 +26,33 @@
         android:text="Cambiar contraseña"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.529" />
 
     <Button
         android:id="@+id/btEliminarUsuarioConfiguracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:onClick="onClickEliminarCuenta"
         android:text="Eliminar usuario"
-        app:layout_constraintEnd_toEndOf="@+id/btCambiarContraseñaConfiguracion"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="@+id/btCambiarContraseñaConfiguracion"
-        app:layout_constraintTop_toBottomOf="@+id/btCambiarContraseñaConfiguracion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641" />
 
     <TextView
         android:id="@+id/tvTituloConfiguracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
         android:text="CONFIGURACIÓN"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btCambiarNombreUsuarioConfiguracion"
-        app:layout_constraintEnd_toEndOf="@+id/btCambiarNombreUsuarioConfiguracion"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="@+id/btCambiarNombreUsuarioConfiguracion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
