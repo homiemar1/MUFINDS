@@ -75,8 +75,29 @@ public class PrincipalActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         nombreUsuario = sharedPref.getString("nombreUsuario","");
+        condicion = 1;
+        ivBtEditarPerfil.setImageResource(R.drawable.logogestionarmusica);
         getCancionesUsuario();
         getUsuariosLike();
+    }
+
+    public void getUsuariosLike() {
+        ArrayList<String> lista = new ArrayList<>();
+        database.collection("relacionUsuarioUsuario").document(nombreUsuario).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = task.getResult().getData();
+
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        if ((boolean)entry.getValue()) {
+                            lista.add(entry.getKey());
+                        }
+                    }
+                    getUsuarios(lista);
+                }
+            }
+        });
     }
 
     private void getUsuarios(ArrayList<String> lista) {
@@ -100,27 +121,6 @@ public class PrincipalActivity extends AppCompatActivity {
                             usuarios.put(nombreUsuario2, infoUser);
                         }
                     }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
-                }
-            }
-        });
-    }
-
-    public void getUsuariosLike() {
-        ArrayList<String> lista = new ArrayList<>();
-        database.collection("relacionUsuarioUsuario").document(nombreUsuario).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Map<String, Object> map = task.getResult().getData();
-
-                    for (Map.Entry<String, Object> entry : map.entrySet()) {
-                        if ((boolean)entry.getValue()) {
-                            lista.add(entry.getKey());
-                        }
-                    }
-                    getUsuarios(lista);
                 }
             }
         });
@@ -178,12 +178,6 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.my_toolbar_menu, menu);
-        return true;
     }
 
     @Override
@@ -317,9 +311,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void añadirInformacionUsuario(boolean valor) {
         if (!nombresUsuario.isEmpty()) {
-            if (!valor && contadorUsuarios != 0) {
+            /*if (!valor && contadorUsuarios != 0) {
                 contadorUsuarios -= 1;
-            }
+            }*/
             if (contadorUsuarios >= nombresUsuario.size()) {
                 contadorUsuarios = 0;
                 getUsuariosLike();
@@ -352,9 +346,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void añadirInformacionMusica(boolean valor) {
         if (!idsCanciones.isEmpty()) {
-            if (!valor && contadorMusica != 0) {
+            /*if (!valor && contadorMusica != 0) {
                 contadorMusica -= 1;
-            }
+            }*/
             if (contadorMusica >= idsCanciones.size()) {
                 contadorMusica = 0;
                 getCancionesUsuario();
@@ -407,5 +401,11 @@ public class PrincipalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my_toolbar_menu, menu);
+        return true;
     }
 }
