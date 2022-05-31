@@ -59,6 +59,10 @@ public class RegistroActivity extends AppCompatActivity {
         Usuario u;
 
         //pattern nombre y apellido
+        String patternNombre = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern patronNombre = Pattern.compile(patternNombre);
+        Matcher emparejadorNombre = patronNombre.matcher(nombre);
+        Matcher emparejadorApellido = patronNombre.matcher(apellido);
         String numeros = ".*\\d.*";
         //pattern contraseña
         String patternContraseña = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
@@ -67,15 +71,11 @@ public class RegistroActivity extends AppCompatActivity {
         Pattern patronEmail = Pattern.compile(patternEmail);
         Matcher emparejadorEmail = patronEmail.matcher(email);
 
-        /*Pattern patron = Pattern.compile(numeros);
-        Matcher emparejador = patron.matcher(email);
-        boolean coincide = emparejador.find();*/
-
         if ("".equals(nombre)) {
             etNombreRegistro.setError("Introduce tu nombre");
             return;
         }
-        else if (nombre.matches(numeros)) {
+        else if (emparejadorNombre.find() || nombre.matches(numeros)) {
             etNombreRegistro.setError("El nombre no acepta caracteres especiales ni números");
             return;
         }
@@ -83,7 +83,7 @@ public class RegistroActivity extends AppCompatActivity {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
-        else if (apellido.matches(numeros)) {
+        else if (emparejadorApellido.find() || apellido.matches(numeros)) {
             etApellidosRegistro.setError("El apellido no acepta caracteres especiales ni numeros");
             return;
         }
