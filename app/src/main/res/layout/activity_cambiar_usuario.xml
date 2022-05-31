@@ -10,25 +10,27 @@
         android:id="@+id/tvTituloCambio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
         android:text="CAMBIAR NOMBRE DE USUARIO"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/etDatoAntiguo"
-        app:layout_constraintEnd_toEndOf="@+id/etDatoAntiguo"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/etDatoAntiguo" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.234" />
 
     <EditText
         android:id="@+id/etDatoAntiguo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/etDatoNuevo"
-        app:layout_constraintEnd_toEndOf="@+id/etDatoNuevo"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/etDatoNuevo" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.368" />
 
     <EditText
         android:id="@+id/etDatoNuevo"
@@ -41,31 +43,34 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.453" />
+        app:layout_constraintVertical_bias="0.47" />
 
     <EditText
         android:id="@+id/etDatoConfirmacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/etDatoNuevo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etDatoNuevo"
-        app:layout_constraintTop_toBottomOf="@+id/etDatoNuevo" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571" />
 
     <Button
-        android:background="@drawable/bordes_redondos"
-        android:textColor="@android:color/white"
         android:id="@+id/btAceptarCambio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:background="@drawable/bordes_redondos"
         android:onClick="onClickAceptar"
         android:text="Aceptar"
-        app:layout_constraintEnd_toEndOf="@+id/etDatoConfirmacion"
-        app:layout_constraintStart_toStartOf="@+id/etDatoConfirmacion"
-        app:layout_constraintTop_toBottomOf="@+id/etDatoConfirmacion" />
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.696" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
