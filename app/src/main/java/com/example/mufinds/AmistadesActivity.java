@@ -16,10 +16,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,19 +72,20 @@ public class AmistadesActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(AmistadesActivity.this);
                 alert.setTitle("Añadir amistad");
                 alert.setMessage("Estas segur@ de que quieres añadir a este usuario?")
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Aceptar solicitud", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 añadirUsuario(position);
                             }
-                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Rechazar solicitud", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        eliminarSolicitud(sharedPref.getString("nombreUsuario", ""), position);
                     }
                 });
                 alert.show();
             }
         });
     }
+
 
     private void onClickLvAmigos() {
         lvAmigos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,7 +137,6 @@ public class AmistadesActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    System.out.println("Error getting documents." + task.getException());
                     return;
                 }
                 if (usuariosAmistad.isEmpty() && usuariosSolicitud.isEmpty()) {
@@ -196,6 +198,8 @@ public class AmistadesActivity extends AppCompatActivity {
         instagramAmistad.remove(position);
         fotosPerfilAmistad.remove(position);
 
+        getInformacionUsuarios();
+
         amigosList.notifyDataSetChanged();
     }
 
@@ -211,6 +215,33 @@ public class AmistadesActivity extends AppCompatActivity {
                 .update(update);
 
         getInformacionUsuarios();
+
         amigosList.notifyDataSetChanged();
+    }
+
+    private void eliminarSolicitud(String nombreUsuario, int position) {
+        String nombreEliminar = usuariosSolicitud.get(position);
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getId().equals(nombreUsuario)) {
+                            Map<String,Object> updates = new HashMap<>();
+                            updates.put(nombreEliminar, FieldValue.delete());
+                            DocumentReference docRef = database.collection("relacionUsuarioUsuario").document(document.getId());
+                            docRef.update(updates);
+                        }
+                    }
+                }
+                usuariosSolicitud.remove(position);
+                cancionesEnComunSolicitud.remove(position);
+                fotosPerfilSolicitud.remove(position);
+
+                getInformacionUsuarios();
+
+                amigosList.notifyDataSetChanged();
+            }
+        });
     }
 }
