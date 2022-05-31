@@ -22,6 +22,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
     EditText etNombreUsuarioRecuperarContraseña, etNombreRecuperarContraseña, etApellidosRecuperarContraseña, etdFechaNacimientoRecuperarContraseña;
     String nombreUsuario, nombre, apellidos, fecha = "";
     FirebaseFirestore database;
+    int any, mes, dia, edad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,12 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         etApellidosRecuperarContraseña = findViewById(R.id.etApellidosRecuperarContraseña);
         etdFechaNacimientoRecuperarContraseña = findViewById(R.id.etdFechaNacimientoRecuperarContraseña);
 
+        Calendar c = Calendar.getInstance();
+        any = c.get(Calendar.YEAR);
+        mes = c.get(Calendar.MONDAY);
+        dia = c.get(Calendar.DAY_OF_MONTH);
+        edad = 0;
+
     }
 
     public void onClickRecuperar(View view) {
@@ -44,15 +51,22 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
 
         if ("".equals(nombreUsuario)) {
             etNombreUsuarioRecuperarContraseña.setError("Introduce tu nombre de usuario");
+            return;
         }
-        else if ("".equals(nombre)) {
+        if ("".equals(nombre)) {
             etNombreRecuperarContraseña.setError("Introduce tu nombre de usuario");
+            return;
         }
-        else if ("".equals(apellidos)) {
+        if ("".equals(apellidos)) {
             etApellidosRecuperarContraseña.setError("Introduce tu nombre de usuario");
+            return;
         }
-        else if ("".equals(fecha)) {
+        if ("".equals(fecha)) {
             etdFechaNacimientoRecuperarContraseña.setError("Introduce tu fecha de nacimiento");
+            return;
+        }
+        if (edad <16) {
+            etdFechaNacimientoRecuperarContraseña.setError("Debes ser mayor de 16 años");
         }
         else {
             database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -98,10 +112,6 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog() {
-        Calendar c = Calendar.getInstance();
-        int any = c.get(Calendar.YEAR);
-        int mes = c.get(Calendar.MONDAY);
-        int dia = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog elegirFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int año, int mes, int dia) {
@@ -109,12 +119,30 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                 String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
                 String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
 
+                any = año;
+                RecuperarContrasenaActivity.this.mes = mes;
+                RecuperarContrasenaActivity.this.dia = dia;
+
                 fecha = diaFormateado + "/" + mesFormateado + "/" + año;
                 etdFechaNacimientoRecuperarContraseña.setText(fecha);
+
+                int añoActual = año;
+                int ma = Integer.parseInt(mesFormateado);
+                edad = calcular(any, (mes+1), añoActual, ma);
 
             }
         },any,mes,dia);
         elegirFecha.show();
 
+    }
+    public int calcular(int any, int mes, int añoActual, int mesActual) {
+        int años = 0;
+        if (mesActual < mes) {
+            años = any - añoActual;
+        }
+        else {
+            años = any - añoActual -1;
+        }
+        return años;
     }
 }
