@@ -77,9 +77,6 @@ public class PrincipalActivity extends AppCompatActivity {
         nombreUsuario = sharedPref.getString("nombreUsuario","");
         condicion = 1;
         ivBtEditarPerfil.setImageResource(R.drawable.logogestionarmusica);
-        getCancionesUsuario();
-        getUsuariosLike();
-
     }
 
     public void getUsuariosLike() {
