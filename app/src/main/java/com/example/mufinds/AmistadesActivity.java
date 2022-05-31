@@ -137,7 +137,20 @@ public class AmistadesActivity extends AppCompatActivity {
                     System.out.println("Error getting documents." + task.getException());
                     return;
                 }
-                getInformacionUsuariosAmpliada();
+                if (usuariosAmistad.isEmpty() && usuariosSolicitud.isEmpty()) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(AmistadesActivity.this);
+                    dialog.setTitle("ATENCIÓN");
+                    dialog.setMessage("Aún no tienes solicitudes de amistad ni amigos :( \n¡Vuelve a la pantalla principal y empieza a hacer amigos!");
+                    dialog.setPositiveButton(" Aceptar ", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+                else {
+                    getInformacionUsuariosAmpliada();
+                }
             }
         });
     }

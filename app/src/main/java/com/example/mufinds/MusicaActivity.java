@@ -83,8 +83,18 @@ public class MusicaActivity extends AppCompatActivity {
                         }
                     }
                 }
-
-                if (allInfo != null) {
+                if (allInfo.isEmpty()) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MusicaActivity.this);
+                    dialog.setTitle("ATENCIÓN");
+                    dialog.setMessage("Aún no has añadido ninguna canción. \nVuelve a la pantalla principal y empieza a añadir canciones.");
+                    dialog.setPositiveButton(" Aceptar ", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+                else if(allInfo != null) {
                     idCanciones.addAll(allInfo.keySet());
                     getCanciones(idCanciones);
                 }

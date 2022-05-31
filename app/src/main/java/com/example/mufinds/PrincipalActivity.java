@@ -79,6 +79,7 @@ public class PrincipalActivity extends AppCompatActivity {
         ivBtEditarPerfil.setImageResource(R.drawable.logogestionarmusica);
         getCancionesUsuario();
         getUsuariosLike();
+
     }
 
     public void getUsuariosLike() {
@@ -173,7 +174,7 @@ public class PrincipalActivity extends AppCompatActivity {
                             canciones.put(idcancion, infoCancion);
                         }
                     }
-                    añadirInformacionMusica(false);
+                    añadirInformacionMusica();
                 }
             }
         });
@@ -211,7 +212,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 dialog.setMessage("MUFINDS tiene el objetivo de ayudar al usuario a conocer personas con el mismo gusto musical. \n \n"
                         + "Esta app esta desarrollada por Marouan Hammich y Nerea López. \n \n"
                         + "Versión 1.0");
-                dialog.setPositiveButton(" OK ", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton(" Aceptar ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
@@ -245,26 +246,26 @@ public class PrincipalActivity extends AppCompatActivity {
     public void onClickMusica(View view) {
         condicion = 1;
         ivBtEditarPerfil.setImageResource(R.drawable.logogestionarmusica);
-        añadirInformacionMusica(false);
+        añadirInformacionMusica();
     }
 
     public void onClickPersonas (View view) {
         condicion = 2;
         ivBtEditarPerfil.setImageResource(R.drawable.logoeditarperfilredimensionado);
-        añadirInformacionUsuario(false);
+        añadirInformacionUsuario();
     }
 
     public void onClickDislike(View view) {
         if (condicion == 1) {
             if (!idsCanciones.isEmpty()) {
                 contadorMusica+=1;
-                añadirInformacionMusica(true);
+                añadirInformacionMusica();
             }
         }
         else {
             if (!nombresUsuario.isEmpty()) {
                 contadorUsuarios += 1;
-                añadirInformacionUsuario(true);
+                añadirInformacionUsuario();
             }
         }
     }
@@ -274,9 +275,10 @@ public class PrincipalActivity extends AppCompatActivity {
         if (condicion == 1) {
             if (!idsCanciones.isEmpty()) {
                 String idcancion = idsCanciones.get(contadorMusica);
+                idsCanciones.remove(contadorMusica);
                 contadorMusica += 1;
                 insertarDatos(idcancion, nombreUsuario);
-                añadirInformacionMusica(true);
+                añadirInformacionMusica();
             }
         }
         else {
@@ -284,7 +286,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 String idUsuario = nombresUsuario.get(contadorUsuarios);
                 contadorUsuarios += 1;
                 insertarDatosUsuario(idUsuario, nombreUsuario);
-                añadirInformacionUsuario(true);
+                añadirInformacionUsuario();
             }
         }
     }
@@ -309,11 +311,8 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    private void añadirInformacionUsuario(boolean valor) {
+    private void añadirInformacionUsuario() {
         if (!nombresUsuario.isEmpty()) {
-            /*if (!valor && contadorUsuarios != 0) {
-                contadorUsuarios -= 1;
-            }*/
             if (contadorUsuarios >= nombresUsuario.size()) {
                 contadorUsuarios = 0;
                 getUsuariosLike();
@@ -344,11 +343,8 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-    private void añadirInformacionMusica(boolean valor) {
+    private void añadirInformacionMusica() {
         if (!idsCanciones.isEmpty()) {
-            /*if (!valor && contadorMusica != 0) {
-                contadorMusica -= 1;
-            }*/
             if (contadorMusica >= idsCanciones.size()) {
                 contadorMusica = 0;
                 getCancionesUsuario();
@@ -368,6 +364,9 @@ public class PrincipalActivity extends AppCompatActivity {
             tvNombreUsuarioPrincipal.setText(nombreFecha);
             tvCancionesComunPrincipal.setText(album);
             tvDescripcionPrincipal.setText(artista);
+
+            System.out.println("CONTADOR AÑADIR INFO FINAL -->" + contadorMusica);
+
         }
         else {
             tvNombreUsuarioPrincipal.setText("No hay más canciones");
