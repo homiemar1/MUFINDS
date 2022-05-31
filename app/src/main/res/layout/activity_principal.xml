@@ -12,9 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.003" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvPersonasPrincipal"
@@ -70,12 +73,13 @@
         android:id="@+id/tgMenuSuperiorPrincipal"
         android:layout_width="222dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="12dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/cvPersonasPrincipal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.242"
         app:singleSelection="true">
 
         <Button
@@ -100,27 +104,28 @@
         android:id="@+id/ivDislike"
         android:layout_width="66dp"
         android:layout_height="70dp"
-        android:layout_marginTop="12dp"
         android:clickable="true"
         android:onClick="onClickDislike"
-        app:layout_constraintEnd_toStartOf="@+id/ivLike"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/cvPersonasPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/cvPersonasPrincipal"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.699"
         app:srcCompat="@drawable/fotodislikeredimension" />
 
     <ImageView
         android:id="@+id/ivLike"
         android:layout_width="69dp"
         android:layout_height="63dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="4dp"
         android:clickable="true"
         android:onClick="onClickLike"
-        app:layout_constraintEnd_toEndOf="@+id/cvPersonasPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/cvPersonasPrincipal"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
         app:srcCompat="@drawable/like" />
 
     <ImageView
