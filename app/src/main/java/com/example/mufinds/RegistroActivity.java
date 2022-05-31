@@ -26,6 +26,9 @@ public class RegistroActivity extends AppCompatActivity {
     String fecha = "";
     int edad = 0;
     FirebaseFirestore database;
+    int any;
+    int mes;
+    int dia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class RegistroActivity extends AppCompatActivity {
         String[] datos = new String[] {"Mujer", "No binario", "Prefiero no contestar", "Hombre"};
         sp_genero.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,datos));
 
+        Calendar c = Calendar.getInstance();
+        any = c.get(Calendar.YEAR);
+        mes = c.get(Calendar.MONDAY);
+        dia = c.get(Calendar.DAY_OF_MONTH);
     }
 
     public void onClickSiguiente (View view) {
@@ -159,16 +166,16 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog() {
-        Calendar c = Calendar.getInstance();
-        int any = c.get(Calendar.YEAR);
-        int mes = c.get(Calendar.MONDAY);
-        int dia = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog elegirFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int año, int mes, int dia) {
                 final int mesActual = mes+1;
                 String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
                 String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
+
+                any = año;
+                RegistroActivity.this.mes = mes;
+                RegistroActivity.this.dia = dia;
 
                 fecha = diaFormateado + "/" + mesFormateado + "/" + año;
                 etdFechaNacimientoRegistro.setText(fecha);
