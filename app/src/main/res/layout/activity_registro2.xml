@@ -10,12 +10,11 @@
         android:id="@+id/ivFotoPerfilRegistro"
         android:layout_width="121dp"
         android:layout_height="129dp"
+        android:layout_marginBottom="36dp"
         android:onClick="onClickFotoDePerfil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277"
+        app:layout_constraintBottom_toTopOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
@@ -36,71 +35,60 @@
         android:id="@+id/btAtrasRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bordes_redondos"
         android:onClick="onClickAtras"
         android:text="Atras"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintStart_toStartOf="@+id/etInstragram"
+        app:layout_constraintTop_toBottomOf="@+id/etInstragram" />
 
     <Button
         android:id="@+id/btFinalizarRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bordes_redondos"
         android:onClick="onClickFinalizar"
         android:text="Finalizar"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.838"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintEnd_toEndOf="@+id/etInstragram"
+        app:layout_constraintTop_toBottomOf="@+id/etInstragram" />
 
     <EditText
         android:id="@+id/etDescripcionRegistro"
         android:layout_width="312dp"
         android:layout_height="83dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Descripcion"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.608" />
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreUsuarioRegistro" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:text="REGISTRO"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintBottom_toTopOf="@+id/ivFotoPerfilRegistro"
+        app:layout_constraintEnd_toEndOf="@+id/ivFotoPerfilRegistro"
+        app:layout_constraintStart_toStartOf="@+id/ivFotoPerfilRegistro" />
 
     <EditText
         android:id="@+id/etInstragram"
         android:layout_width="306dp"
         android:layout_height="45dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Instagram"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.718" />
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionRegistro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -81,8 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        } else {
-                            System.out.println("Error getting documents." + task.getException());
                         }
                         if (!usuarioCheck) {
                             editTextTextPersonName.setError("Usuario o contraseña incorrecto");

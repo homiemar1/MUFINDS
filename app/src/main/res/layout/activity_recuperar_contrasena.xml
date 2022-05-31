@@ -10,27 +10,24 @@
         android:id="@+id/tvTituloRecuperarContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="RECUPERAR CONTRASEÑA"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.226" />
+        app:layout_constraintBottom_toTopOf="@+id/etNombreUsuarioRecuperarContraseña"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreUsuarioRecuperarContraseña"
+        app:layout_constraintStart_toStartOf="@+id/etNombreUsuarioRecuperarContraseña" />
 
     <EditText
         android:id="@+id/etNombreRecuperarContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.418" />
+        app:layout_constraintBottom_toTopOf="@+id/etApellidosRecuperarContraseña"
+        app:layout_constraintEnd_toEndOf="@+id/etApellidosRecuperarContraseña"
+        app:layout_constraintStart_toStartOf="@+id/etApellidosRecuperarContraseña" />
 
     <EditText
         android:id="@+id/etApellidosRecuperarContraseña"
@@ -41,15 +38,15 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etdFechaNacimientoRecuperarContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:clickable="true"
         android:ems="10"
         android:focusable="false"
@@ -57,37 +54,32 @@
         android:inputType="date"
         android:maxLines="1"
         android:onClick="onClickFecha"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.612" />
+        app:layout_constraintEnd_toEndOf="@+id/etApellidosRecuperarContraseña"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etApellidosRecuperarContraseña"
+        app:layout_constraintTop_toBottomOf="@+id/etApellidosRecuperarContraseña" />
 
     <Button
         android:id="@+id/btRecuperarRecuperarContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:onClick="onClickRecuperar"
         android:text="RECUPERAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintEnd_toEndOf="@+id/etdFechaNacimientoRecuperarContraseña"
+        app:layout_constraintStart_toStartOf="@+id/etdFechaNacimientoRecuperarContraseña"
+        app:layout_constraintTop_toBottomOf="@+id/etdFechaNacimientoRecuperarContraseña" />
 
     <EditText
         android:id="@+id/etNombreUsuarioRecuperarContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Nombre usuario"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        app:layout_constraintBottom_toTopOf="@+id/etNombreRecuperarContraseña"
+        app:layout_constraintEnd_toEndOf="@+id/etNombreRecuperarContraseña"
+        app:layout_constraintStart_toStartOf="@+id/etNombreRecuperarContraseña" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
