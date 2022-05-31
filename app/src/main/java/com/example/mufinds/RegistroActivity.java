@@ -21,14 +21,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
-    Spinner sp_genero;
-    EditText etNombreRegistro, etApellidosRegistro, etEmailRegistro, etContraseñaRegistro, etdFechaNacimientoRegistro;
-    String fecha = "";
-    int edad = 0;
-    FirebaseFirestore database;
-    int any;
-    int mes;
-    int dia;
+    private Spinner sp_genero;
+    private EditText etNombreRegistro, etApellidosRegistro, etEmailRegistro, etContraseñaRegistro, etdFechaNacimientoRegistro;
+    private String fecha = "";
+    private int edad = 0;
+    private FirebaseFirestore database;
+    private int any, mes ,dia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +58,14 @@ public class RegistroActivity extends AppCompatActivity {
         String genero = sp_genero.getSelectedItem().toString();
         Usuario u;
 
-        String caracteres = "[`~!@#$%^&*()+=|{}/%':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-        String numeros = "[.*\\d.*]";
-
+        //pattern nombre y apellido
+        String numeros = "\\d*";
+        //pattern contraseña
+        String patternContraseña = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        //pattern email
+        String patternEmail = "[A-Za-z]+@[a-z]+\\.[a-z]+";
+        Pattern patronEmail = Pattern.compile(patternEmail);
+        Matcher emparejadorEmail = patronEmail.matcher(email);
 
         /*Pattern patron = Pattern.compile(numeros);
         Matcher emparejador = patron.matcher(email);
@@ -72,8 +75,7 @@ public class RegistroActivity extends AppCompatActivity {
             etNombreRegistro.setError("Introduce tu nombre");
             return;
         }
-
-        else if (nombre.matches(caracteres) || nombre.matches(numeros)) {
+        else if (!nombre.matches(numeros)) {
             etNombreRegistro.setError("El nombre no acepta caracteres especiales ni números");
             return;
         }
@@ -81,7 +83,7 @@ public class RegistroActivity extends AppCompatActivity {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
-        else if (apellido.matches(caracteres) || apellido.matches(numeros)) {
+        else if (!apellido.matches(numeros)) {
             etApellidosRegistro.setError("El apellido no acepta caracteres especiales ni numeros");
             return;
         }
@@ -90,13 +92,7 @@ public class RegistroActivity extends AppCompatActivity {
             etEmailRegistro.setError("Introduce tu email");
             return;
         }
-
-        String regex = "[A-Za-z]+@[a-z]+\\.[a-z]+";
-        Pattern patron = Pattern.compile(regex);
-        Matcher emparejador = patron.matcher(email);
-        boolean coincide = emparejador.find();
-
-        if (!coincide) {
+        if (emparejadorEmail.find()) {
             etEmailRegistro.setError("Este email no es valido");
             return;
         }
@@ -105,16 +101,13 @@ public class RegistroActivity extends AppCompatActivity {
             etEmailRegistro.setError("Este email ya existe");
             return;
         }
-        if (!email.contains("@")) {
-            etEmailRegistro.setError("Este correo no es valido");
-            return;
-        }
+
         if ("".equals(pwd)) {
             etContraseñaRegistro.setError("Introduce tu contraseña");
             return;
         }
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
-        if (!pwd.matches(pattern)) {
+
+        if (!pwd.matches(patternContraseña)) {
             etContraseñaRegistro.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
                     "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
             return;
@@ -169,26 +162,23 @@ public class RegistroActivity extends AppCompatActivity {
         DatePickerDialog elegirFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int año, int mes, int dia) {
-                final int mesActual = mes+1;
-                String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
-                String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
-
-                any = año;
+                RegistroActivity.this.any = año;
                 RegistroActivity.this.mes = mes;
                 RegistroActivity.this.dia = dia;
 
-                fecha = diaFormateado + "/" + mesFormateado + "/" + año;
+                fecha = dia + "/" + String.format("%02d", (mes+1)) + "/" + año;
                 etdFechaNacimientoRegistro.setText(fecha);
 
-                int añoActual = año;
-                int ma = Integer.parseInt(mesFormateado);
-                edad = calcular(any, (mes+1), añoActual, ma);
+                edad = calcular(año, (mes + 1));
             }
         },any,mes,dia);
         elegirFecha.show();
 
     }
-    public int calcular(int any, int mes, int añoActual, int mesActual) {
+    public int calcular(int añoActual, int mesActual) {
+        Calendar c = Calendar.getInstance();
+        int any = c.get(Calendar.YEAR);
+        int mes = c.get(Calendar.MONDAY);
         int años = 0;
         if (mesActual < mes) {
             años = any - añoActual;
