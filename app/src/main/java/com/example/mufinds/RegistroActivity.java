@@ -1,6 +1,5 @@
 package com.example.mufinds;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -12,22 +11,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
 
-import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
     Spinner sp_genero;
@@ -62,31 +53,48 @@ public class RegistroActivity extends AppCompatActivity {
         String genero = sp_genero.getSelectedItem().toString();
         Usuario u;
 
-        String caracteres = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-        String numeros = "[?=.*[0-9]]";
+        String caracteres = "[`~!@#$%^&*()+=|{}/%':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String numeros = "[.*\\d.*]";
+
+
+        /*Pattern patron = Pattern.compile(numeros);
+        Matcher emparejador = patron.matcher(email);
+        boolean coincide = emparejador.find();*/
+
         if ("".equals(nombre)) {
             etNombreRegistro.setError("Introduce tu nombre");
             return;
         }
-        else if (nombre.matches(caracteres) && nombre.matches(numeros)) {
-            etNombreRegistro.setError("El nombre no acepta caracteres especiales ni numeros");
+
+        else if (nombre.matches(caracteres) || nombre.matches(numeros)) {
+            etNombreRegistro.setError("El nombre no acepta caracteres especiales ni números");
             return;
         }
         if ("".equals(apellido)) {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
-        else if (apellido.matches(caracteres) && apellido.matches(numeros)) {
+        else if (apellido.matches(caracteres) || apellido.matches(numeros)) {
             etApellidosRegistro.setError("El apellido no acepta caracteres especiales ni numeros");
             return;
         }
 
-        boolean valor = comprobarEmail(email);
         if ("".equals(email)) {
             etEmailRegistro.setError("Introduce tu email");
             return;
         }
-        else if (valor) {
+
+        String regex = "[A-Za-z]+@[a-z]+\\.[a-z]+";
+        Pattern patron = Pattern.compile(regex);
+        Matcher emparejador = patron.matcher(email);
+        boolean coincide = emparejador.find();
+
+        if (!coincide) {
+            etEmailRegistro.setError("Este email no es valido");
+            return;
+        }
+        boolean valor = comprobarEmail(email);
+        if (valor) {
             etEmailRegistro.setError("Este email ya existe");
             return;
         }

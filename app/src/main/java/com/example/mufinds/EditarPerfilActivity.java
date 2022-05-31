@@ -114,8 +114,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         fotoPerfil2 = "";
 
         String caracteres = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-        String numeros = "[?=.*[0-9]]";
-
+        String numeros = ".*\\d.*";
 
         if ("".equals(nombre2)) {
             etNombreEditarPerfil.setError("Introduce tu nombre");
