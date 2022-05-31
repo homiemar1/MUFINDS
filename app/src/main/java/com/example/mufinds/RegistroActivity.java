@@ -75,7 +75,7 @@ public class RegistroActivity extends AppCompatActivity {
             etNombreRegistro.setError("Introduce tu nombre");
             return;
         }
-        else if (!nombre.matches(numeros)) {
+        else if (nombre.matches(numeros)) {
             etNombreRegistro.setError("El nombre no acepta caracteres especiales ni números");
             return;
         }
@@ -83,7 +83,7 @@ public class RegistroActivity extends AppCompatActivity {
             etApellidosRegistro.setError("Introduce tus apellidos");
             return;
         }
-        else if (!apellido.matches(numeros)) {
+        else if (apellido.matches(numeros)) {
             etApellidosRegistro.setError("El apellido no acepta caracteres especiales ni numeros");
             return;
         }
