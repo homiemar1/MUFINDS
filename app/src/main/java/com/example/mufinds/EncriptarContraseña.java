@@ -2,8 +2,6 @@ package com.example.mufinds;
 
 import android.util.Base64;
 
-import com.google.android.gms.common.util.Base64Utils;
-
 import java.security.MessageDigest;
 import java.util.Arrays;
 

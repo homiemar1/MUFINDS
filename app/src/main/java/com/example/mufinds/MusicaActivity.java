@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,11 +19,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MusicaActivity extends AppCompatActivity {
     private FirebaseFirestore database;
@@ -86,11 +82,9 @@ public class MusicaActivity extends AppCompatActivity {
                             allInfo = document.getData();
                         }
                     }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
                 }
+
                 if (allInfo != null) {
-                    System.out.println("All info no esta vacio");
                     idCanciones.addAll(allInfo.keySet());
                     getCanciones(idCanciones);
                 }
@@ -116,10 +110,7 @@ public class MusicaActivity extends AppCompatActivity {
                             }
                         }
                     }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
                 }
-
                 amigosList = new AmigosList(MusicaActivity.this, nombreCanciones, artistasCanciones, portadas);
                 lvGestionarMusica.setAdapter(amigosList);
             }

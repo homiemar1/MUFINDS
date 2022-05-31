@@ -38,12 +38,12 @@ public class RegistroActivity2 extends AppCompatActivity {
     private Intent intent;
     private ImageView ivFotoPerfilRegistro;
     private Uri imageUri;
-    EditText etNombreUsuarioRegistro, etDescripcionRegistro, etInstragram;
-    Usuario u;
-    FirebaseFirestore database;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-    StorageReference sr;
+    private EditText etNombreUsuarioRegistro, etDescripcionRegistro, etInstragram;
+    private Usuario u;
+    private FirebaseFirestore database;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private StorageReference sr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,6 @@ public class RegistroActivity2 extends AppCompatActivity {
                     else {
                         StorageReference storage = sr.child("fotosperfiles").child(nombre_usuario);
                         recogerFoto(storage);
-
                     }
 
                     guardarDatos();

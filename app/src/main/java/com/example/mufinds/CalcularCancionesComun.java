@@ -1,14 +1,10 @@
 package com.example.mufinds;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CalcularCancionesComun {

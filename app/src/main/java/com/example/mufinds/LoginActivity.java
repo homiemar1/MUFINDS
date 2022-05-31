@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.ArraySet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,21 +15,9 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-
-import java.util.Map;
-import java.util.Set;
-
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tv_olvidado_contraseña, tv_olvidado_usuario;
@@ -82,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                                     usuarioCheck = true;
                                     String pwd = document.getData().get("password").toString();
                                     if (pwd.equals(password)) {
-                                        //getCancionesUsuario(nombreUsuario);
                                         guardarInformacionSharedPreference(nombreUsuario);
                                         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                         startActivity(intent);
@@ -138,56 +124,18 @@ public class LoginActivity extends AppCompatActivity {
                             editor.commit();
                         }
                     }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
                 }
             }
         });
     }
 
-    public Set<String> saveArraySharedPreference(ArrayList<String> array) {
-        Set<String> set = new HashSet<String>();
-        set.addAll(array);
-        return set;
-    }
-
     public void onClickRecuperarContraseña (View view) {
         Intent intent = new Intent(LoginActivity.this, RecuperarContrasenaActivity.class);
-        intent.putExtra("confirmacon", 1);
         startActivity(intent);
     }
 
     public void onClickRecuperarUsuario (View view) {
         Intent intent = new Intent(LoginActivity.this, RecuperarUsuarioActivity.class);
-        intent.putExtra("confirmacon", 2);
         startActivity(intent);
-    }
-
-    public void getCancionesUsuario(String nombreUsuario) {
-        ArrayList<String> lista= new ArrayList<>();
-        DocumentReference docRef = database.collection("relacionUsuarioMusica").document(nombreUsuario);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Map<String, Object> map = task.getResult().getData();
-
-                    for (Map.Entry<String, Object> entry : map.entrySet()) {
-                        lista.add(entry.getKey());
-
-                    }
-                    Set<String> set = saveArray(lista);
-                    editor.putStringSet("canciones", set);
-                    guardarInformacionSharedPreference(nombreUsuario);
-                }
-            }
-        });
-
-    }
-
-    public Set<String> saveArray(ArrayList<String> array) {
-        Set<String> set = new ArraySet<>();
-        set.addAll(array);
-        return set;
     }
 }

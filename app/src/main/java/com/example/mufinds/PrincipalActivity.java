@@ -17,10 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -177,10 +175,7 @@ public class PrincipalActivity extends AppCompatActivity {
                         }
                     }
                     añadirInformacionMusica(false);
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
                 }
-
             }
         });
 
@@ -226,7 +221,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 dialog.setPositiveButton(" OK ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
-
                     }
                 });
                 dialog.show();
@@ -319,11 +313,6 @@ public class PrincipalActivity extends AppCompatActivity {
                     batch.commit();
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
         });
     }
 
@@ -412,11 +401,6 @@ public class PrincipalActivity extends AppCompatActivity {
                     }
                     batch.commit();
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
             }
         });
     }

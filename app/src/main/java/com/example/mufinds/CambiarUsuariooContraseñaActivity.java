@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -127,12 +125,12 @@ public class CambiarUsuariooContraseñaActivity extends AppCompatActivity {
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
         if (!datoNuevo.matches(pattern) && valor!=1) {
             etDatoNuevo.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
-                    "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
+                    "una en mayúscula[A-Z], un número[0-9] y que tenga 8 caracteres como mínimo");
             return;
         }
         if (!datoNuevo.matches(pattern) && valor!=1) {
             etDatoConfirmacion.setError("La contraseña debe inculir una letra en minuscula [a-z], " +
-                    "una en mayuscula[A-Z], un numero[0-9] y que tenga 8 caracteres como mínimo");
+                    "una en mayúscula[A-Z], un número[0-9] y que tenga 8 caracteres como mínimo");
             return;
         }
         if (!datoNuevo.equals(datoConfirmacion)) {
