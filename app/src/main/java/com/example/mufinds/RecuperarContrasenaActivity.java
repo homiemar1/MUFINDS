@@ -22,7 +22,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
     EditText etNombreUsuarioRecuperarContraseña, etNombreRecuperarContraseña, etApellidosRecuperarContraseña, etdFechaNacimientoRecuperarContraseña;
     String nombreUsuario, nombre, apellidos, fecha = "";
     FirebaseFirestore database;
-    int any, mes, dia, edad;
+    int any, mes, dia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,6 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         any = c.get(Calendar.YEAR);
         mes = c.get(Calendar.MONDAY);
         dia = c.get(Calendar.DAY_OF_MONTH);
-        edad = 0;
-
     }
 
     public void onClickRecuperar(View view) {
@@ -65,42 +63,37 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
             etdFechaNacimientoRecuperarContraseña.setError("Introduce tu fecha de nacimiento");
             return;
         }
-        if (edad <16) {
-            etdFechaNacimientoRecuperarContraseña.setError("Debes ser mayor de 16 años");
-        }
-        else {
-            database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            System.out.println(document.getId() + " => " + document.getData());
-                            if (document.getId().equals(nombreUsuario)) {
-                                String dbNombre = document.getData().get("nombre").toString();
-                                String dbApellidos = document.getData().get("apellido").toString();
-                                String dbFecha = document.getData().get("dataNaixement").toString();
-                                if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos) && dbFecha.equals(fecha)) {
-                                    Intent intent = new Intent(RecuperarContrasenaActivity.this, CambiarUsuariooContraseñaActivity.class);
-                                    intent.putExtra("variable", 3);
-                                    intent.putExtra("usuario", nombreUsuario);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else {
-                                    etNombreUsuarioRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
-                                    etNombreRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
-                                    etApellidosRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
-                                    etdFechaNacimientoRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
-                                }
+
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        System.out.println(document.getId() + " => " + document.getData());
+                        if (document.getId().equals(nombreUsuario)) {
+                            String dbNombre = document.getData().get("nombre").toString();
+                            String dbApellidos = document.getData().get("apellido").toString();
+                            String dbFecha = document.getData().get("dataNaixement").toString();
+                            if (dbNombre.equals(nombre) && dbApellidos.equals(apellidos) && dbFecha.equals(fecha)) {
+                                Intent intent = new Intent(RecuperarContrasenaActivity.this, CambiarUsuariooContraseñaActivity.class);
+                                intent.putExtra("variable", 3);
+                                intent.putExtra("usuario", nombreUsuario);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                etNombreUsuarioRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                etNombreRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                etApellidosRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
+                                etdFechaNacimientoRecuperarContraseña.setError("Los datos no coinciden. Vuelva a intentarlo");
                             }
                         }
-                    } else {
-                        System.out.println("Error getting documents." + task.getException());
                     }
+                } else {
+                    System.out.println("Error getting documents." + task.getException());
                 }
-            });
-        }
-
+            }
+        });
     }
 
     public void onClickFecha(View view) {
@@ -115,34 +108,15 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         DatePickerDialog elegirFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int año, int mes, int dia) {
-                final int mesActual = mes+1;
-                String diaFormateado = (dia <10)? "0" + String.valueOf(dia):String.valueOf(dia);
-                String mesFormateado = (mesActual <10)? "0" + String.valueOf(mesActual): String.valueOf(mesActual);
-
-                any = año;
+                RecuperarContrasenaActivity.this.any = año;
                 RecuperarContrasenaActivity.this.mes = mes;
                 RecuperarContrasenaActivity.this.dia = dia;
 
-                fecha = diaFormateado + "/" + mesFormateado + "/" + año;
+                fecha = dia + "/" + String.format("%02d", (mes+1)) + "/" + año;
                 etdFechaNacimientoRecuperarContraseña.setText(fecha);
-
-                int añoActual = año;
-                int ma = Integer.parseInt(mesFormateado);
-                edad = calcular(any, (mes+1), añoActual, ma);
-
             }
         },any,mes,dia);
         elegirFecha.show();
 
-    }
-    public int calcular(int any, int mes, int añoActual, int mesActual) {
-        int años = 0;
-        if (mesActual < mes) {
-            años = any - añoActual;
-        }
-        else {
-            años = any - añoActual -1;
-        }
-        return años;
     }
 }
