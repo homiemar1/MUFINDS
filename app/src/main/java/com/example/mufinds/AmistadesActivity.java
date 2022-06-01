@@ -128,9 +128,11 @@ public class AmistadesActivity extends AppCompatActivity {
                                 if (!nombreUsuario.equals(entry.getKey())) {
                                     if (!(boolean)entry.getValue()) {
                                         usuariosSolicitud.add(entry.getKey());
+                                        getInformacionUsuarioAmpliada(entry.getKey(), 1);
                                     }
                                     else {
                                         usuariosAmistad.add(entry.getKey());
+                                        getInformacionUsuarioAmpliada(entry.getKey(), 2);
                                     }
                                 }
                             }
@@ -139,6 +141,7 @@ public class AmistadesActivity extends AppCompatActivity {
                 } else {
                     return;
                 }
+
                 if (usuariosAmistad.isEmpty() && usuariosSolicitud.isEmpty()) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(AmistadesActivity.this);
                     dialog.setTitle("ATENCIÓN");
@@ -151,38 +154,39 @@ public class AmistadesActivity extends AppCompatActivity {
                     dialog.show();
                 }
                 else {
-                    getInformacionUsuariosAmpliada();
+                    amigosList = new AmigosList(AmistadesActivity.this, usuariosSolicitud, cancionesEnComunSolicitud, fotosPerfilSolicitud);
+                    lvSolicitudesAmistad.setAdapter(amigosList);
+                    amigosList = new AmigosList(AmistadesActivity.this, usuariosAmistad, instagramAmistad, fotosPerfilAmistad);
+                    lvAmigos.setAdapter(amigosList);
                 }
             }
         });
     }
 
-    private void getInformacionUsuariosAmpliada() {
-        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void getInformacionUsuarioAmpliada(String nombre, int condicion) {
+        Task<QuerySnapshot> task = database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (usuariosSolicitud.contains(document.getId())){
-                            cancionesEnComunSolicitud.add(calcularCancionesComun.cancionesEnComun(sharedPref.getString("nombreUsuario","")
-                                    , document.getId()) + " canciones en comun");
-                            fotosPerfilSolicitud.add((String) document.getData().get("fotoPerfil"));
-                        }
-                        else if (usuariosAmistad.contains(document.getId())) {
-                            instagramAmistad.add((String) document.getData().get("instagram"));
-                            fotosPerfilAmistad.add((String) document.getData().get("fotoPerfil"));
+                        if (nombre.equals(document.getId())){
+                            if (condicion == 1) {
+                                cancionesEnComunSolicitud.add(calcularCancionesComun.cancionesEnComun(sharedPref.getString("nombreUsuario","")
+                                        , document.getId()) + " canciones en comun");
+                                fotosPerfilSolicitud.add((String) document.getData().get("fotoPerfil"));
+                            }
+                            else if (condicion == 2) {
+                                instagramAmistad.add((String) document.getData().get("instagram"));
+                                fotosPerfilAmistad.add((String) document.getData().get("fotoPerfil"));
+                            }
                         }
                     }
                 } else {
                     System.out.println("Error getting documents." + task.getException());
                 }
-
-                amigosList = new AmigosList(AmistadesActivity.this, usuariosSolicitud, cancionesEnComunSolicitud, fotosPerfilSolicitud);
-                lvSolicitudesAmistad.setAdapter(amigosList);
-                amigosList = new AmigosList(AmistadesActivity.this, usuariosAmistad, instagramAmistad, fotosPerfilAmistad);
-                lvAmigos.setAdapter(amigosList);
             }
         });
+        while (!task.isComplete()) {}
     }
 
     private void borrarUsuario (int position) {
