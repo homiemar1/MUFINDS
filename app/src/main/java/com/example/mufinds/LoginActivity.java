@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void guardarInformacionSharedPreference (String nombreUsuario) {
-        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Task<QuerySnapshot> task = database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        while (!task.isComplete()){};
     }
 
     public void onClickRecuperarContraseña (View view) {
