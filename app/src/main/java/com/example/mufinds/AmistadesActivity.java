@@ -118,7 +118,7 @@ public class AmistadesActivity extends AppCompatActivity {
         fotosPerfilAmistad = new ArrayList<>();
 
         String nombreUsuario = sharedPref.getString("nombreUsuario", "");
-        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Task<QuerySnapshot> task = database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -198,10 +198,6 @@ public class AmistadesActivity extends AppCompatActivity {
         eliminar.put(sharedPref.getString("nombreUsuario", ""), FieldValue.delete());
         database.collection("relacionUsuarioUsuario").document(usuariosAmistad.get(position)).update(eliminar);
 
-        usuariosAmistad.remove(position);
-        instagramAmistad.remove(position);
-        fotosPerfilAmistad.remove(position);
-
         getInformacionUsuarios();
 
         amigosList.notifyDataSetChanged();
@@ -238,9 +234,6 @@ public class AmistadesActivity extends AppCompatActivity {
                         }
                     }
                 }
-                usuariosSolicitud.remove(position);
-                cancionesEnComunSolicitud.remove(position);
-                fotosPerfilSolicitud.remove(position);
 
                 getInformacionUsuarios();
 
