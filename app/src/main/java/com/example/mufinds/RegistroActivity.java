@@ -64,8 +64,10 @@ public class RegistroActivity extends AppCompatActivity {
         Matcher emparejadorNombre = patronNombre.matcher(nombre);
         Matcher emparejadorApellido = patronNombre.matcher(apellido);
         String numeros = ".*\\d.*";
+
         //pattern contraseña
         String patternContraseña = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+
         //pattern email
         String patternEmail = "[A-Za-z0-9]+@[a-z]+\\.[a-z]+";
         Pattern patronEmail = Pattern.compile(patternEmail);

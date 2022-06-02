@@ -219,18 +219,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 guardarDatos();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull @NotNull Exception e) {
-
-                            }
                         });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(EditarPerfilActivity.this, "Foto no guardada", Toast.LENGTH_SHORT).show();
             }
         });
     }

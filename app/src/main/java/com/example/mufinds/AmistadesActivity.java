@@ -118,7 +118,7 @@ public class AmistadesActivity extends AppCompatActivity {
         fotosPerfilAmistad = new ArrayList<>();
 
         String nombreUsuario = sharedPref.getString("nombreUsuario", "");
-        Task<QuerySnapshot> task = database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        database.collection("relacionUsuarioUsuario").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

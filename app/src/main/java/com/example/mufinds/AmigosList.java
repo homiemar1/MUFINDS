@@ -76,27 +76,4 @@ public class AmigosList extends ArrayAdapter {
         AmigosList.this.notifyDataSetChanged();
     }
 
-    public List<String> getUserNames() {
-        return userNames;
-    }
-
-    public void setUserNames(List<String> userNames) {
-        this.userNames = userNames;
-    }
-
-    public List<String> getCancionComun() {
-        return cancionComun;
-    }
-
-    public void setCancionComun(List<String> cancionComun) {
-        this.cancionComun = cancionComun;
-    }
-
-    public List<String> getPerfilId() {
-        return perfilId;
-    }
-
-    public void setPerfilId(List<String> perfilId) {
-        this.perfilId = perfilId;
-    }
 }

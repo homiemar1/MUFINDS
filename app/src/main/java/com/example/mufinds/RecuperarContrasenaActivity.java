@@ -89,8 +89,6 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
                             }
                         }
                     }
-                } else {
-                    System.out.println("Error getting documents." + task.getException());
                 }
             }
         });
